@@ -6,10 +6,14 @@ import Image from "next/image";
 import XCircleIcon from "@heroicons/react/24/outline/XCircleIcon";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
+import { useSession } from "next-auth/react";
+
 
 function CartScreen() {
     const { state, dispatch } = useContext(Store);
     const router = useRouter();
+    const { data: session } = useSession();
+
     const {
         cart: { cartItems },
     } = state;
@@ -21,6 +25,16 @@ function CartScreen() {
     const updateCartHandler = (item, qty) => {
         const quantity = Number(qty);
         dispatch({ type: "CART_ADD_ITEM", payload: { ...item, quantity } });
+    };
+
+    const handleButtonClick = () => {
+        if (session) {
+            // Якщо користувач залогінений, переходимо на сторінку доставки
+            router.push('/shipping');
+        } else {
+            // Якщо користувач не залогінений, переходимо на сторінку логіну з редіректом на сторінку доставки
+            router.push('/login?redirect=/shipping');
+        }
     };
 
     return (
@@ -96,7 +110,7 @@ function CartScreen() {
                             </li>
                             <li>
                                 <button
-                                    onClick={() => router.push("login?redirect=/shipping")}
+                                    onClick={handleButtonClick}
                                     className="primary-button w-full"
                                 >
                                     Оформити замовлення

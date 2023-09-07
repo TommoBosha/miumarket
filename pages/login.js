@@ -74,7 +74,9 @@ export default function LoginScreen() {
                 </div>
                 <div className='mb-4'>
                     Новий користувач? &nbsp;
-                    <Link href='register'>Зареєструватись</Link>
+                    <Link href='register' style={{
+                        color: "#3ACCE9",
+                    }}>Зареєструватись</Link>
                 </div>
             </form>
         </Layout>

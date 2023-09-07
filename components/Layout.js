@@ -3,13 +3,16 @@ import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 import { Store } from "../utils/Store";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { Menu } from "@headlessui/react";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import DropdownLink from "./DropdownLink";
+import Cookies from "js-cookie";
 
 export default function Layout({ title, children }) {
     const { status, data: session } = useSession();
-    const { state } = useContext(Store);
+    const { state, dispatch } = useContext(Store);
     const [currentLanguage, setCurrentLanguage] = useState("uk");
     const { cart } = state;
     const [cartItemsCount, setcartItemsCoun] = useState(0);
@@ -22,6 +25,13 @@ export default function Layout({ title, children }) {
         const newLanguage = currentLanguage === "uk" ? "en" : "uk";
         setCurrentLanguage(newLanguage);
     };
+
+    const logoutClickHandler = () => {
+        Cookies.remove('cart');
+        dispatch({ type: 'CART_RESET' })
+        signOut({ callbackUrl: '/login' });
+    };
+
     return (
         <>
             <Head>
@@ -89,7 +99,40 @@ export default function Layout({ title, children }) {
                             {status === "loading" ? (
                                 "Loading"
                             ) : session?.user ? (
-                                session.user.name
+                                <Menu as='div' className='relative inline-block'>
+                                    <Menu.Button style={{ color: "#3ACCE9" }}>
+                                        <div className="p-2 relative flex items-center">
+                                            <Image
+                                                src="/images/user.svg"
+                                                alt="Логін"
+                                                width={23}
+                                                height={25}
+                                            />
+                                            {/* <span className="p-2 text-xl font-bold">{session.user.name}</span> */}
+                                        </div>
+                                    </Menu.Button>
+                                    <Menu.Items className='absolute left-0  w-56 bg-white origin-top-right shadow-lg'>
+                                        <Menu.Item>
+                                            <DropdownLink className='dropdown-link' href='/profile'>
+                                                Профіль
+                                            </DropdownLink>
+                                        </Menu.Item>
+                                        <Menu.Item>
+                                            <DropdownLink className='dropdown-link' href='/order-history'>
+                                                Історія замовлень
+                                            </DropdownLink>
+                                        </Menu.Item>
+                                        <Menu.Item>
+                                            <Link
+                                                className='dropdown-link'
+                                                href='#'
+                                                onClick={logoutClickHandler}
+                                            >
+                                                Вихід
+                                            </Link>
+                                        </Menu.Item>
+                                    </Menu.Items>
+                                </Menu>
                             ) : (
                                 <Link href="/login" className="p-2 relative">
                                     {/* <div className="relative"> */}
