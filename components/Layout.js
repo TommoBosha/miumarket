@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import DropdownLink from "./DropdownLink";
 import Cookies from "js-cookie";
+import Footer from "./Footer";
 
 export default function Layout({ title, children }) {
     const { status, data: session } = useSession();
@@ -45,7 +46,7 @@ export default function Layout({ title, children }) {
                 <header>
                     <nav
                         className="flex items-center justify-center px-4  space-x-8 shadow-md"
-                        style={{ backgroundColor: "#F9F9F9" }}
+
                     >
                         <Link href="/">
                             <p
@@ -60,7 +61,7 @@ export default function Layout({ title, children }) {
                         <div className="relative">
                             <input
                                 type="text"
-                                className="px-4 py-2 rounded-full text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-blue-300 "
+                                className="px-4 py-2 rounded-full text-white placeholder-white focus:outline-none focus:ring-2  "
                                 style={{
                                     backgroundColor: "#3ACCE9",
                                     width: "303px",
@@ -189,10 +190,13 @@ export default function Layout({ title, children }) {
                     </nav>
                 </header>
 
-                <main className="container m-auto mt-4 relative px-4 ">{children}</main>
+                <main className="container m-auto  relative px-4 " >{children}</main>
 
-                <footer className="flex h-10 justify-center items-center  shadow-inner">
-                    © All rights reserved
+                <footer className="flex   justify-center items-center  shadow-inner px-4 relative " style={{ background: "#3ACCE9" }}>
+                    <div className="flex-col">
+                        <Footer />
+
+                    </div>
                 </footer>
             </div>
         </>

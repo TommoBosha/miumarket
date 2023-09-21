@@ -29,21 +29,34 @@ a {
 .default-button {
   @apply rounded bg-gray-100 py-2 px-4 text-black shadow outline-none hover:bg-gray-200 active:bg-gray-300;
 }
+.primary-footer-text {
+  @apply text-white font-semibold text-xl uppercase;
+}
 
 header {
   position: sticky;
   top: 0;
-  background-color: #f9f9f9;
+  background-color: rgba(249, 249, 249, 1);
   z-index: 50;
 }
 nav {
   height: 115px;
 }
 
+.footer-image-wrapper {
+  width: 100%;
+  max-width: 100%;
+}
+
+.footer-image-wrapper img {
+  width: 100%;
+  height: auto;
+}
+
 input,
 select,
 textarea {
-  @apply rounded border p-2 outline-none ring-indigo-300 focus:ring;
+  @apply rounded border p-2 outline-none ring-offset-indigo-100 focus:ring;
 }
 
 .dropdown-link {

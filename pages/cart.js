@@ -7,6 +7,8 @@ import XCircleIcon from "@heroicons/react/24/outline/XCircleIcon";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 
 function CartScreen() {
@@ -22,9 +24,14 @@ function CartScreen() {
         dispatch({ type: "CART_REMOVE_ITEM", payload: item });
     };
 
-    const updateCartHandler = (item, qty) => {
+    const updateCartHandler = async (item, qty) => {
         const quantity = Number(qty);
+        const { data } = await axios.get(`/api/products/${item._id}`);
+        if (data.countInStock < quantity) {
+            return toast.error('Пробачте, товар закінчівся')
+        }
         dispatch({ type: "CART_ADD_ITEM", payload: { ...item, quantity } });
+        toast.success('Товар додан до кошика')
     };
 
     const handleButtonClick = () => {
