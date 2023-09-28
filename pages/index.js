@@ -1,15 +1,13 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Layout from '../components/Layout'
-import ProductItem from '../components/ProductItem'
 import Product from '../models/Product'
-import db from '../utils/db'
-import { Store } from '../utils/Store';
-import axios from 'axios';
-import { toast } from 'react-toastify';
 import PageSlide from '../components/PageSlide';
 import slidesData from '../utils/slideData';
-// import { Carousel } from 'react-responsive-carousel'
-// import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import SocialMedia from '../components/SocialMedia';
+import { mongooseConnect } from '../lib/mongoose';
+import NewProducts from '../components/NewProducts';
+import styled from 'styled-components';
+import Link from 'next/link';
 
 const slides = [
   '1',
@@ -17,11 +15,56 @@ const slides = [
   '3'
 ];
 
-export default function Home({ products }) {
-  const { state, dispatch } = useContext(Store);
-  const { cart } = state;
+const ButtonStyle = styled.button`
+  width: 150px;
+  height: 58px;
+  background: ${props => (props.active === 'true' ? '#3ACCE9' : 'black')};
+  color: white; 
+  border: none; 
+  cursor: pointer; 
+  text-transform: uppercase;
+ 
+  
+  &:hover {
+    background: #3ACCE9; 
+  }
+`;
+
+const ButtonCatalogStyle = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 184px;
+  height: 46px;
+  background: #FFCD05;
+  color: black; 
+  border: none; 
+  cursor: pointer; 
+  text-transform: uppercase;
+  margin: 0 auto 35px;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 1.8px;
+  gap: 5px;
+  
+  &:hover {
+    background: #3ACCE9; 
+  }
+`;
+
+const ButtonsWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+ align-items: center;
+  margin: 40px auto; 
+  gap: 35px;
+`;
+
+export default function Home({ productsNew, productsTop, productsSale, productsAll }) {
+
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [currentSlideDirection, setCurrentSlideDirection] = useState('left');
+  const [activeCategory, setActiveCategory] = useState('productsAll');
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -38,18 +81,11 @@ export default function Home({ products }) {
     };
   }, [currentSlideIndex, currentSlideDirection]);
 
+  const handleCategoryChange = (category) => {
+    setActiveCategory(category);
+  };
 
-  const addToCardHandler = async (product) => {
-    const existItem = cart.cartItems.find((x) => x.slug === product.slug);
-    const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(`/api/products/${product._id}`);
 
-    if (data.countInStock < quantity) {
-      return toast.error('Пробачте, товар закінчівся')
-    }
-    dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } })
-
-  }
   return (
     <div >
       <Layout title="HomePage">
@@ -59,14 +95,59 @@ export default function Home({ products }) {
           direction={currentSlideDirection}
           slidesData={slidesData}
         />
-        <div className='grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4 mt-12 mx-48'>
-          {products.map((product) => (
-            <ProductItem product={product} key={product.slug}
-              addToCardHandler={addToCardHandler}
-            ></ProductItem>
-          ))}
+        <div className='container m-auto'>
+          <ButtonsWrapper >
+            <ButtonStyle
+              active={activeCategory === 'productsAll' ? 'true' : 'false'}
+              onClick={() => handleCategoryChange('productsAll')}
+            >
+              Всі
+            </ButtonStyle>
+            <ButtonStyle
+              active={activeCategory === 'productsNew' ? 'true' : 'false'}
+              onClick={() => handleCategoryChange('productsNew')}
+            >
+              New
+            </ButtonStyle>
+            <ButtonStyle
+              active={activeCategory === 'productsTop' ? 'true' : 'false'}
+              onClick={() => handleCategoryChange('productsTop')}
+            >
+              Top
+            </ButtonStyle>
+            <ButtonStyle
+              active={activeCategory === 'productsSale' ? 'true' : 'false'}
+              onClick={() => handleCategoryChange('productsSale')}
+            >
+              Sale
+            </ButtonStyle>
+          </ButtonsWrapper>
+
+
+          {activeCategory === 'productsAll' && (
+            <NewProducts products={productsAll} key={productsAll} />
+          )}
+          {activeCategory === 'productsNew' && (
+            <NewProducts products={productsNew} key={productsNew.slug} />
+          )}
+          {activeCategory === 'productsTop' && (
+            <NewProducts products={productsTop} key={productsTop.slug} />
+          )}
+          {activeCategory === 'productsSale' && (
+            <NewProducts products={productsSale} key={productsSale.slug} />
+          )}
+
+          <ButtonCatalogStyle href={`/catalog/${activeCategory}`}>
+            Всі товари <svg xmlns="http://www.w3.org/2000/svg" width="23" height="16" viewBox="0 0 23 16" fill="none">
+              <path d="M1.93164 6.84119C1.37936 6.84119 0.931641 7.2889 0.931641 7.84119C0.931641 8.39347 1.37936 8.84119 1.93164 8.84119L1.93164 6.84119ZM22.6387 8.54829C23.0293 8.15777 23.0293 7.5246 22.6387 7.13408L16.2748 0.770119C15.8843 0.379594 15.2511 0.379594 14.8606 0.770119C14.47 1.16064 14.47 1.79381 14.8606 2.18433L20.5174 7.84119L14.8606 13.498C14.47 13.8886 14.47 14.5217 14.8606 14.9123C15.2511 15.3028 15.8843 15.3028 16.2748 14.9123L22.6387 8.54829ZM1.93164 8.84119L21.9316 8.84119V6.84119L1.93164 6.84119L1.93164 8.84119Z" fill="black" />
+            </svg>
+          </ButtonCatalogStyle>
+        </div>
+        <div  >
+          <SocialMedia />
 
         </div>
+
       </Layout>
 
 
@@ -75,11 +156,17 @@ export default function Home({ products }) {
 }
 
 export async function getServerSideProps() {
-  await db.connect();
-  const products = await Product.find().lean();
+  await mongooseConnect();
+  const productsNew = await Product.find({ tag: 'NEW' }, null, { sort: { 'tag': -1 }, limit: 6 });
+  const productsTop = await Product.find({ tag: 'Top' }, null, { sort: { 'tag': -1 }, limit: 6 });
+  const productsSale = await Product.find({ tag: 'Sale' }, null, { sort: { 'tag': -1 }, limit: 6 });
+  const productsAll = await Product.find({}, null, { sort: { '_id': -1 }, limit: 6 });
   return {
     props: {
-      products: products.map(db.convertDocToObj),
-    },
-  };
+      productsNew: JSON.parse(JSON.stringify(productsNew)),
+      productsTop: JSON.parse(JSON.stringify(productsTop)),
+      productsSale: JSON.parse(JSON.stringify(productsSale)),
+      productsAll: JSON.parse(JSON.stringify(productsAll)),
+    }
+  }
 }

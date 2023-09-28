@@ -10,8 +10,8 @@ export default function ProductItem({ product, addToCardHandler }) {
         <div className='card'>
             <Link href={`/product/${product.slug}`}>
                 <img
-                    src={product.image}
-                    alt={product.name}
+                    src={product.images}
+                    alt={product.title}
                     className='w-auto h-64 mx-auto my-auto rounded shadow'
                 />
             </Link>

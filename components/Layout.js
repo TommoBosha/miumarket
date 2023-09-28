@@ -190,15 +190,19 @@ export default function Layout({ title, children }) {
                     </nav>
                 </header>
 
-                <main className="container m-auto  relative px-4 " >{children}</main>
+                <main className="  relative z-1" >{children}</main>
 
-                <footer className="flex   justify-center items-center  shadow-inner px-4 relative " style={{ background: "#3ACCE9" }}>
-                    <div className="flex-col">
+                <footer className="flex   justify-center items-center  shadow-inner  relative z-0 "
+                    style={{ background: "#3ACCE9" }}
+                >
+                    <div className="flex-col" style={{ width: "100%" }}>
                         <Footer />
+
+                        <p className="bg-white py-8 pl-56" >Copyright © 2023</p>
 
                     </div>
                 </footer>
-            </div>
+            </div >
         </>
     );
 }

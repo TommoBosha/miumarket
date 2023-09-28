@@ -4,13 +4,14 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import { Store } from "../../utils/Store";
-import db from "../../utils/db";
 import Product from "../../models/Product";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { mongooseConnect } from "../../lib/mongoose";
 
 export default function ProductScreen(props) {
-    const { product } = props;
+    const product = props.product[0];
+    console.log(product)
     const { state, dispatch } = useContext(Store);
     const router = useRouter();
 
@@ -30,15 +31,15 @@ export default function ProductScreen(props) {
         router.push('/cart');
     }
     return (
-        <Layout title={product.name}>
+        <Layout title={product.title}>
             <div className="py-2">
                 <Link href="/">back to products</Link>
             </div>
             <div className="grid md:grid-cols-4 md:gap-3">
                 <div className="md:col-span-2">
                     <Image
-                        src={product.image}
-                        alt={product.name}
+                        src={product.images[0]}
+                        alt={product.title}
                         width={640}
                         height={640}
                         layout="responsive"
@@ -47,7 +48,7 @@ export default function ProductScreen(props) {
                 <div>
                     <ul>
                         <li>
-                            <h1 className="text-lg font-bold">{product.name}</h1>
+                            <h1 className="text-lg font-bold">{product.title}</h1>
                         </li>
                         <li>Категорія: {product.category}</li>
                         <li >Опис: {product.description}</li>
@@ -57,7 +58,7 @@ export default function ProductScreen(props) {
                     <div className="card p-5">
                         <div className="mb-2 flex justify-between">
                             <div className="font-bold">Ціна</div>
-                            <div>{product.price} грн.</div>
+                            <div>{product.price} $</div>
                         </div>
                         <div className="mb-2 flex justify-between">
                             <div className="font-bold">Статус</div>
@@ -71,16 +72,16 @@ export default function ProductScreen(props) {
     );
 }
 
+
 export async function getServerSideProps(context) {
-    const { params } = context;
-    const { slug } = params;
-    await db.connect();
-    const product = await Product.findOne({ slug }).lean();
-    await db.disconnect();
+    await mongooseConnect();
+    const { slug } = context.query;
+    const product = await Product.find({ slug: slug });
     return {
         props: {
-            product: product ? db.convertDocToObj(product) : null,
-        },
-    };
+            product: JSON.parse(JSON.stringify(product)),
+        }
+    }
 }
+
 

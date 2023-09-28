@@ -72,13 +72,13 @@ function CartScreen() {
                                                 className="flex items-center"
                                             >
                                                 <Image
-                                                    src={item.image}
-                                                    alt={item.name}
+                                                    src={item.images}
+                                                    alt={item.title}
                                                     width={50}
                                                     height={50}
                                                 ></Image>
                                                 &nbsp;
-                                                {item.name}
+                                                {item.title}
                                             </Link>
                                         </td>
                                         <td className="p-5 text-right">
