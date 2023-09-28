@@ -8,6 +8,8 @@ import { mongooseConnect } from '../lib/mongoose';
 import NewProducts from '../components/NewProducts';
 import styled from 'styled-components';
 import Link from 'next/link';
+import AboutUs from '../components/AboutUs';
+import Sales from '../components/Sales';
 
 const slides = [
   '1',
@@ -143,6 +145,11 @@ export default function Home({ productsNew, productsTop, productsSale, productsA
             </svg>
           </ButtonCatalogStyle>
         </div>
+
+        <Sales />
+
+        <AboutUs />
+
         <div  >
           <SocialMedia />
 
