@@ -8,12 +8,19 @@ import Product from "../../models/Product";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { mongooseConnect } from "../../lib/mongoose";
+import { Currency } from "../../models/Currency";
 
 export default function ProductScreen(props) {
     const product = props.product[0];
-    console.log(product)
     const { state, dispatch } = useContext(Store);
     const router = useRouter();
+
+    const priceInDollars = product.price;
+    const exchangeRate = props.latestCurrency.currency;
+
+    const priceInHryvnia = priceInDollars * exchangeRate;
+
+    console.log(`Цена в гривнях: ${priceInHryvnia}`);
 
     if (!product) {
         return <Layout title='404'>Продукт не знайдено</Layout>;
@@ -58,7 +65,7 @@ export default function ProductScreen(props) {
                     <div className="card p-5">
                         <div className="mb-2 flex justify-between">
                             <div className="font-bold">Ціна</div>
-                            <div>{product.price} $</div>
+                            <div>{priceInHryvnia} грн.</div>
                         </div>
                         <div className="mb-2 flex justify-between">
                             <div className="font-bold">Статус</div>
@@ -77,9 +84,11 @@ export async function getServerSideProps(context) {
     await mongooseConnect();
     const { slug } = context.query;
     const product = await Product.find({ slug: slug });
+    const latestCurrency = await Currency.findOne().sort({ currency: -1 });
     return {
         props: {
             product: JSON.parse(JSON.stringify(product)),
+            latestCurrency: JSON.parse(JSON.stringify(latestCurrency)),
         }
     }
 }
