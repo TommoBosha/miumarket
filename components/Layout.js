@@ -6,10 +6,11 @@ import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { Menu } from "@headlessui/react";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import DropdownLink from "./DropdownLink";
 import Cookies from "js-cookie";
 import Footer from "./Footer";
+import BurgerMenu from "./BurgerMenu";
 
 export default function Layout({ title, children }) {
     const { status, data: session } = useSession();
@@ -17,6 +18,7 @@ export default function Layout({ title, children }) {
     const [currentLanguage, setCurrentLanguage] = useState("uk");
     const { cart } = state;
     const [cartItemsCount, setcartItemsCoun] = useState(0);
+    const [navbar, setNavbar] = useState(false);
 
     useEffect(() => {
         setcartItemsCoun(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
@@ -28,9 +30,9 @@ export default function Layout({ title, children }) {
     };
 
     const logoutClickHandler = () => {
-        Cookies.remove('cart');
-        dispatch({ type: 'CART_RESET' })
-        signOut({ callbackUrl: '/login' });
+        Cookies.remove("cart");
+        dispatch({ type: "CART_RESET" });
+        signOut({ callbackUrl: "/login" });
     };
 
     return (
@@ -44,18 +46,26 @@ export default function Layout({ title, children }) {
 
             <div className="flex min-h-screen flex-col justify-between">
                 <header>
-                    <nav
-                        className="flex items-center justify-center px-4  space-x-8 shadow-md"
-
-                    >
-                        <Link href="/">
-                            <p
-                                className="text-xl border-b-2 border-black"
-                                style={{ fontFamily: "Myriad Pro", fontSize: "18px" }}
+                    <nav className="flex items-center justify-center px-4  space-x-8 shadow-md">
+                        <div>
+                            <button
+                                className="p-2 text-gray-700 rounded-md outline-none cursor-pointer"
+                                onClick={() => setNavbar(!navbar)}
                             >
-                                Каталог
-                            </p>
-                        </Link>
+                                <Image
+                                    src={navbar ? "/images/close.svg" : "/images/hamburger-menu.svg"}
+                                    width={30}
+                                    height={30}
+                                    alt="logo"
+                                />
+                            </button>
+
+                            {/* Burger menu */}
+
+                            <BurgerMenu setNavbar={setNavbar} navbar={navbar} />
+                        </div>
+
+
 
                         {/* Пошук */}
                         <div className="relative">
@@ -100,7 +110,7 @@ export default function Layout({ title, children }) {
                             {status === "loading" ? (
                                 "Loading"
                             ) : session?.user ? (
-                                <Menu as='div' className='relative inline-block'>
+                                <Menu as="div" className="relative inline-block">
                                     <Menu.Button style={{ color: "#3ACCE9" }}>
                                         <div className="p-2 relative flex items-center">
                                             <Image
@@ -112,21 +122,24 @@ export default function Layout({ title, children }) {
                                             {/* <span className="p-2 text-xl font-bold">{session.user.name}</span> */}
                                         </div>
                                     </Menu.Button>
-                                    <Menu.Items className='absolute left-0  w-56 bg-white origin-top-right shadow-lg'>
+                                    <Menu.Items className="absolute left-0  w-56 bg-white origin-top-right shadow-lg">
                                         <Menu.Item>
-                                            <DropdownLink className='dropdown-link' href='/profile'>
+                                            <DropdownLink className="dropdown-link" href="/profile">
                                                 Профіль
                                             </DropdownLink>
                                         </Menu.Item>
                                         <Menu.Item>
-                                            <DropdownLink className='dropdown-link' href='/order-history'>
+                                            <DropdownLink
+                                                className="dropdown-link"
+                                                href="/order-history"
+                                            >
                                                 Історія замовлень
                                             </DropdownLink>
                                         </Menu.Item>
                                         <Menu.Item>
                                             <Link
-                                                className='dropdown-link'
-                                                href='#'
+                                                className="dropdown-link"
+                                                href="#"
                                                 onClick={logoutClickHandler}
                                             >
                                                 Вихід
@@ -190,19 +203,19 @@ export default function Layout({ title, children }) {
                     </nav>
                 </header>
 
-                <main className="  relative z-1" >{children}</main>
+                <main className="  relative z-1">{children}</main>
 
-                <footer className="flex   justify-center items-center  shadow-inner  relative z-0 "
+                <footer
+                    className="flex   justify-center items-center  shadow-inner  relative z-0 "
                     style={{ background: "#3ACCE9" }}
                 >
                     <div className="flex-col" style={{ width: "100%" }}>
                         <Footer />
 
-                        <p className="bg-white py-8 pl-56" >Copyright © 2023</p>
-
+                        <p className="bg-white py-8 pl-56">Copyright © 2023</p>
                     </div>
                 </footer>
-            </div >
+            </div>
         </>
     );
 }

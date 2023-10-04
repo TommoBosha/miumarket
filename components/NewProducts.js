@@ -7,7 +7,7 @@ const ProductsGrid = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   color: black;
   gap: 35px;
-  margin: 40px 103px;
+  margin-bottom: 38px ;
 
 `;
 

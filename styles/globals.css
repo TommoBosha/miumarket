@@ -53,6 +53,11 @@ nav {
   height: auto;
 }
 
+.custom-li:hover,
+.custom-li:active {
+  background-color: #38c2dd;
+}
+
 input,
 select,
 textarea {

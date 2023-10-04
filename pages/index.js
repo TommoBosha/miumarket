@@ -18,8 +18,8 @@ const slides = [
 ];
 
 const ButtonStyle = styled.button`
-  width: 150px;
-  height: 58px;
+  width: 144px;
+  height: 69px;
   background: ${props => (props.active === 'true' ? '#3ACCE9' : 'black')};
   color: white; 
   border: none; 
@@ -58,7 +58,7 @@ const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: center;
  align-items: center;
-  margin: 40px auto; 
+  margin: 36px auto; 
   gap: 35px;
 `;
 
@@ -97,7 +97,7 @@ export default function Home({ productsNew, productsTop, productsSale, productsA
           direction={currentSlideDirection}
           slidesData={slidesData}
         />
-        <div className='container m-auto'>
+        <div className=' m-auto' style={{ width: '1040px' }}>
           <ButtonsWrapper >
             <ButtonStyle
               active={activeCategory === 'productsAll' ? 'true' : 'false'}
@@ -147,8 +147,10 @@ export default function Home({ productsNew, productsTop, productsSale, productsA
         </div>
 
         <Sales />
+        <section id="about">
+          <AboutUs />
+        </section>
 
-        <AboutUs />
 
         <div  >
           <SocialMedia />

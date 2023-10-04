@@ -79,7 +79,11 @@ export default function Footer() {
                     <ul>
                         <h2 className="primary-footer-text mb-4">СОЦМЕРЕЖІ</h2>
                         <li className="flex items-center mb-2 ">
-                            <Link href={"/"} className="flex items-center ">
+                            <Link
+                                href={"https://www.youtube.com/@Made.in.Ukraine2023"}
+                                className="flex items-center "
+                                target="_blank"
+                            >
                                 {" "}
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +101,11 @@ export default function Footer() {
                             </Link>
                         </li>
                         <li className="flex items-center mb-2">
-                            <Link href={"/"} className="flex items-center">
+                            <Link
+                                href={"/"}
+                                className="flex items-center"
+                                target="_blank"
+                            >
                                 {" "}
                                 <svg
                                     width="14"
@@ -115,7 +123,11 @@ export default function Footer() {
                             </Link>
                         </li>
                         <li className="flex items-center mb-2">
-                            <Link href={"/"} className="flex items-center">
+                            <Link
+                                href={"/"}
+                                className="flex items-center"
+                                target="_blank"
+                            >
                                 <svg
                                     width="14"
                                     height="15"
@@ -133,7 +145,11 @@ export default function Footer() {
                         </li>
 
                         <li className="flex items-center">
-                            <Link href={"/"} className="flex items-center">
+                            <Link
+                                href={"/"}
+                                className="flex items-center"
+                                target="_blank"
+                            >
                                 <svg
                                     width="14"
                                     height="15"
@@ -165,7 +181,7 @@ export default function Footer() {
                     height={253}
                     className="opacity-10 absolute left-0  "
                     style={{
-                        top: "-83px", zIndex: -1,
+                        top: "-99px", zIndex: -1,
                     }}
                 />
             </div>
