@@ -48,7 +48,7 @@ export default function AboutUs() {
                 alt="braslets"
                 width={315}
                 height={698}
-                className="absolute right-0 top-14"
+                className="absolute right-0 top-14 z-10"
 
             />
         </div>

@@ -175,13 +175,13 @@ export default function Footer() {
             <div className="footer-image-wrapper">
 
                 <Image
-                    src={'/images/Rectangle.svg'}
+                    src={'/images/blue.svg'}
                     alt="uzor"
                     width={1900}
                     height={253}
-                    className="opacity-10 absolute left-0  "
+                    className=" absolute left-0 top-0 "
                     style={{
-                        top: "-99px", zIndex: -1,
+                        zIndex: -1,
                     }}
                 />
             </div>
