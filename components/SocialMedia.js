@@ -13,7 +13,6 @@ export default function SocialMedia() {
 
     useEffect(() => {
         setIsClient(true);
-        console.log(setIsClient)
     }, []);
 
     const Header = styled.h1`

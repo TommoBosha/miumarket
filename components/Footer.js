@@ -69,7 +69,7 @@ export default function Footer() {
                             <Link href={"/catalog/delivery"}>Доставка та оплата</Link>
                         </li>
                         <li className="mb-2">
-                            <Link href={"#"}>Про нас</Link>
+                            <Link href={"/#about"}>Про нас</Link>
                         </li>
                         <li>
                             <Link href={"/catalog/partners"}>Партнерам</Link>

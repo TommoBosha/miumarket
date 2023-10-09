@@ -44,7 +44,7 @@ export default function AboutUs() {
                 </p>
             </div>
             <Image
-                src="/images/Group-7111.png"
+                src="/images/Group711.png"
                 alt="braslets"
                 width={315}
                 height={698}

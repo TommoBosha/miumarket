@@ -98,7 +98,7 @@ export async function getServerSideProps(context) {
     const { slug } = context.query;
     const product = await Product.find({ slug: slug });
     const latestCurrency = await Currency.findOne().sort({ currency: -1 });
-    const categoryId = product[0].category; // ідентифікатор категорії продукту
+    const categoryId = product[0].category;
     const categoryName = await getCategoryName(categoryId);
     const breadcrumbs = await generateBreadcrumbs(categoryId);
     return {
@@ -122,7 +122,6 @@ async function generateBreadcrumbs(categoryId) {
     const breadcrumbs = [];
     async function getCategoryInfo(categoryId) {
         const category = await Category.findOne({ _id: categoryId });
-        console.log(category);
         breadcrumbs.unshift(category);
         if (category.parent) {
             await getCategoryInfo(category.parent);

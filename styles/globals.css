@@ -53,9 +53,26 @@ nav {
   height: auto;
 }
 
-.custom-li:hover,
-.custom-li:active {
+.custom-li:hover > a,
+.custom-li:active > a {
   background-color: #38c2dd;
+
+  padding: 13px 0;
+  padding-left: 15px;
+  border-radius: 10px;
+  color: #000;
+  transition: background-color 0.5s, color 0.5s;
+}
+
+.custom-category-li:hover > a,
+.custom-category-li:active > a {
+  background-color: #38c2dd;
+
+  padding: 13px 0;
+  padding-left: 45px;
+  border-radius: 10px;
+  color: #000;
+  transition: background-color 0.5s, color 0.5s;
 }
 
 input,
