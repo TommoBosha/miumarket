@@ -63,16 +63,16 @@ export default function Footer() {
                     <ul>
                         <h2 className="primary-footer-text mb-4">ІНФОРМАЦІЯ</h2>
                         <li className="mb-2">
-                            <Link href={"/catalog/contacts"}>Контакти</Link>
+                            <Link href={"/contacts"}>Контакти</Link>
                         </li>
                         <li className="mb-2">
-                            <Link href={"/catalog/delivery"}>Доставка та оплата</Link>
+                            <Link href={"/delivery"}>Доставка та оплата</Link>
                         </li>
                         <li className="mb-2">
                             <Link href={"/#about"}>Про нас</Link>
                         </li>
                         <li>
-                            <Link href={"/catalog/partners"}>Партнерам</Link>
+                            <Link href={"/partners"}>Партнерам</Link>
                         </li>
                     </ul>
 

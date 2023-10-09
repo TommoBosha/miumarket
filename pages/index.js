@@ -166,7 +166,7 @@ export default function Home({ productsNew, productsTop, productsSale, productsA
 
 export async function getServerSideProps() {
   await mongooseConnect();
-  const productsNew = await Product.find({ tag: 'NEW' }, null, { sort: { 'tag': -1 }, limit: 6 });
+  const productsNew = await Product.find({ tag: 'New' }, null, { sort: { 'tag': -1 }, limit: 6 });
   const productsTop = await Product.find({ tag: 'Top' }, null, { sort: { 'tag': -1 }, limit: 6 });
   const productsSale = await Product.find({ tag: 'Sale' }, null, { sort: { 'tag': -1 }, limit: 6 });
   const productsAll = await Product.find({}, null, { sort: { '_id': -1 }, limit: 6 });
