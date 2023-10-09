@@ -34,7 +34,7 @@ export default function Partners() {
         <Layout>
             <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md mx-auto py-5">
                 <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="companyName">Ім'я (Назва компанії):</label>
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="companyName">Ім&#39;я (Назва компанії):</label>
                     <Controller
                         name="companyName"
                         control={control}
@@ -42,7 +42,7 @@ export default function Partners() {
                         rules={{ required: true }}
                         render={({ field }) => <input {...field} id="companyName" className={`appearance-none border ${errors.companyName ? 'border-red-500' : 'border-gray-300'} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} />}
                     />
-                    {errors.companyName && <p className="text-red-500 text-xs italic">Поле обов'язкове</p>}
+                    {errors.companyName && <p className="text-red-500 text-xs italic"> Поле обов&#39;язкове</p>}
                 </div>
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">Телефон:</label>
