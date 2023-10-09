@@ -11,8 +11,7 @@ import DropdownLink from "./DropdownLink";
 import Cookies from "js-cookie";
 import Footer from "./Footer";
 import BurgerMenu from "./BurgerMenu";
-import { mongooseConnect } from "../lib/mongoose";
-import { Category } from "../models/Category";
+
 
 export default function Layout({ title, children }) {
     const { status, data: session } = useSession();
