@@ -50,7 +50,7 @@ export default function ProductScreen(props) {
             <div className="breadcrumbs">
                 {breadcrumbsArray.map((category, index) => (
                     <span key={category._id}>
-                        <Link href={`/category/${category._id}`}>{category.name}</Link>
+                        <Link href={`/catalog/${category._id}`}>{category.name}</Link>
                         {index < breadcrumbsArray.length - 1 && " > "}
                     </span>
                 ))}

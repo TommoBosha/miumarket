@@ -11,7 +11,6 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
     const [showParentCategories, setShowParentCategories] = useState(false);
     const [isEscKeyPressed, setIsEscKeyPressed] = useState(false);
     const [showCatalog, setShowCatalog] = useState(false);
-    const [setSelectedCategory] = useState(null);
     const [categories, setCategories] = useState([]);
 
 
@@ -42,8 +41,7 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
         setShowCatalog(true);
     };
 
-    const handleCategoryClick = (category) => {
-        setSelectedCategory(category);
+    const handleCategoryClick = () => {
 
         setNavbar(false);
     };
@@ -117,17 +115,17 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
                     </li>
 
                     {showParentCategories ? (
-                        // Отображение родительских категорий
+
                         <ul>
                             {categories.map((cat) => (
-                                // Добавьте обработчик клика на категорию
+
                                 <li key={cat._id}
                                     onClick={() => handleCategoryClick(cat)}
                                     className='custom-category-li mb-4  '
                                     style={{ color: '#38C2DD' }}
                                 >
                                     <Link
-                                        href={`/catalog/${cat.name}`}
+                                        href={`/catalog/${cat._id}`}
                                         className='flex flex-row px-9 uppercase text-base'
                                         style={{ fontWeight: '600', }}
                                     >{cat.name}</Link>

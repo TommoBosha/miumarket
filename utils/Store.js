@@ -39,6 +39,14 @@ function reducer(state, action) {
                 paymentMethod: '',
             },
         };
+        case "CART_UPDATE_QUANTITY": {
+            const { slug, quantity } = action.payload;
+            const cartItems = state.cart.cartItems.map((item) =>
+                item.slug === slug ? { ...item, quantity } : item
+            );
+            Cookies.set("cart", JSON.stringify({ ...state.cart, cartItems }));
+            return { ...state, cart: { ...state.cart, cartItems } };
+        }
         case "SAVE_SHIPPING_ADDRESS":
             return {
                 ...state,

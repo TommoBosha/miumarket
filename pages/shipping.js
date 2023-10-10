@@ -54,90 +54,94 @@ export default function ShippingScreen() {
 
     return (
         <Layout title="Адреса доставки">
-            <CheckoutWizard activeStep={1} />
-            <form
-                className='mx-auto max-w-screen-md'
-                onSubmit={handleSubmit(submitHandler)}
+            <div className=' m-auto my-6'
+                style={{ width: '1040px' }}
             >
-                <h1 className='mb-4 text-xl'>Адреса доставки</h1>
-                <div className='mb-4'>
-                    <label htmlFor='fullName'>ПІБ</label>
-                    <input
-                        className='w-full'
-                        id='fullName'
-                        autoFocus
-                        {...register('fullName', {
-                            required: 'Введіть ПІБ',
-                        })} />
-                    {errors.fullName && (
-                        <div className='text-red-500'>{errors.fullName.message}</div>
-                    )}
-                </div>
+                <CheckoutWizard activeStep={1} />
+                <form
+                    className='mx-auto max-w-screen-md'
+                    onSubmit={handleSubmit(submitHandler)}
+                >
+                    <h1 className='mb-4 text-xl'>Адреса доставки</h1>
+                    <div className='mb-4'>
+                        <label htmlFor='fullName'>ПІБ</label>
+                        <input
+                            className='w-full'
+                            id='fullName'
+                            autoFocus
+                            {...register('fullName', {
+                                required: 'Введіть ПІБ',
+                            })} />
+                        {errors.fullName && (
+                            <div className='text-red-500'>{errors.fullName.message}</div>
+                        )}
+                    </div>
 
-                <div className='mb-4'>
-                    <label htmlFor='address'>Адреса</label>
-                    <input
-                        className='w-full'
-                        id='address'
-                        autoFocus
-                        {...register('address', {
-                            required: 'Введіть Адресу',
-                            minLength: { value: 3, message: 'Адреса не повина бути меньша за 2 символів' },
-                        })} />
-                    {errors.address && (
-                        <div className='text-red-500'>{errors.address.message}</div>
-                    )}
-                </div>
+                    <div className='mb-4'>
+                        <label htmlFor='address'>Адреса</label>
+                        <input
+                            className='w-full'
+                            id='address'
+                            autoFocus
+                            {...register('address', {
+                                required: 'Введіть Адресу',
+                                minLength: { value: 3, message: 'Адреса не повина бути меньша за 2 символів' },
+                            })} />
+                        {errors.address && (
+                            <div className='text-red-500'>{errors.address.message}</div>
+                        )}
+                    </div>
 
-                <div className='mb-4'>
-                    <label htmlFor='city'>Місто</label>
-                    <input
-                        className='w-full'
-                        id='city'
-                        autoFocus
-                        {...register('city', {
-                            required: 'Введіть ваше місто ',
+                    <div className='mb-4'>
+                        <label htmlFor='city'>Місто</label>
+                        <input
+                            className='w-full'
+                            id='city'
+                            autoFocus
+                            {...register('city', {
+                                required: 'Введіть ваше місто ',
 
-                        })} />
-                    {errors.city && (
-                        <div className='text-red-500'>{errors.city.message}</div>
-                    )}
-                </div>
+                            })} />
+                        {errors.city && (
+                            <div className='text-red-500'>{errors.city.message}</div>
+                        )}
+                    </div>
 
-                <div className='mb-4'>
-                    <label htmlFor='postCode'>Індекс</label>
-                    <input
-                        className='w-full'
-                        id='postCode'
-                        autoFocus
-                        {...register('postCode', {
-                            required: 'Введіть ваш індекс ',
+                    <div className='mb-4'>
+                        <label htmlFor='postCode'>Індекс</label>
+                        <input
+                            className='w-full'
+                            id='postCode'
+                            autoFocus
+                            {...register('postCode', {
+                                required: 'Введіть ваш індекс ',
 
-                        })} />
-                    {errors.postCode && (
-                        <div className='text-red-500'>{errors.postCode.message}</div>
-                    )}
-                </div>
+                            })} />
+                        {errors.postCode && (
+                            <div className='text-red-500'>{errors.postCode.message}</div>
+                        )}
+                    </div>
 
-                <div className='mb-4'>
-                    <label htmlFor='country'>Країна</label>
-                    <input
-                        className='w-full'
-                        id='country'
-                        autoFocus
-                        {...register('country', {
-                            required: 'Введіть вашу країну ',
+                    <div className='mb-4'>
+                        <label htmlFor='country'>Країна</label>
+                        <input
+                            className='w-full'
+                            id='country'
+                            autoFocus
+                            {...register('country', {
+                                required: 'Введіть вашу країну ',
 
-                        })} />
-                    {errors.country && (
-                        <div className='text-red-500'>{errors.country.message}</div>
-                    )}
-                </div>
+                            })} />
+                        {errors.country && (
+                            <div className='text-red-500'>{errors.country.message}</div>
+                        )}
+                    </div>
 
-                <div className='mb-4 flex justify-between'>
-                    <button className='primary-button'>Далі</button>
-                </div>
-            </form>
+                    <div className='mb-4 flex justify-between'>
+                        <button className='primary-button'>Далі</button>
+                    </div>
+                </form>
+            </div>
         </Layout>
     )
 }
