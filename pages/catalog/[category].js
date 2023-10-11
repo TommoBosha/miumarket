@@ -86,11 +86,14 @@ export async function getServerSideProps(context) {
     } else {
         childCategories = await Category.find({ parent: category });
 
-        //  усі айді дочірніх категорій
-        const childCategoryIds = childCategories.map((childCategory) => childCategory._id);
+        //  всі айді дочірніх категорій
+        const categoryIds = [...childCategories.map((childCategory) => childCategory._id), category];
 
-        // Шукаємо продукти, які належать до дочірніх категорій
-        products = await Product.find({ category: { $in: childCategoryIds } });
+        console.log("categoryIds", categoryIds);
+        // шукаємо продукти, які належать до дочірніх категорій
+        products = await Product.find({ category: { $in: categoryIds } });
+
+        // products = await Product.find({ category: category });
     }
 
     return {

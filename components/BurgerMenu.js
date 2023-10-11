@@ -87,11 +87,11 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
 
                 <ul className="text-left h-auto  justify-center flex  flex-col px-6 pb-32 w-72">
                     <li
-                        className="  text-black mb-7 px-2 custom-li items-center" >
+                        className="  text-black   custom-li items-center" >
                         <Link
                             href="/"
                             onClick={() => setNavbar(!navbar)}
-                            className='flex flex-row gap-2 uppercase text-base'
+                            className=' uppercase text-base'
                             style={{ fontWeight: '600' }}
 
                         >
@@ -102,8 +102,8 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
                         </Link>
                     </li>
 
-                    <li className=" text-black mb-7 px-2  custom-li" onClick={handleCatalogClick}>
-                        <a className='flex flex-row gap-2 uppercase text-base'
+                    <li className=" text-black  custom-li" onClick={handleCatalogClick}>
+                        <a className=' uppercase text-base'
                             style={{ fontWeight: '600' }}
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="18" viewBox="0 0 23 20" fill="none">
@@ -117,11 +117,22 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
                     {showParentCategories ? (
 
                         <ul>
+                            <li
+                                onClick={handleCatalogClick}
+                                className='custom-category-li  '
+                                style={{ color: '#38C2DD' }}
+                            >
+                                <Link
+                                    href={`/catalog`}
+                                    className='flex flex-row px-9 uppercase text-base'
+                                    style={{ fontWeight: '600', }}
+                                >Всі товари</Link>
+                            </li>
                             {categories.map((cat) => (
 
                                 <li key={cat._id}
                                     onClick={() => handleCategoryClick(cat)}
-                                    className='custom-category-li mb-4  '
+                                    className='custom-category-li   '
                                     style={{ color: '#38C2DD' }}
                                 >
                                     <Link
@@ -138,11 +149,11 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
 
 
 
-                    <li className="  text-black mb-7 px-2 custom-li">
+                    <li className="  text-black custom-li">
                         <Link
                             href="/#about"
                             onClick={() => setNavbar(!navbar)}
-                            className='flex flex-row gap-2 uppercase text-base items-center'
+                            className='uppercase text-base items-center'
                             style={{ fontWeight: '600' }}
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -151,11 +162,11 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
                             Про нас
                         </Link>
                     </li>
-                    <li className="  text-black mb-7 px-2  custom-li">
+                    <li className="  text-black   custom-li">
                         <Link
                             href="/contacts"
                             onClick={() => setNavbar(!navbar)}
-                            className='flex flex-row gap-2 uppercase text-base'
+                            className=' uppercase text-base'
                             style={{ fontWeight: '600' }}
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 18 26" fill="none">
@@ -164,11 +175,11 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
                             Контакти
                         </Link>
                     </li>
-                    <li className="  text-black mb-7 px-2  custom-li ">
+                    <li className="  text-black custom-li ">
                         <Link
                             href="/delivery"
                             onClick={() => setNavbar(!navbar)}
-                            className='flex flex-row gap-2 uppercase text-base items-center'
+                            className=' uppercase text-base items-center'
                             style={{ fontWeight: '600' }}
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="18" viewBox="0 0 24 20" fill="none">
@@ -177,11 +188,11 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
                             Доставка та оплата
                         </Link>
                     </li>
-                    <li className="  text-black mb-7 px-2  custom-li ">
+                    <li className="  text-black custom-li ">
                         <Link
                             href="/partners"
                             onClick={() => setNavbar(!navbar)}
-                            className='flex flex-row gap-2 uppercase text-base items-center'
+                            className=' uppercase text-base items-center'
                             style={{ fontWeight: '600' }}
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 27 21" fill="none">
