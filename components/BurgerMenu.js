@@ -79,7 +79,7 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
                     }`}
                 style={{
                     position: 'fixed',
-                    left: navbar ? '240px' : '-100%',
+                    left: navbar ? '120px' : '-100%',
                     backgroundColor: '#F4F4F4',
                     transition: 'left 0.3s ease',
                 }}
