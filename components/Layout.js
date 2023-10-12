@@ -16,7 +16,7 @@ import BurgerMenu from "./BurgerMenu";
 export default function Layout({ title, children }) {
     const { status, data: session } = useSession();
     const { state, dispatch } = useContext(Store);
-    const [currentLanguage, setCurrentLanguage] = useState("uk");
+    // const [currentLanguage, setCurrentLanguage] = useState("uk");
     const { cart } = state;
     const [cartItemsCount, setcartItemsCoun] = useState(0);
     const [navbar, setNavbar] = useState(false);
