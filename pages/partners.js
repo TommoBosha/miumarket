@@ -22,10 +22,10 @@ export default function Partners() {
     }
 
     const ButtonStyles = styled.button`
-     background: #FFD700; 
+     background: #3ACCE9; 
         &:hover {
-        background: #3ACCE9;
-        color: #fff; 
+        background: #FFF;
+        color: #000; 
         }
 
     `;
@@ -34,12 +34,18 @@ export default function Partners() {
     return (
         <Layout>
             <div className="m-auto" style={{ background: '#D7D7D7' }}>
-                <h1 className='uppercase text-white text-center pt-9 text-2xl' style={{ fontWeight: '700' }}>форма для партнерства </h1>
-                <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md mx-auto py-5 relative z-10">
-                    <div className="mb-4">
-                        <label
-                            className="block text-gray-700 text-sm font-bold mb-2"
-                            htmlFor="companyName">Ім&#39;я (Назва компанії):</label>
+                <h1
+                    className='uppercase text-g text-center pt-9 mb-12 font-bold'
+                    style={{ color: '#A0A0A0', fontSize: '28px' }}>
+                    форма для <br /> партнерства
+                </h1>
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="w-full max-w-md mx-auto py-5 relative z-10">
+
+                    <div className="mb-8 relative">
+
+
                         <Controller
                             name="companyName"
                             control={control}
@@ -47,14 +53,24 @@ export default function Partners() {
                             rules={{ required: true }}
                             render={({ field }) => <input {...field}
                                 id="companyName"
-                                placeholder='Ім&#39;я (Назва компанії)'
-                                className={`appearance-none border rounded-3xl ${errors.companyName ? 'border-red-500' : 'border-gray-300'} rounded w-full py-2 px-3 text-gray-700 text-sm leading-tight focus:outline-none focus:shadow-outline`} />}
+                                placeholder='Богдан Бондар'
+                                className={`appearance-none border-2 rounded-3xl 
+                                ${errors.companyName ? 'border-red-500' : 'border-gray-300'} 
+                                rounded w-full py-2 px-5 text-black text-sm leading-tight focus:outline-none focus:shadow-outline`} style={{ borderColor: '#A0A0A0', backgroundColor: '#D7D7D7' }} />}
                         />
+
+                        <label
+                            className="block   text-sm pl-1 pr-2 absolute top-0 left-5 transform -translate-y-2/4 " style={{ background: '#D7D7D7', color: '#A0A0A0' }}
+                            htmlFor="companyName"
+                        >
+                            Ім&#39;я
+                        </label>
+
                         {errors.companyName && <p className="text-red-500 text-xs italic"> Поле обов&#39;язкове</p>}
                     </div>
 
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="product">Що плануєте продавати</label>
+                    <div className="mb-8 relative">
+
                         <Controller
                             name="product"
                             control={control}
@@ -63,27 +79,47 @@ export default function Partners() {
                             render={({ field }) => <input {...field}
                                 id="product"
                                 placeholder='Що плануєте продавати'
-                                className={`appearance-none border rounded-3xl ${errors.product ? 'border-red-500' : 'border-gray-300'} rounded w-full py-2 px-3 text-gray-700 text-sm leading-tight focus:outline-none focus:shadow-outline`} />}
+                                className={`appearance-none border-2 rounded-3xl
+                                 ${errors.product ? 'border-red-500' : 'border-gray-300'} 
+                                 rounded w-full py-2 px-5  text-black text-sm leading-tight
+                                 focus:outline-none focus:shadow-outline`}
+                                style={{ borderColor: '#A0A0A0', backgroundColor: '#D7D7D7' }} />}
                         />
+                        <label
+                            className="block   text-sm pl-1 pr-2 absolute top-0 left-5 transform -translate-y-2/4 " style={{ background: '#D7D7D7', color: '#A0A0A0' }}
+                            htmlFor="product"
+                        >
+                            Продукт
+                        </label>
                         {errors.product && <p className="text-red-500 text-xs italic"> Поле обов&#39;язкове</p>}
                     </div>
 
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="socialMedia">Соцмережі</label>
+                    <div className="mb-8 relative">
+
                         <Controller
                             name="socialMedia"
                             control={control}
                             defaultValue=""
                             render={({ field }) => <input {...field}
                                 id="socialMedia"
-                                placeholder='Соцмережі'
-                                className={`appearance-none border rounded-3xl border-gray-300  w-full py-2 px-3 text-gray-700 text-sm leading-tight focus:outline-none focus:shadow-outline`} />}
+                                placeholder='Instagram, Telegram ...'
+                                className={`appearance-none border-2 rounded-3xl
+                                 border-gray-300  w-full py-2 px-5 text-black
+                                 text-sm leading-tight focus:outline-none focus:shadow-outline`}
+                                style={{ borderColor: '#A0A0A0', backgroundColor: '#D7D7D7' }}
+                            />}
                         />
+                        <label
+                            className="block   text-sm pl-1 pr-2 absolute top-0 left-5 transform -translate-y-2/4 " style={{ background: '#D7D7D7', color: '#A0A0A0' }}
+                            htmlFor="socialMedia"
+                        >
+                            Соцмережі
+                        </label>
 
                     </div>
 
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">Телефон:</label>
+                    <div className="mb-8 relative">
+
                         <Controller
                             name="phone"
                             control={control}
@@ -92,12 +128,24 @@ export default function Partners() {
                             render={({ field }) => <input {...field}
                                 id="phone"
                                 placeholder='+380990000000'
-                                className={`appearance-none border rounded-3xl ${errors.phone ? 'border-red-500' : 'border-gray-300'} rounded w-full py-2 px-3 text-gray-700 text-sm leading-tight focus:outline-none focus:shadow-outline`} />}
+                                className={`appearance-none border-2 rounded-3xl 
+                                ${errors.phone ? 'border-red-500' : 'border-gray-300'} 
+                                rounded w-full py-2 px-5 text-black text-sm leading-tight
+                                focus:outline-none focus:shadow-outline`}
+                                style={{ borderColor: '#A0A0A0', backgroundColor: '#D7D7D7' }}
+                            />}
                         />
+                        <label
+                            className="block   text-sm pl-1 pr-2 absolute top-0 left-5 transform -translate-y-2/4 " style={{ background: '#D7D7D7', color: '#A0A0A0' }}
+                            htmlFor="phone"
+                        >
+                            Телефон
+                        </label>
                         {errors.phone && <p className="text-red-500 text-xs italic">Введіть правильний формат телефону (+380XXXXXXXXX)</p>}
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">E-mail:</label>
+
+                    <div className="mb-8 relative">
+
                         <Controller
                             name="email"
                             control={control}
@@ -105,13 +153,25 @@ export default function Partners() {
                             rules={{ required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i }}
                             render={({ field }) => <input {...field}
                                 id="email"
-                                placeholder='E-mail'
-                                className={`appearance-none border rounded-3xl ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded w-full py-2 px-3 text-gray-700 text-sm leading-tight focus:outline-none focus:shadow-outline`} />}
+                                placeholder='example@mail.com'
+                                className={`appearance-none border-2 rounded-3xl 
+                                ${errors.email ? 'border-red-500' : 'border-gray-300'} 
+                                rounded w-full py-2 px-5 text-black text-sm leading-tight
+                                focus:outline-none focus:shadow-outline`}
+                                style={{ borderColor: '#A0A0A0', backgroundColor: '#D7D7D7' }}
+                            />}
                         />
+                        <label
+                            className="block   text-sm pl-1 pr-2 absolute top-0 left-5 transform -translate-y-2/4 " style={{ background: '#D7D7D7', color: '#A0A0A0' }}
+                            htmlFor="email"
+                        >
+                            E-mail
+                        </label>
                         {errors.email && <p className="text-red-500 text-xs italic">Введіть правильний формат email(example@mail.com)</p>}
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">Расскажите о себе и товаре который производите (мінімум 100 символів):</label>
+
+                    <div className="pb-8 relative">
+
                         <Controller
                             name="description"
                             control={control}
@@ -120,30 +180,41 @@ export default function Partners() {
                             render={({ field }) => <textarea {...field}
                                 id="description"
                                 placeholder='Розкажіть про себе та товар який робите'
-                                className={`appearance-none border rounded-3xl ${errors.description ? 'border-red-500' : 'border-gray-300'} rounded w-full py-6 px-3 h-32 text-gray-700 text-sm leading-tight focus:outline-none focus:shadow-outline`} />}
+                                className={`appearance-none border-2 rounded-3xl 
+                                ${errors.description ? 'border-red-500' : 'border-gray-300'}
+                                 rounded w-full py-6 px-5 h-32 text-black text-sm
+                                 leading-tight focus:outline-none focus:shadow-outline`}
+                                style={{ borderColor: '#A0A0A0', backgroundColor: '#D7D7D7' }} />}
                         />
-                        {errors.description && <p className="text-red-500 text-xs italic">Мінімум 100 символів</p>}
+                        <label
+                            className="block text-sm pl-1 pr-2 absolute top-0 left-5 transform -translate-y-2/4 " style={{ background: '#D7D7D7', color: '#A0A0A0' }}
+                            htmlFor="description"
+                        >
+                            Про себе
+                        </label>
+                        {errors.description && <p className="text-red-500 text-xs italic">Поле обов&#39;язкове</p>}
                     </div>
-                    <div className="mb-4 flex justify-center items-center">
+                    <div className="mb-6 flex justify-center items-center">
                         <ButtonStyles
                             type="submit"
-                            className="font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline  "
+                            className="font-bold py-2 px-4 rounded-xl uppercase focus:outline-none focus:shadow-outline  "
 
                         >
                             Відправити
                         </ButtonStyles>
                     </div>
                 </form>
-                <Image
-                    src={'/images/gray.svg'}
-                    alt="uzor"
-                    width={1900}
-                    height={253}
-                    className=" absolute left-0 bottom-0 "
-                    style={{
-                        zIndex: 0,
-                    }}
-                />
+                <div className='pt-4'>
+                    <Image
+                        src={'/images/gray.svg'}
+                        alt="uzor"
+                        width={1900}
+                        height={253}
+                        className=" absolute left-0 bottom-0 "
+
+                    />
+                </div>
+
             </div>
         </Layout >
     )

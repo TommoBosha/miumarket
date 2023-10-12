@@ -85,7 +85,7 @@ nav {
 input,
 select,
 textarea {
-  @apply rounded border p-2 outline-none ring-offset-indigo-100 focus:ring;
+  @apply rounded border p-2 outline-none;
 }
 
 .dropdown-link {

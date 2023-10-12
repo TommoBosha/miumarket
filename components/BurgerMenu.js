@@ -75,11 +75,9 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
         <div
         >
             <div
-                className={` flex-1 justify-self-center mt-8 block rounded-b-2xl pb-6  ${navbar ? 'p-0  block' : 'hidden'
+                className={` flex-1 justify-self-center top-full left-0 absolute mt-8 block rounded-b-2xl pb-6  ${navbar ? 'p-0  block' : 'hidden'
                     }`}
                 style={{
-                    position: 'fixed',
-                    left: navbar ? '120px' : '-100%',
                     backgroundColor: '#F4F4F4',
                     transition: 'left 0.3s ease',
                 }}

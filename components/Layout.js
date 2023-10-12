@@ -45,12 +45,12 @@ export default function Layout({ title, children }) {
             </Head>
             <ToastContainer position="bottom-center" limit={1} />
 
-            <div className="flex min-h-screen flex-col justify-between">
+            <div className="flex min-h-screen flex-col justify-between" >
                 <header>
-                    <nav className="flex items-center justify-center px-4  space-x-8 shadow-md">
-                        <div>
+                    <nav className="flex items-center justify-center   shadow-md" >
+                        <div className="relative " style={{ marginRight: "60px" }}>
                             <button
-                                className="p-2 text-gray-700 rounded-md outline-none cursor-pointer"
+                                className="p-2  text-gray-700 rounded-md outline-none cursor-pointer"
                                 onClick={() => setNavbar(!navbar)}
                             >
                                 <Image
@@ -69,14 +69,14 @@ export default function Layout({ title, children }) {
 
 
                         {/* Пошук */}
-                        <div className="relative">
+                        <div className="relative" style={{ marginRight: "60px" }}>
                             <input
                                 type="text"
                                 className="px-4 py-2 rounded-full text-white placeholder-white focus:outline-none focus:ring-2  "
                                 style={{
                                     backgroundColor: "#3ACCE9",
-                                    width: "303px",
-                                    height: "30px",
+                                    width: "264px",
+                                    height: "28px",
                                 }}
                                 placeholder="Пошук"
                             />
@@ -94,18 +94,19 @@ export default function Layout({ title, children }) {
                             <Image
                                 src="/images/logo.svg"
                                 alt="Логотип MIU Market"
-                                width={206}
-                                height={80}
+                                width={182}
+                                height={70}
+                                style={{ marginRight: "104px" }}
                             />
                         </Link>
 
                         {/* Номер телефону */}
-                        <p className="text-xl font-bold" style={{ color: "#3ACCE9" }}>
+                        <p className="text-xl font-bold" style={{ color: "#3ACCE9", marginRight: "74px" }}>
                             +380 66 523 23 07
                         </p>
 
                         {/* Група іконок */}
-                        <div className="flex ">
+                        <div className="flex gap-5" >
                             {/* Логін */}
 
                             {status === "loading" ? (
@@ -113,14 +114,14 @@ export default function Layout({ title, children }) {
                             ) : session?.user ? (
                                 <Menu as="div" className="relative inline-block">
                                     <Menu.Button style={{ color: "#3ACCE9" }}>
-                                        <div className="p-2 relative flex items-center">
+                                        <div className="py-2 relative flex items-center">
                                             <Image
                                                 src="/images/user.svg"
                                                 alt="Логін"
                                                 width={23}
                                                 height={25}
                                             />
-                                            {/* <span className="p-2 text-xl font-bold">{session.user.name}</span> */}
+
                                         </div>
                                     </Menu.Button>
                                     <Menu.Items className="absolute left-0  w-56 bg-white origin-top-right shadow-lg">
@@ -150,19 +151,19 @@ export default function Layout({ title, children }) {
                                 </Menu>
                             ) : (
                                 <Link href="/login" className="p-2 relative">
-                                    {/* <div className="relative"> */}
+
                                     <Image
                                         src="/images/user.svg"
                                         alt="Логін"
                                         width={23}
                                         height={25}
                                     />
-                                    {/* </div> */}
+
                                 </Link>
                             )}
 
                             {/* Корзина */}
-                            <Link href="/cart" className="p-2 relative">
+                            <Link href="/cart" className="py-2 mr-2 relative">
                                 <Image
                                     src="/images/cart.svg"
                                     alt="Корзина"
@@ -181,25 +182,7 @@ export default function Layout({ title, children }) {
                                 )}
                             </Link>
 
-                            {/* Смена теми */}
-                            <div className="p-2 relative">
-                                <Image
-                                    src="/images/themeswitcher.svg"
-                                    alt="Смена теми"
-                                    width={23}
-                                    height={23}
-                                />
-                            </div>
 
-                            {/* Світчер смени мови */}
-                            <div className="p-2 relative">
-                                <button
-                                    onClick={toggleLanguage}
-                                    className="w-6 h-6  rounded-full flex items-center justify-center focus:outline-none"
-                                >
-                                    {currentLanguage === "uk" ? "УК" : "EN"}
-                                </button>
-                            </div>
                         </div>
                     </nav>
                 </header>
