@@ -25,10 +25,10 @@ export default function Layout({ title, children }) {
         setcartItemsCoun(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
     }, [cart.cartItems]);
 
-    const toggleLanguage = () => {
-        const newLanguage = currentLanguage === "uk" ? "en" : "uk";
-        setCurrentLanguage(newLanguage);
-    };
+    // const toggleLanguage = () => {
+    //     const newLanguage = currentLanguage === "uk" ? "en" : "uk";
+    //     setCurrentLanguage(newLanguage);
+    // };
 
     const logoutClickHandler = () => {
         Cookies.remove("cart");
