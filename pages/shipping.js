@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { Store } from '../utils/Store';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
+import NovaPoshta from '../components/NovaPoshta';
 
 export default function ShippingScreen() {
     const router = useRouter();
@@ -63,6 +64,10 @@ export default function ShippingScreen() {
                     onSubmit={handleSubmit(submitHandler)}
                 >
                     <h1 className='mb-4 text-xl'>Адреса доставки</h1>
+
+                    <NovaPoshta />
+
+
                     <div className='mb-4'>
                         <label htmlFor='fullName'>ПІБ</label>
                         <input

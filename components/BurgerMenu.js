@@ -85,7 +85,7 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
 
                 <ul className="text-left h-auto  justify-center flex  flex-col px-6 pb-32 w-72">
                     <li
-                        className="  text-black   custom-li items-center" >
+                        className="  text-black  custom-li items-center" >
                         <Link
                             href="/"
                             onClick={() => setNavbar(!navbar)}
@@ -207,4 +207,5 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
 };
 
 export default BurgerMenu;
+
 

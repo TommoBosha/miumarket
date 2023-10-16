@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import axios from "axios";
 
 export default function Footer() {
+    const [categories, setCategories] = useState([]);
+    useEffect(() => {
+        fetchCategories()
+    }, [])
+
+    function fetchCategories() {
+        axios.get("/api/categories/")
+            .then((result) => {
+                const categoriesWithoutParent = result.data.filter(category => !category.parent);
+                setCategories(categoriesWithoutParent);
+            })
+            .catch((error) => {
+                console.error('Ошибка при выполнении запроса:', error);
+            });
+    }
+
     return (
         <div className=" py-8 " style={{ width: "100%", }}
 
@@ -45,19 +62,25 @@ export default function Footer() {
 
                 <div className="flex justify-evenly space-x-12">
                     <ul>
+
                         <h2 className="primary-footer-text mb-4">КАТАЛОГ</h2>
-                        <li className="mb-2">
-                            <Link href={"/catalog/braslet"} >Браслети</Link>
-                        </li>
-                        <li className="mb-2">
-                            <Link href={"/catalog/pendants"} >Кулони</Link>
-                        </li>
-                        <li className="mb-2">
-                            <Link href={"/catalog/brooches"} >Брошки</Link>
-                        </li>
-                        <li>
-                            <Link href={"/catalog/bags"} >Сумки</Link>
-                        </li>
+
+
+                        {categories.map((cat) => (
+
+                            <li key={cat._id}
+
+                                className='mb-2  '
+
+                            >
+                                <Link
+                                    href={`/catalog/${cat._id}`}
+
+
+                                >{cat.name}</Link>
+                            </li>
+                        ))}
+
                     </ul>
 
                     <ul>

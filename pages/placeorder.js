@@ -14,21 +14,12 @@ export default function PlaceOrderScreen() {
     const { state, dispatch } = useContext(Store);
     const { cart } = state;
     const { cartItems, shippingAddress, paymentMethod } = cart;
-    const [currency, setCurrency] = useState(null);
 
-    useEffect(() => {
-        async function fetchCurrency() {
-            const { data } = await axios.get(`/api/currency/`);
-            setCurrency(data);
-        }
-
-        fetchCurrency();
-    }, []);
 
     const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
 
     const itemsPrice = round2(
-        cartItems.reduce((a, c) => a + c.quantity * c.price * currency?.currency, 0)
+        cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
     );
 
     const shippingPrice = itemsPrice > 5000 ? 0 : 100;
@@ -132,9 +123,9 @@ export default function PlaceOrderScreen() {
                                                     </Link>
                                                 </td>
                                                 <td className=" p-5 text-right">{item.quantity}</td>
-                                                <td className="p-5 text-right">{item.price * currency?.currency} грн.</td>
+                                                <td className="p-5 text-right">{item.price} грн.</td>
                                                 <td className="p-5 text-right">
-                                                    {item.quantity * item.price * currency?.currency} грн.
+                                                    {item.quantity * item.price} грн.
                                                 </td>
                                             </tr>
                                         ))}

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Store } from "../utils/Store";
 import Layout from "../components/Layout";
 import Link from "next/link";
@@ -34,18 +34,6 @@ function CartScreen() {
         dispatch({ type: "CART_UPDATE_QUANTITY", payload: { slug: item.slug, quantity } });
         toast.success('Кількість товару оновлено')
     };
-
-    const [currency, setCurrency] = useState(null);
-
-    useEffect(() => {
-        async function fetchCurrency() {
-            const { data } = await axios.get(`/api/currency/`);
-            setCurrency(data);
-        }
-
-        fetchCurrency();
-    }, []);
-
 
     const handleButtonClick = () => {
         if (session) {
@@ -111,7 +99,7 @@ function CartScreen() {
                                                     ))}
                                                 </select>
                                             </td>
-                                            <td className="p-5 text-right">  {item.price * currency?.currency} грн.</td>
+                                            <td className="p-5 text-right">  {item.price} грн.</td>
                                             <td className="p-5 text-right">
                                                 <button onClick={() => removeItemHandler(item)}>
                                                     <XCircleIcon className="h-5 w-5"></XCircleIcon>
@@ -129,7 +117,7 @@ function CartScreen() {
                                         Загальна сума  ({cartItems.reduce((a, c) => a + c.quantity, 0)}
                                         ) :
                                     </div>{" "}
-                                    {cartItems.reduce((a, c) => a + c.quantity * c.price * currency?.currency, 0)} грн.
+                                    {cartItems.reduce((a, c) => a + c.quantity * c.price, 0)} грн.
                                 </li>
                                 <li>
                                     <button
