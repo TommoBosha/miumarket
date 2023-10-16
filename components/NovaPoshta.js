@@ -9,7 +9,7 @@ export default function NovaPoshta() {
     const [cityName, setCityName] = useState('');
     const [cities, setCities] = useState([]);
     const [branches, setBranches] = useState([]);
-    const [selectedCity, setSelectedCity] = useState(null);
+    const [selectedCity] = useState(null);
 
 
 
