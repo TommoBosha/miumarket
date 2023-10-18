@@ -4,6 +4,7 @@ import Layout from '../components/Layout'
 import styled from 'styled-components'
 import { sendPartnerForm } from '../lib/api'
 import Image from 'next/image'
+import { toast } from 'react-toastify'
 
 export default function Partners() {
     const { handleSubmit, control, formState: { errors } } = useForm()
@@ -13,7 +14,7 @@ export default function Partners() {
         console.log(data)
         try {
             await sendPartnerForm(data);
-            console.log("Form successfully submitted!");
+            toast.success('Форма відправлена')
 
         } catch (error) {
             console.error("Failed to submit form: ", error);
