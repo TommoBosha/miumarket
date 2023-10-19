@@ -6,16 +6,13 @@ import { signIn, useSession } from 'next-auth/react'
 import { getError } from '../utils/error'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
+import axios from 'axios'
 
 export default function LoginScreen() {
 
     const { data: session } = useSession();
     const router = useRouter();
     const { redirect } = router.query;
-
-    async function login() {
-        await signIn('google');
-    }
 
     useEffect(() => {
         if (session?.user) {
@@ -26,11 +23,18 @@ export default function LoginScreen() {
     const {
         handleSubmit,
         register,
+        getValues,
         formState: { errors },
     } = useForm();
 
-    const submitHandler = async ({ email, password }) => {
+    const submitHandler = async ({ name, email, password }) => {
         try {
+            await axios.post('api/auth/signup', {
+                name,
+                email,
+                password
+            });
+
             const result = await signIn('credentials', {
                 redirect: false,
                 email,
@@ -47,10 +51,26 @@ export default function LoginScreen() {
     return (
         <Layout>
             <form className='mx-auto max-w-screen-md' onSubmit={handleSubmit(submitHandler)} >
-                <h1 className='mb-4 text-xl'>Увійти</h1>
+                <h1 className='mb-4 text-xl'>Зареєструватись</h1>
+
+                <div className='mb-4'>
+                    <label htmlFor='name'>Ім&#39;я</label>
+                    <input
+                        type='text'
+                        {...register('name', {
+                            required: 'Додайте ваше ім&#39;я',
+
+                        })}
+                        className='w-full'
+                        id='name'
+                        autoFocus />
+                    {errors.name && (<div className='text-red-500'>{errors.name.message}</div>)}
+                </div>
+
                 <div className='mb-4'>
                     <label htmlFor='email'>Email</label>
-                    <input type='email'
+                    <input
+                        type='email'
                         {...register('email', {
                             required: 'Додайте вашу пошту',
                             pattern: {
@@ -58,39 +78,54 @@ export default function LoginScreen() {
                                 message: 'Невірна пошта',
                             }
                         })}
-                        className='w-full' id='email' autoFocus />
+                        className='w-full'
+                        id='email'
+                    />
                     {errors.email && (<div className='text-red-500'>{errors.email.message}</div>)}
                 </div>
 
                 <div className='mb-4'>
                     <label htmlFor='password'>Пароль</label>
-                    <input type='password'
+                    <input
+                        type='password'
                         {...register('password', {
                             required: 'Додайте ваш пароль',
                             minLength: { value: 6, message: 'Пароль повинен бути більше за 5 символів' },
                         })}
-                        className='w-full' id='password' autoFocus />
+                        className='w-full'
+                        id='password' />
                     {errors.password && (<div className='text-red-500'>{errors.password.message}</div>)}
                 </div>
 
                 <div className='mb-4'>
-                    <button className='primary-button'>Login</button>
+                    <label htmlFor='confirmPassword'>Підтвердження пароля</label>
+                    <input
+                        type='password'
+                        {...register('confirmPassword', {
+                            required: 'Додайте ваш пароль',
+                            validate: (value) => value === getValues('password'),
+                            minLength: {
+                                value: 6,
+                                message: 'Пароль повинен бути більше за 5 символів'
+                            },
+                        })}
+                        className='w-full'
+                        id='confirmPassword' />
+                    {errors.confirmPassword && (<div className='text-red-500'>{errors.confirmPassword.message}</div>)}
+                    {errors.confirmPassword &&
+                        errors.confirmPassword.type === 'validate' && (
+                            <div className='text - red - 500'>Паролі не співпадають</div>)}
                 </div>
 
                 <div className='mb-4'>
-                    <button
-                        className='primary-button'
-                        onClick={login}
-                    >
-                        Login with Google
-                    </button>
+                    <button className='primary-button'>Зареєструватись</button>
                 </div>
                 <div className='mb-4'>
-                    Новий користувач? &nbsp;
-                    <Link href={`/register?redirect=${redirect || '/'}`}
+                    Чи вже є аккаунт? &nbsp;
+                    <Link href={`/login?redirect=${redirect || '/'}`}
                         style={{
                             color: "#3ACCE9",
-                        }}>Зареєструватись</Link>
+                        }}>Увійти</Link>
                 </div>
             </form>
         </Layout>

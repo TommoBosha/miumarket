@@ -3,6 +3,10 @@ import db from "../../../utils/db";
 import User from "../../../models/User";
 import bcryptjs from "bcryptjs";
 import CredentiasProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
+import clientPromise from "../../../lib/mongodb";
+
 
 export default NextAuth({
 
@@ -19,6 +23,15 @@ export default NextAuth({
             if (token?._id) session.user._id = token._id;
             if (token?.isAdmin) session.user.isAdmin = token.isAdmin;
             return session;
+        },
+        async signIn(user, account, profile) {
+            if (account && account.provider === "google") {
+
+                user.name = profile.name;
+                user.email = profile.email;
+                user.image = profile.image;
+            }
+            return true;
         },
     },
     providers: [
@@ -40,6 +53,12 @@ export default NextAuth({
                 }
                 throw new Error('Invalid email or password')
             }
+        }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_ID,
+            clientSecret: process.env.GOOGLE_SECRET,
         })
-    ]
+    ],
+    adapter: MongoDBAdapter(clientPromise),
+
 })
