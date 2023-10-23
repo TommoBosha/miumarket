@@ -5,7 +5,7 @@ import { getError } from '../utils/error'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 
-export default function LoginScreen() {
+export default function LoginScreen({ setIsVisible }) {
 
     const { data: session } = useSession();
     const router = useRouter();
@@ -37,6 +37,7 @@ export default function LoginScreen() {
             if (result.error) {
                 toast.error(result.error);
             }
+            setIsVisible(false)
         } catch (error) {
             toast.error(getError(error));
         }

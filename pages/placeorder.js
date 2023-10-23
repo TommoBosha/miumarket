@@ -62,6 +62,52 @@ export default function PlaceOrderScreen() {
         }
     };
 
+    const createPayment = async () => {
+        try {
+            // Замените ключи, суму и order_id на ваши значения
+            const publicKey = 'sandbox_i67991022050';
+            const privateKey = 'sandbox_sPmUKVMZYWvsfay1Wgtp6w8MEacJCsoqb9Gklbqx';
+            const amount = totalPrice; // Ваша сума платежу
+            const currency = 'UAH';
+            const description = 'Оплата заказа';
+            const order_id = '5324'; // Унікальний ідентифікатор замовлення
+
+            const data = {
+                action: 'pay',
+                amount,
+                currency,
+                description,
+                order_id,
+                version: '3',
+            };
+
+            // Формируем подпись для запроса
+            const dataString = btoa(encodeURIComponent(JSON.stringify(data)));
+            const signature = btoa(dataString + privateKey);
+
+            // Отправляем запрос на LiqPay
+            const response = await axios.post('https://www.liqpay.ua/api/3/checkout', data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Basic ${publicKey}:${signature}`,
+                },
+            });
+
+            const responseData = response.data;
+
+            if (responseData && responseData.link) {
+                // Перенаправляем пользователя на страницу оплаты LiqPay
+                window.location.href = responseData.link;
+            } else {
+                toast.error('Помилка відповіді від сервера LiqPay');
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error('Помилка при створенні платежу');
+        }
+    };
+
+
     return (
         <Layout title="Зробити замовлення">
             <div className=' m-auto my-6'
@@ -161,12 +207,25 @@ export default function PlaceOrderScreen() {
                                     <li>
                                         <button
                                             disabled={loading}
-                                            onClick={placeOrderHandler}
+                                            onClick={createPayment}
                                             className="primary-button w-full"
                                         >
                                             {loading ? 'Loading...' : 'Зробити замовлення'}
                                         </button>
+
                                     </li>
+
+                                    <li >
+                                        <button
+                                            disabled={loading}
+                                            onClick={placeOrderHandler}
+                                            className=" mt-4 p-2 w-full bg-orange-900"
+                                        >
+                                            {loading ? 'Loading...' : 'Зробити замовлення'}
+                                        </button>
+
+                                    </li>
+
                                 </ul>
                             </div>
                         </div>

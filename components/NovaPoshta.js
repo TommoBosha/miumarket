@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export default function NovaPoshta() {
-    const apiKey = '1f4156810d037ab33030a8a23e134751';
+    const apiKey = process.env.NOVAPOSHTA_API;
     const baseURL = 'https://api.novaposhta.ua/v2.0/json/';
+
 
     const [cityName, setCityName] = useState('');
     const [cities, setCities] = useState([]);

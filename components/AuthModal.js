@@ -45,7 +45,7 @@ export default function AuthModal({ onClose }) {
                                 alt="logo"
                             />
                         </button>
-                        {isLogin ? <LoginScreen /> : <RegisterScreen setIsVisible={setIsVisible} />}
+                        {isLogin ? <LoginScreen setIsVisible={setIsVisible} /> : <RegisterScreen setIsVisible={setIsVisible} />}
                         <p>
                             {isLogin
                                 ? "Не маєте облікового запису? "
