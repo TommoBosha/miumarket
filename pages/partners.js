@@ -1,5 +1,5 @@
 import React from 'react'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm, Controller, reset } from 'react-hook-form'
 import Layout from '../components/Layout'
 import styled from 'styled-components'
 import { sendPartnerForm } from '../lib/api'
@@ -7,14 +7,14 @@ import Image from 'next/image'
 import { toast } from 'react-toastify'
 
 export default function Partners() {
-    const { handleSubmit, control, formState: { errors } } = useForm()
+    const { handleSubmit, control, formState: { errors }, reset } = useForm()
 
     const onSubmit = async (data) => {
 
-        console.log(data)
         try {
             await sendPartnerForm(data);
-            toast.success('Форма відправлена')
+            toast.success('Форма відправлена');
+            reset();
 
         } catch (error) {
             console.error("Failed to submit form: ", error);
