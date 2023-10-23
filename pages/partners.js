@@ -1,5 +1,5 @@
 import React from 'react'
-import { useForm, Controller, reset } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import Layout from '../components/Layout'
 import styled from 'styled-components'
 import { sendPartnerForm } from '../lib/api'
