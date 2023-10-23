@@ -88,7 +88,7 @@ export default function Delivery() {
 
                     <h2 className='text-white  text-center uppercase pt-5 pb-4 font-bold text-2xl'>ОПЛАТА</h2>
                     <p className=' text-center uppercase mb-6  text-lg'
-                        style={{ lineHeight: '16.59px', color: '#A0A0A0' }}
+                        style={{ lineHeight: '21.59px', color: '#A0A0A0' }}
                     >
                         Замовлення відправляються накладеним
                         <br /> платежем <b>після передоплати у розмірі 200грн</b></p>
@@ -106,7 +106,7 @@ export default function Delivery() {
                                     height={95}
                                     className='mb-6'
                                 />
-                                <p style={{ color: '#A0A0A0' }}>
+                                <p style={{ color: '#A0A0A0', lineHeight: '16.59px' }}>
                                     Ви можете оплатити <br />замовлення онлайн за <br />допомогою банківської картки <br />або через систему Приват24.
                                 </p>
                             </li>
@@ -122,7 +122,7 @@ export default function Delivery() {
                                     height={95}
                                     className='mb-6'
                                 />
-                                <p style={{ color: '#A0A0A0' }}>
+                                <p style={{ color: '#A0A0A0', lineHeight: '16.59px' }}>
                                     Ви можете оплатити <br />замовлення карткою Visa <br />або MasterCard у точці самовивозу.
                                 </p>
                             </li>
@@ -138,7 +138,7 @@ export default function Delivery() {
                                     height={95}
                                     className='mb-6'
                                 />
-                                <p style={{ color: '#A0A0A0' }}>
+                                <p style={{ color: '#A0A0A0', lineHeight: '16.59px' }}>
                                     При отриманні замовлення у <br />відділенні &#34;Нової пошта&#34;, Ви можете оплатити його як готівкою, так і банківською картою.
                                 </p>
                             </li>
@@ -161,7 +161,7 @@ export default function Delivery() {
                                     height={95}
                                     className='mb-6'
                                 />
-                                <p style={{ color: '#A0A0A0' }}>
+                                <p style={{ color: '#A0A0A0', lineHeight: '16.59px' }}>
                                     Ви можете відстежувати <br /> ваші посилки через додатки або <br />на сайтах перевізників
                                 </p>
                             </li>
@@ -177,7 +177,7 @@ export default function Delivery() {
                                     height={98}
                                     className='mb-6'
                                 />
-                                <p style={{ color: '#A0A0A0' }}>
+                                <p style={{ color: '#A0A0A0', lineHeight: '16.59px' }}>
                                     Лінки Новою поштою та <br />Укрпоштою
                                 </p>
                             </li>
