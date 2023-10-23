@@ -11,24 +11,23 @@ import DropdownLink from "./DropdownLink";
 import Cookies from "js-cookie";
 import Footer from "./Footer";
 import BurgerMenu from "./BurgerMenu";
+import AuthModal from "./AuthModal";
 
 
 export default function Layout({ title, children }) {
     const { status, data: session } = useSession();
     const { state, dispatch } = useContext(Store);
-    // const [currentLanguage, setCurrentLanguage] = useState("uk");
     const { cart } = state;
     const [cartItemsCount, setcartItemsCoun] = useState(0);
     const [navbar, setNavbar] = useState(false);
+
+    const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+    const [isLoginModal, setIsLoginModal] = useState(true);
 
     useEffect(() => {
         setcartItemsCoun(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
     }, [cart.cartItems]);
 
-    // const toggleLanguage = () => {
-    //     const newLanguage = currentLanguage === "uk" ? "en" : "uk";
-    //     setCurrentLanguage(newLanguage);
-    // };
 
     const logoutClickHandler = () => {
         Cookies.remove("cart");
@@ -113,6 +112,7 @@ export default function Layout({ title, children }) {
                                 "Loading"
                             ) : session?.user ? (
                                 <Menu as="div" className="relative inline-block">
+
                                     <Menu.Button style={{ color: "#3ACCE9" }}>
                                         <div className="py-2 relative flex items-center">
                                             <Image
@@ -150,7 +150,10 @@ export default function Layout({ title, children }) {
                                     </Menu.Items>
                                 </Menu>
                             ) : (
-                                <Link href="/login" className="p-2 relative">
+                                <button
+                                    className="p-2 text-gray-700 rounded-md outline-none cursor-pointer"
+                                    onClick={() => setIsAuthModalOpen(true)} // Відкриття модального вікна
+                                >
 
                                     <Image
                                         src="/images/user.svg"
@@ -159,7 +162,7 @@ export default function Layout({ title, children }) {
                                         height={25}
                                     />
 
-                                </Link>
+                                </button>
                             )}
 
                             {/* Корзина */}
@@ -200,6 +203,13 @@ export default function Layout({ title, children }) {
                     </div>
                 </footer>
             </div>
+            {isAuthModalOpen && (
+                <AuthModal
+                    onClose={() => setIsAuthModalOpen(false)}
+                    isLogin={isLoginModal}
+                    setIsLogin={setIsLoginModal}
+                />
+            )}
         </>
     );
 }

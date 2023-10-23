@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react'
-import Layout from '../components/Layout'
-import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { signIn, useSession } from 'next-auth/react'
 import { getError } from '../utils/error'
@@ -45,54 +43,48 @@ export default function LoginScreen() {
     }
 
     return (
-        <Layout>
-            <form className='mx-auto max-w-screen-md' onSubmit={handleSubmit(submitHandler)} >
-                <h1 className='mb-4 text-xl'>Увійти</h1>
-                <div className='mb-4'>
-                    <label htmlFor='email'>Email</label>
-                    <input type='email'
-                        {...register('email', {
-                            required: 'Додайте вашу пошту',
-                            pattern: {
-                                value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
-                                message: 'Невірна пошта',
-                            }
-                        })}
-                        className='w-full' id='email' autoFocus />
-                    {errors.email && (<div className='text-red-500'>{errors.email.message}</div>)}
-                </div>
 
-                <div className='mb-4'>
-                    <label htmlFor='password'>Пароль</label>
-                    <input type='password'
-                        {...register('password', {
-                            required: 'Додайте ваш пароль',
-                            minLength: { value: 6, message: 'Пароль повинен бути більше за 5 символів' },
-                        })}
-                        className='w-full' id='password' autoFocus />
-                    {errors.password && (<div className='text-red-500'>{errors.password.message}</div>)}
-                </div>
+        <form className='mx-auto max-w-screen-md' onSubmit={handleSubmit(submitHandler)} >
+            <h1 className='mb-4 text-xl'>Увійти</h1>
+            <div className='mb-4'>
+                <label htmlFor='email'>Email</label>
+                <input type='email'
+                    {...register('email', {
+                        required: 'Додайте вашу пошту',
+                        pattern: {
+                            value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
+                            message: 'Невірна пошта',
+                        }
+                    })}
+                    className='w-full' id='email' autoFocus />
+                {errors.email && (<div className='text-red-500'>{errors.email.message}</div>)}
+            </div>
 
-                <div className='mb-4'>
-                    <button className='primary-button'>Login</button>
-                </div>
+            <div className='mb-4'>
+                <label htmlFor='password'>Пароль</label>
+                <input type='password'
+                    {...register('password', {
+                        required: 'Додайте ваш пароль',
+                        minLength: { value: 6, message: 'Пароль повинен бути більше за 5 символів' },
+                    })}
+                    className='w-full' id='password' autoFocus />
+                {errors.password && (<div className='text-red-500'>{errors.password.message}</div>)}
+            </div>
 
-                <div className='mb-4'>
-                    <button
-                        className='primary-button'
-                        onClick={login}
-                    >
-                        Login with Google
-                    </button>
-                </div>
-                <div className='mb-4'>
-                    Новий користувач? &nbsp;
-                    <Link href={`/register?redirect=${redirect || '/'}`}
-                        style={{
-                            color: "#3ACCE9",
-                        }}>Зареєструватись</Link>
-                </div>
-            </form>
-        </Layout>
+            <div className='mb-4'>
+                <button className='primary-button'>Login</button>
+            </div>
+
+            <div className='mb-4'>
+                <button
+                    className='primary-button'
+                    onClick={login}
+                >
+                    Login with Google
+                </button>
+            </div>
+
+        </form>
+
     )
 }
