@@ -181,14 +181,30 @@ video {
 }
 
 .modalContent {
-  background-color: #fff;
-  padding: 20px;
-  width: 100%;
-  max-width: 400px;
+  background-color: #d7d7d7;
+  padding: 18px;
+  height: 100%;
+  width: 451px;
   border-radius: 20px;
   position: relative;
+  z-index: 100;
 }
 
+.scrollableContent {
+  max-height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.scrollableContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollableContent::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
 .closeButton {
   color: #fff;
   border: none;

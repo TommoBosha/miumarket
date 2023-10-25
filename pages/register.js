@@ -49,25 +49,31 @@ export default function RegisterScreen({ setIsVisible }) {
 
     return (
 
-        <form className='mx-auto max-w-screen-md' onSubmit={handleSubmit(submitHandler)} >
-            <h1 className='mb-4 text-xl'>Зареєструватись</h1>
+        <form className='mx-auto ' onSubmit={handleSubmit(submitHandler)} >
+            <h1 className='mb-7 mt-14 text-center text-4xl font-bold'>Реєстрація</h1>
 
             <div className='mb-4'>
-                <label htmlFor='name'>Ім&#39;я</label>
+                <label
+                    className='pl-16 text-white'
+                    htmlFor='name'>Ім&#39;я</label>
                 <input
                     type='text'
                     {...register('name', {
                         required: 'Додайте ваше ім&#39;я',
 
                     })}
-                    className='w-full'
+                    className='  m-auto grid pl-6 rounded-3xl bg-white placeholder-slate-300 '
+                    style={{ width: '335px' }}
+                    placeholder='Made Ua'
                     id='name'
                     autoFocus />
                 {errors.name && (<div className='text-red-500'>{errors.name.message}</div>)}
             </div>
 
             <div className='mb-4'>
-                <label htmlFor='email'>Email</label>
+                <label
+                    className='pl-16 text-white'
+                    htmlFor='email'>Email</label>
                 <input
                     type='email'
                     {...register('email', {
@@ -77,27 +83,35 @@ export default function RegisterScreen({ setIsVisible }) {
                             message: 'Невірна пошта',
                         }
                     })}
-                    className='w-full'
+                    className='  m-auto grid pl-6 rounded-3xl bg-white placeholder-slate-300 '
+                    style={{ width: '335px' }}
+                    placeholder='madeinua@gmail.com'
                     id='email'
                 />
                 {errors.email && (<div className='text-red-500'>{errors.email.message}</div>)}
             </div>
 
             <div className='mb-4'>
-                <label htmlFor='password'>Пароль</label>
+                <label
+                    className='pl-16 text-white'
+                    htmlFor='password'>Пароль</label>
                 <input
                     type='password'
                     {...register('password', {
                         required: 'Додайте ваш пароль',
                         minLength: { value: 6, message: 'Пароль повинен бути більше за 5 символів' },
                     })}
-                    className='w-full'
+                    className='m-auto grid pl-6 rounded-3xl bg-white placeholder-slate-300'
+                    style={{ width: '335px' }}
+                    placeholder='sfrhfdgt32'
                     id='password' />
                 {errors.password && (<div className='text-red-500'>{errors.password.message}</div>)}
             </div>
 
-            <div className='mb-4'>
-                <label htmlFor='confirmPassword'>Підтвердження пароля</label>
+            <div className='mb-8'>
+                <label
+                    className='pl-16 text-white'
+                    htmlFor='confirmPassword'>Підтвердження пароля</label>
                 <input
                     type='password'
                     {...register('confirmPassword', {
@@ -108,7 +122,9 @@ export default function RegisterScreen({ setIsVisible }) {
                             message: 'Пароль повинен бути більше за 5 символів'
                         },
                     })}
-                    className='w-full'
+                    className='m-auto grid pl-6 rounded-3xl bg-white placeholder-slate-300'
+                    style={{ width: '335px' }}
+                    placeholder='sfrhfdgt32'
                     id='confirmPassword' />
                 {errors.confirmPassword && (<div className='text-red-500'>{errors.confirmPassword.message}</div>)}
                 {errors.confirmPassword &&
@@ -116,8 +132,11 @@ export default function RegisterScreen({ setIsVisible }) {
                         <div className='text - red - 500'>Паролі не співпадають</div>)}
             </div>
 
-            <div className='mb-4'>
-                <button className='primary-button'>Зареєструватись</button>
+            <div className='mb-7 flex justify-center'>
+                <button
+                    style={{ width: '230px', backgroundColor: '#3ACCE9' }}
+                    className=' mx-8 rounded-3xl py-2 text-lg font-semibold uppercase text-white'
+                >Зареєструватись</button>
             </div>
 
         </form>
