@@ -8,6 +8,8 @@ export default function AuthModal({ onClose }) {
     const [isLogin, setIsLogin] = useState(true);
     const [isVisible, setIsVisible] = useState(true);
 
+
+
     async function login() {
         await signIn('google');
     }
@@ -16,6 +18,8 @@ export default function AuthModal({ onClose }) {
         if (!isVisible) {
             onClose();
         }
+
+
         function handleKeyDown(event) {
             if (event.key === "Escape") {
                 onClose();
@@ -100,6 +104,7 @@ export default function AuthModal({ onClose }) {
 
                 </div>
             )}
+
         </>
     );
 }

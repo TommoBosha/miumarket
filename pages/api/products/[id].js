@@ -1,11 +1,12 @@
+import { mongooseConnect } from "../../../lib/mongoose";
 import Product from "../../../models/Product";
-import db from "../../../utils/db";
+
 
 
 const handler = async (req, res) => {
-    await db.connect();
+    await mongooseConnect()
     const product = await Product.findById(req.query.id);
-    await db.disconnect();
+
     res.send(product);
 };
 

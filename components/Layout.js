@@ -12,6 +12,8 @@ import Cookies from "js-cookie";
 import Footer from "./Footer";
 import BurgerMenu from "./BurgerMenu";
 import AuthModal from "./AuthModal";
+import { useRouter } from 'next/router';
+import axios from "axios";
 
 
 export default function Layout({ title, children }) {
@@ -23,6 +25,22 @@ export default function Layout({ title, children }) {
 
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
     const [isLoginModal, setIsLoginModal] = useState(true);
+    const [query, setQuery] = useState('');
+
+    const router = useRouter();
+    const submitHandler = (e) => {
+        e.preventDefault();
+        axios.get(`/api/products?phrase=${encodeURIComponent(query)}`)
+            .then(response => {
+                router.push({
+                    pathname: `/search`,
+                    query: { phrase: query },
+                });
+            })
+            .catch(error => {
+                console.error("Error searching products: ", error);
+            });
+    };
 
     useEffect(() => {
         setcartItemsCoun(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
@@ -69,24 +87,29 @@ export default function Layout({ title, children }) {
 
                         {/* Пошук */}
                         <div className="relative" style={{ marginRight: "60px" }}>
-                            <input
-                                type="text"
-                                className="px-4 py-2 rounded-full text-white placeholder-white focus:outline-none focus:ring-2  "
-                                style={{
-                                    backgroundColor: "#3ACCE9",
-                                    width: "264px",
-                                    height: "28px",
-                                }}
-                                placeholder="Пошук"
-                            />
-                            <div className="absolute inset-y-0 right-3 flex items-center">
-                                <Image
-                                    src="/images/search.svg"
-                                    alt="Лупа"
-                                    width={17}
-                                    height={18}
+                            <form onSubmit={submitHandler}>
+                                <input
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    type="text"
+                                    className="px-4 py-2 rounded-full text-white placeholder-white focus:outline-none focus:ring-2  "
+                                    style={{
+                                        backgroundColor: "#3ACCE9",
+                                        width: "264px",
+                                        height: "28px",
+                                    }}
+                                    placeholder="Пошук"
                                 />
-                            </div>
+                                <button
+                                    type="submit"
+                                    className="absolute inset-y-0 right-3 flex items-center">
+                                    <Image
+                                        src="/images/search.svg"
+                                        alt="Лупа"
+                                        width={17}
+                                        height={18}
+                                    />
+                                </button>
+                            </form>
                         </div>
 
                         <Link href="/">

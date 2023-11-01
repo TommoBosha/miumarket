@@ -10,14 +10,17 @@ export default async function handler(req, res) {
         try {
             const html = liqpay.cnb_form({
                 action: 'pay',
-                amount: 100, // Вставте суму платежу зі свого коду
+                amount: 100,
                 currency: 'UAH',
                 description: 'Оплата заказа',
-                order_id: '5324', // Унікальний ідентифікатор замовлення
+                sandbox: 0,
+                server_url: 'https://test.com/billing/pay-callback/',
+                order_id: '5324',
                 version: '3',
             });
 
-            res.setHeader('Content-Type', 'text/html');
+            console.log(html)
+
             res.status(200).send(html);
         } catch (error) {
             console.error(error);
