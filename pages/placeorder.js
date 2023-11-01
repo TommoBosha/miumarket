@@ -35,55 +35,55 @@ export default function PlaceOrderScreen() {
 
     const [loading, setLoading] = useState(false);
 
-    // const placeOrderHandler = async () => {
-    //     try {
-    //         setLoading(true);
-    //         const { data } = await axios.post('/api/orders', {
-    //             orderItems: cartItems,
-    //             shippingAddress,
-    //             paymentMethod,
-    //             itemsPrice,
-    //             shippingPrice,
-    //             totalPrice,
-    //         });
-    //         setLoading(false);
-    //         dispatch({ type: 'CART_CLEAR_ITEMS' });
-    //         Cookies.set(
-    //             'cart',
-    //             JSON.stringify({
-    //                 ...cart,
-    //                 cartItems: [],
-    //             })
-    //         );
-    //         router.push(`/order/${data._id}`);
-    //     } catch (err) {
-    //         setLoading(false);
-    //         toast.error(getError(err));
-    //     }
-    // };
-
-    const createPayment = async () => {
+    const placeOrderHandler = async () => {
         try {
-            const response = await axios.post('/api/liqpay', {
-                action: 'pay',
-                amount: 100,
-                currency: 'UAH',
-                description: 'Оплата заказа',
-                order_id: '5324', // Унікальний ідентифікатор замовлення
-                version: '3',
+            setLoading(true);
+            const { data } = await axios.post('/api/orders', {
+                orderItems: cartItems,
+                shippingAddress,
+                paymentMethod,
+                itemsPrice,
+                shippingPrice,
+                totalPrice,
             });
-            const data = response.data;
-            console.log(data)
-            if (data && data.link) {
-                // Перенаправіть користувача на сторінку оплати
-                window.location = data.link;
-            } else {
-                toast.error('Помилка відповіді від сервера LiqPay');
-            }
-        } catch (error) {
-            toast.error('Помилка при створенні платежу');
+            setLoading(false);
+            dispatch({ type: 'CART_CLEAR_ITEMS' });
+            Cookies.set(
+                'cart',
+                JSON.stringify({
+                    ...cart,
+                    cartItems: [],
+                })
+            );
+            router.push(`/order/${data._id}`);
+        } catch (err) {
+            setLoading(false);
+            toast.error(getError(err));
         }
     };
+
+    // const createPayment = async () => {
+    //     try {
+    //         const response = await axios.post('/api/liqpay', {
+    //             action: 'pay',
+    //             amount: 100,
+    //             currency: 'UAH',
+    //             description: 'Оплата заказа',
+    //             order_id: '5324', // Унікальний ідентифікатор замовлення
+    //             version: '3',
+    //         });
+    //         const data = response.data;
+    //         console.log(data)
+    //         if (data && data.link) {
+    //             // Перенаправіть користувача на сторінку оплати
+    //             window.location = data.link;
+    //         } else {
+    //             toast.error('Помилка відповіді від сервера LiqPay');
+    //         }
+    //     } catch (error) {
+    //         toast.error('Помилка при створенні платежу');
+    //     }
+    // };
 
 
     return (
@@ -185,7 +185,7 @@ export default function PlaceOrderScreen() {
                                     <li>
                                         <button
                                             disabled={loading}
-                                            onClick={createPayment}
+                                            onClick={placeOrderHandler}
                                             className="primary-button w-full"
                                         >
                                             {loading ? 'Loading...' : 'Зробити замовлення'}
