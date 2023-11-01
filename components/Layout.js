@@ -13,7 +13,7 @@ import Footer from "./Footer";
 import BurgerMenu from "./BurgerMenu";
 import AuthModal from "./AuthModal";
 import { useRouter } from 'next/router';
-import axios from "axios";
+
 
 
 export default function Layout({ title, children }) {
@@ -30,16 +30,10 @@ export default function Layout({ title, children }) {
     const router = useRouter();
     const submitHandler = (e) => {
         e.preventDefault();
-        axios.get(`/api/products?phrase=${encodeURIComponent(query)}`)
-            .then(response => {
-                router.push({
-                    pathname: `/search`,
-                    query: { phrase: query },
-                });
-            })
-            .catch(error => {
-                console.error("Error searching products: ", error);
-            });
+        router.push({
+            pathname: `/search`,
+            query: { phrase: query },
+        });
     };
 
     useEffect(() => {
