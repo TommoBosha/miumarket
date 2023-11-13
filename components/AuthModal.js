@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import LoginScreen from "../pages/login";
-import RegisterScreen from "../pages/register";
+
 import Image from "next/image";
 import { signIn } from "next-auth/react";
+import LoginScreen from "./LoginScreen";
+import RegisterScreen from "./RegisterScreen";
+
 
 export default function AuthModal({ onClose }) {
     const [isLogin, setIsLogin] = useState(true);

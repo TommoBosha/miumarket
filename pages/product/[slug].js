@@ -33,7 +33,6 @@ export default function ProductScreen(props) {
 
     const addToCardHandler = async () => {
         const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
-        console.log(existItem)
         const quantity = existItem ? existItem.quantity + 1 : 1;
         const price = priceInHryvnia
         const { data } = await axios.get(`/api/products/${product._id}`);

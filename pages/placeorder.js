@@ -9,12 +9,14 @@ import CheckoutWizard from '../components/CheckoutWizard';
 import Layout from '../components/Layout';
 import { getError } from '../utils/error';
 import { Store } from '../utils/Store';
+import { getSession } from 'next-auth/react'
 
 export default function PlaceOrderScreen() {
     const { state, dispatch } = useContext(Store);
     const { cart } = state;
     const { cartItems, shippingAddress, paymentMethod } = cart;
 
+    console.log(cartItems)
 
     const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
 
@@ -22,11 +24,30 @@ export default function PlaceOrderScreen() {
         cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
     );
 
-    const shippingPrice = itemsPrice > 5000 ? 0 : 100;
+    // const shippingPrice = itemsPrice > 5000 ? 0 : 100;
 
-    const totalPrice = round2(itemsPrice + shippingPrice);
+    const totalPrice = round2(itemsPrice);
 
     const router = useRouter();
+    // eslint-disable-next-line no-unused-vars
+    const [session, setSession] = useState(null);
+
+    const getSessionData = async () => {
+        const session = await getSession();
+        return session;
+    };
+
+
+
+    useEffect(() => {
+        const getSessionAndSetState = async () => {
+            const sessionData = await getSessionData();
+            setSession(sessionData);
+        };
+
+        getSessionAndSetState();
+    }, []);
+
     useEffect(() => {
         if (!paymentMethod) {
             router.push('/payment');
@@ -38,14 +59,25 @@ export default function PlaceOrderScreen() {
     const placeOrderHandler = async () => {
         try {
             setLoading(true);
-            const { data } = await axios.post('/api/orders', {
+            const session = await getSessionData();
+            if (!session || !session.user || !session.user.email) {
+                throw new Error('Не вдалося отримати інформацію про користувача');
+            }
+
+            const user = session.user.email;
+            console.log(user)
+
+            const orderData = {
                 orderItems: cartItems,
                 shippingAddress,
                 paymentMethod,
                 itemsPrice,
-                shippingPrice,
+                // shippingPrice,
                 totalPrice,
-            });
+                user,
+            };
+
+            const { data } = await axios.post('/api/orders', orderData);
             setLoading(false);
             dispatch({ type: 'CART_CLEAR_ITEMS' });
             Cookies.set(
@@ -58,33 +90,10 @@ export default function PlaceOrderScreen() {
             router.push(`/order/${data._id}`);
         } catch (err) {
             setLoading(false);
+            console.log(getError(err));
             toast.error(getError(err));
         }
     };
-
-    // const createPayment = async () => {
-    //     try {
-    //         const response = await axios.post('/api/liqpay', {
-    //             action: 'pay',
-    //             amount: 100,
-    //             currency: 'UAH',
-    //             description: 'Оплата заказа',
-    //             order_id: '5324', // Унікальний ідентифікатор замовлення
-    //             version: '3',
-    //         });
-    //         const data = response.data;
-    //         console.log(data)
-    //         if (data && data.link) {
-    //             // Перенаправіть користувача на сторінку оплати
-    //             window.location = data.link;
-    //         } else {
-    //             toast.error('Помилка відповіді від сервера LiqPay');
-    //         }
-    //     } catch (error) {
-    //         toast.error('Помилка при створенні платежу');
-    //     }
-    // };
-
 
     return (
         <Layout title="Зробити замовлення">
@@ -172,8 +181,8 @@ export default function PlaceOrderScreen() {
                                     </li>
                                     <li>
                                         <div className="mb-2 flex justify-between">
-                                            <div>Доставка</div>
-                                            <div>{shippingPrice} грн.</div>
+
+                                            <div> Доставка згідно тарифу перевізника</div>
                                         </div>
                                     </li>
                                     <li>

@@ -1,18 +1,35 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link'
-import React from 'react'
+import React, { useContext } from 'react'
+import { Store } from '../utils/Store';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 
-import { mongooseConnect } from '../lib/mongoose';
-import { Currency } from '../models/Currency';
 
-
-export default function ProductItem({ product, addToCartHandler, latestCurrency }) {
+export default function ProductItem({ product, latestCurrency }) {
+    const { state, dispatch } = useContext(Store);
+    const router = useRouter();
 
     const exchangeRate = latestCurrency.currency;
 
     const priceInDollars = product.price;
 
     const priceInHryvnia = priceInDollars * exchangeRate;
+
+    const addToCartHandler = async (product) => {
+        const existItem = state.cart.cartItems.find((x) => x._id === product._id);
+        const quantity = existItem ? existItem.quantity + 1 : 1;
+        const price = priceInHryvnia
+        const { data } = await axios.get(`/api/products/${product._id}`);
+        if (data.countInStock < quantity) {
+            toast.error('Sorry. Product is out of stock');
+            return;
+
+        }
+        dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity, price } });
+        router.push('/cart');
+    };
 
     return (
         <div className='card'>
@@ -39,19 +56,3 @@ export default function ProductItem({ product, addToCartHandler, latestCurrency 
     )
 }
 
-export async function getServerSideProps() {
-    await mongooseConnect();
-
-
-    const latestCurrency = await Currency.findOne().sort({ currency: -1 });
-
-
-    return {
-        props: {
-
-            latestCurrency: JSON.parse(JSON.stringify(latestCurrency)),
-
-
-        }
-    }
-}
