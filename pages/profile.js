@@ -22,7 +22,7 @@ export default function ProfileScreen() {
     const [wishlistLoaded, setWishlistLoaded] = useState(true);
     const [orderLoaded, setOrderLoaded] = useState(true);
     const [wishedProducts, setWishedProducts] = useState([]);
-    const [activeTab, setActiveTab] = useState('Orders');
+    const [activeTab, setActiveTab] = useState('Замовлення');
     const [orders, setOrders] = useState([]);
 
 

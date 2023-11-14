@@ -1,7 +1,7 @@
 import React from "react";
 import Image from 'next/image';
 
-export default function SingleOrder({ orderItems, createdAt, shippingAddress, ...rest }) {
+export default function SingleOrder({ orderItems, createdAt, shippingAddress }) {
     return (
         <div className="my-10 py-10 border-b border-gray-300 flex gap-20 items-center">
             <div>
