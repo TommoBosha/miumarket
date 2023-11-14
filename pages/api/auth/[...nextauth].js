@@ -12,16 +12,21 @@ export default NextAuth({
 
     session: {
         strategy: 'jwt',
+        user: {
+            email: 'user.email',
+        },
     },
     callbacks: {
         async jwt({ token, user }) {
             if (user?._id) token._id = user._id;
             if (user?.isAdmin) token.isAdmin = user.isAdmin;
+            if (user?.email) token.email = user.email;
             return token;
         },
         async session({ session, token }) {
             if (token?._id) session.user._id = token._id;
             if (token?.isAdmin) session.user.isAdmin = token.isAdmin;
+            if (token?.email) session.user.email = token.email;
             return session;
         },
         async signIn(user, account, profile) {
