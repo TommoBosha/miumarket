@@ -24,6 +24,7 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
             });
     }
 
+
     const burgerMenuRef = useRef(null);
 
 

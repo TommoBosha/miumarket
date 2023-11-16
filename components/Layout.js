@@ -4,10 +4,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { Store } from "../utils/Store";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
-import { Menu } from "@headlessui/react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DropdownLink from "./DropdownLink";
 import Cookies from "js-cookie";
 import Footer from "./Footer";
 import BurgerMenu from "./BurgerMenu";
@@ -59,7 +57,7 @@ export default function Layout({ title, children }) {
             <div className="flex min-h-screen flex-col justify-between" >
                 <header>
                     <nav className="flex items-center justify-center   shadow-md" >
-                        <div className="relative " style={{ marginRight: "60px" }}>
+                        <div className="relative " style={{ marginRight: "45px" }}>
                             <button
                                 className="p-2  text-gray-700 rounded-md outline-none cursor-pointer"
                                 onClick={() => setNavbar(!navbar)}
@@ -80,7 +78,7 @@ export default function Layout({ title, children }) {
 
 
                         {/* Пошук */}
-                        <div className="relative" style={{ marginRight: "60px" }}>
+                        <div className="relative" style={{ marginRight: "45px" }}>
                             <form onSubmit={submitHandler}>
                                 <input
                                     onChange={(e) => setQuery(e.target.value)}
@@ -128,44 +126,16 @@ export default function Layout({ title, children }) {
                             {status === "loading" ? (
                                 "Loading"
                             ) : session?.user ? (
-                                <Menu as="div" className="relative inline-block">
-
-                                    <Menu.Button style={{ color: "#3ACCE9" }}>
-                                        <div className="py-2 relative flex items-center">
-                                            <Image
-                                                src="/images/user.svg"
-                                                alt="Логін"
-                                                width={23}
-                                                height={25}
-                                            />
-
-                                        </div>
-                                    </Menu.Button>
-                                    <Menu.Items className="absolute left-0  w-56 bg-white origin-top-right shadow-lg">
-                                        <Menu.Item>
-                                            <DropdownLink className="dropdown-link" href="/profile">
-                                                Профіль
-                                            </DropdownLink>
-                                        </Menu.Item>
-                                        <Menu.Item>
-                                            <DropdownLink
-                                                className="dropdown-link"
-                                                href="/order-history"
-                                            >
-                                                Історія замовлень
-                                            </DropdownLink>
-                                        </Menu.Item>
-                                        <Menu.Item>
-                                            <Link
-                                                className="dropdown-link"
-                                                href="#"
-                                                onClick={logoutClickHandler}
-                                            >
-                                                Вихід
-                                            </Link>
-                                        </Menu.Item>
-                                    </Menu.Items>
-                                </Menu>
+                                <div className="py-2 relative flex items-center">
+                                    <Link href="/profile" style={{ color: "#3ACCE9" }}>
+                                        <Image
+                                            src="/images/user.svg"
+                                            alt="Логін"
+                                            width={23}
+                                            height={22}
+                                        />
+                                    </Link>
+                                </div>
                             ) : (
                                 <button
                                     className="p-2 text-gray-700 rounded-md outline-none cursor-pointer"
@@ -202,6 +172,19 @@ export default function Layout({ title, children }) {
                                 )}
                             </Link>
 
+                            {/* Логаут */}
+                            <Link
+                                href="#"
+                                className="py-2 text-gray-700 rounded-md outline-none cursor-pointer"
+                                onClick={logoutClickHandler}
+                            >
+                                <Image
+                                    src="/images/logout.svg"
+                                    alt="Вихід"
+                                    width={20}
+                                    height={24}
+                                />
+                            </Link>
 
                         </div>
                     </nav>

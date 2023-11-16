@@ -50,10 +50,10 @@ export default function ProfileScreen() {
             }
             setAddressLoaded(true);
         });
-        // axios.get('/api/wishlist').then(response => {
-        //     setWishedProducts(response.data.map(wp => wp.product));
-        //     setWishlistLoaded(true);
-        // });
+        axios.get('/api/wishlist').then(response => {
+            setWishedProducts(response.data.map(wp => wp.product));
+            setWishlistLoaded(true);
+        });
         axios.get('/api/orders').then(response => {
             setOrders(response.data);
             setOrderLoaded(true);
