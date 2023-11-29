@@ -25,7 +25,7 @@ export default function ProfileScreen() {
     const [wishedProducts, setWishedProducts] = useState([]);
     const [activeTab, setActiveTab] = useState('Замовлення');
     const [orders, setOrders] = useState([]);
-    const [phoneError, setPhoneError] = useState('');
+    const [phoneError] = useState('');
 
 
     function saveAddress() {
