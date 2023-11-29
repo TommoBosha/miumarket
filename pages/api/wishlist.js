@@ -12,10 +12,10 @@ export default async function handle(req, res) {
         const wishedDoc = await WishedProduct.findOne({ userEmail: user.email, product });
         if (wishedDoc) {
             await WishedProduct.findByIdAndDelete(wishedDoc._id);
-            res.json({ wishedDoc }); // Повертаємо об'єкт wishedDoc
+            res.json({ wishedDoc });
         } else {
             const newWishedDoc = await WishedProduct.create({ userEmail: user.email, product });
-            res.json({ wishedDoc: newWishedDoc }); // Повертаємо об'єкт нового wishedDoc
+            res.json({ wishedDoc: newWishedDoc });
         }
     }
 

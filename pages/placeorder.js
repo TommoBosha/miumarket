@@ -16,15 +16,11 @@ export default function PlaceOrderScreen() {
     const { cart } = state;
     const { cartItems, shippingAddress, paymentMethod } = cart;
 
-    console.log(cartItems)
-
     const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
 
     const itemsPrice = round2(
         cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
     );
-
-    // const shippingPrice = itemsPrice > 5000 ? 0 : 100;
 
     const totalPrice = round2(itemsPrice);
 
@@ -56,6 +52,17 @@ export default function PlaceOrderScreen() {
 
     const [loading, setLoading] = useState(false);
 
+    const updateProductQuantity = async () => {
+        try {
+            for (const item of cartItems) {
+                await axios.put(`/api/products/${item._id}`, { _id: item._id, countInStock: item.countInStock - item.quantity });
+            }
+        } catch (err) {
+            console.error(getError(err));
+            toast.error(getError(err));
+        }
+    };
+
     const placeOrderHandler = async () => {
         try {
             setLoading(true);
@@ -65,19 +72,26 @@ export default function PlaceOrderScreen() {
             }
 
             const user = session.user.email;
-            console.log(user)
+
 
             const orderData = {
                 orderItems: cartItems,
                 shippingAddress,
                 paymentMethod,
                 itemsPrice,
-                // shippingPrice,
                 totalPrice,
                 user,
             };
 
+            // await Promise.all(cartItems.map(async (item) => {
+            //     await axios.put(`/api/products/${item._id}`, {
+            //         countInStock: item.quantity,
+            //     });
+            // }));
+
             const { data } = await axios.post('/api/orders', orderData);
+
+            await updateProductQuantity();
             setLoading(false);
             dispatch({ type: 'CART_CLEAR_ITEMS' });
             Cookies.set(

@@ -24,6 +24,7 @@ export default function Partners() {
 
     const ButtonStyles = styled.button`
      background: #3ACCE9; 
+     border-radius: 2px;
         &:hover {
         background: #FFF;
         color: #000; 
@@ -198,7 +199,7 @@ export default function Partners() {
                     <div className="mb-6 flex justify-center items-center">
                         <ButtonStyles
                             type="submit"
-                            className="font-bold py-2 px-4 rounded-xl uppercase focus:outline-none focus:shadow-outline  "
+                            className="font-bold py-2 px-4  uppercase focus:outline-none focus:shadow-outline  "
 
                         >
                             Відправити

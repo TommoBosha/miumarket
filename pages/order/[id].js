@@ -61,7 +61,6 @@ export default function OrderScreen() {
         order: {},
         error: '',
     });
-    console.log(order)
     useEffect(() => {
         const fetchOrder = async () => {
             try {

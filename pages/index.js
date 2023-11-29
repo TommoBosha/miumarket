@@ -19,10 +19,11 @@ const slides = [
 
 const ButtonStyle = styled.button`
   width: 144px;
-  height: 69px;
+  height: 52px;
   background: ${props => (props.active === 'true' ? '#3ACCE9' : 'black')};
   color: white; 
-  border: none; 
+  border: none;
+  border-radius : 16px ;
   cursor: pointer; 
   text-transform: uppercase;
  
@@ -40,7 +41,8 @@ const ButtonCatalogStyle = styled(Link)`
   height: 46px;
   background: #FFCD05;
   color: black; 
-  border: none; 
+  border: none;
+  border-radius : 16px ; 
   cursor: pointer; 
   text-transform: uppercase;
   margin: 0 auto 35px;

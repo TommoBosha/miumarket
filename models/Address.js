@@ -7,6 +7,7 @@ const AddressSchema = new Schema({
     city: String,
     postalCode: String,
     streetAddress: String,
+    phone: Number,
     country: String,
 });
 

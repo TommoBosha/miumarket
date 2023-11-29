@@ -24,7 +24,7 @@ a {
 }
 
 .primary-button {
-  @apply rounded bg-amber-300 py-2 px-4 shadow outline-none hover:bg-amber-400 active:bg-amber-500;
+  @apply rounded-2xl py-3 px-5  shadow outline-none 
 }
 .default-button {
   @apply rounded bg-gray-100 py-2 px-4 text-black shadow outline-none hover:bg-gray-200 active:bg-gray-300;
@@ -231,4 +231,59 @@ video {
 
 .alert-success {
   @apply my-3 rounded-lg bg-green-100 p-3 text-green-700;
+}
+
+.thumbnail .keen-slider__slide {
+  font-size: 30px;
+  margin-top: 30px;
+  width: 159px;
+  height: 159px ;
+  overflow: hidden;
+  position: relative;
+  
+}
+
+.thumbnail .keen-slider__slide {
+  cursor: pointer;
+}
+
+.thumbnail .keen-slider__slide img {
+  width: 159px;
+  height: 159px;
+  object-fit: cover;
+}
+
+.thumbnail .keen-slider__slide.active {
+  border: 2px solid #3ACCE9;
+}
+
+.keen-slider:not([data-keen-slider-disabled]) {
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  align-content: flex-start;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -khtml-user-select: none;
+  
+}
+
+.keen-slider:not([data-keen-slider-disabled]) .keen-slider__slide {
+ 
+  overflow: hidden;
+  position: relative;
+ 
+}
+
+.keen-slider:not([data-keen-slider-disabled])[data-keen-slider-reverse] {
+  flex-direction: row-reverse;
+}
+
+.keen-slider:not([data-keen-slider-disabled])[data-keen-slider-v] {
+  flex-wrap: wrap;
 }

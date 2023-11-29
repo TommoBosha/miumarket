@@ -31,6 +31,8 @@ const ImageOverlay = styled.div`
   right: 0;
   bottom: 0;
   z-index: 1;
+  border-radius: 2px;
+  
    
   
   

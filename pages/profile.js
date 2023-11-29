@@ -14,6 +14,7 @@ export default function ProfileScreen() {
     const { data: session } = useSession();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
     const [city, setCity] = useState('');
     const [postalCode, setPostalCode] = useState('');
     const [streetAddress, setStreetAddress] = useState('');
@@ -24,10 +25,11 @@ export default function ProfileScreen() {
     const [wishedProducts, setWishedProducts] = useState([]);
     const [activeTab, setActiveTab] = useState('Замовлення');
     const [orders, setOrders] = useState([]);
+    const [phoneError, setPhoneError] = useState('');
 
 
     function saveAddress() {
-        const data = { name, email, city, streetAddress, postalCode, country };
+        const data = { name, email, phone, city, streetAddress, postalCode, country };
         axios.put('/api/address', data);
     }
 
@@ -43,6 +45,7 @@ export default function ProfileScreen() {
             if (response.data?.name) {
                 setName(response.data.name);
                 setEmail(response.data.email);
+                setPhone(response.data.phone);
                 setCity(response.data.city);
                 setPostalCode(response.data.postalCode);
                 setStreetAddress(response.data.streetAddress);
@@ -66,6 +69,8 @@ export default function ProfileScreen() {
         })
     }
 
+
+
     return (
         <Layout>
             <div className='grid grid-cols-2 gap-10 my-10  '>
@@ -86,6 +91,12 @@ export default function ProfileScreen() {
                                 value={email}
                                 name="email"
                                 onChange={ev => setEmail(ev.target.value)} />
+                            <Input type="text"
+                                placeholder="Телефон"
+                                value={phone}
+                                name="phone"
+                                onChange={ev => setPhone(ev.target.value)} />
+                            {phoneError && <p className="text-red-500">{phoneError}</p>}
                             <div className='flex gap-1'>
                                 <Input type="text"
                                     placeholder="Місто"

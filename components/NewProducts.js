@@ -8,6 +8,7 @@ const ProductsGrid = styled.div`
   color: black;
   gap: 35px;
   margin-bottom: 38px ;
+  
 
 `;
 
