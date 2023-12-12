@@ -6,7 +6,6 @@ import slidesData from '../utils/slideData';
 import SocialMedia from '../components/SocialMedia';
 import { mongooseConnect } from '../lib/mongoose';
 import NewProducts from '../components/NewProducts';
-import styled from 'styled-components';
 import Link from 'next/link';
 import AboutUs from '../components/AboutUs';
 import Sales from '../components/Sales';
@@ -17,58 +16,12 @@ const slides = [
   '3'
 ];
 
-const ButtonStyle = styled.button`
-  width: 144px;
-  height: 52px;
-  background: ${props => (props.active === 'true' ? '#3ACCE9' : 'black')};
-  color: white; 
-  border: none;
-  border-radius : 16px ;
-  cursor: pointer; 
-  text-transform: uppercase;
- 
-  
-  &:hover {
-    background: #3ACCE9; 
-  }
-`;
-
-const ButtonCatalogStyle = styled(Link)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 184px;
-  height: 46px;
-  background: #FFCD05;
-  color: black; 
-  border: none;
-  border-radius : 16px ; 
-  cursor: pointer; 
-  text-transform: uppercase;
-  margin: 0 auto 35px;
-  font-size: 16px;
-  font-weight: 400;
-  letter-spacing: 1.8px;
-  gap: 5px;
-  
-  &:hover {
-    background: #3ACCE9; 
-  }
-`;
-
-const ButtonsWrapper = styled.div`
-  display: flex;
-  justify-content: center;
- align-items: center;
-  margin: 36px auto; 
-  gap: 35px;
-`;
-
 export default function Home({ productsNew, productsTop, productsSale, productsAll }) {
 
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [currentSlideDirection, setCurrentSlideDirection] = useState('left');
   const [activeCategory, setActiveCategory] = useState('productsAll');
+  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -99,33 +52,33 @@ export default function Home({ productsNew, productsTop, productsSale, productsA
           direction={currentSlideDirection}
           slidesData={slidesData}
         />
-        <div className=' m-auto' style={{ width: '1040px' }}>
-          <ButtonsWrapper >
-            <ButtonStyle
-              active={activeCategory === 'productsAll' ? 'true' : 'false'}
+        <div className=' container' >
+          <div className='flex justify-center items-center mt-6 md:mt-5 xl:mt-10 mb-[22px] md:mb-5 xl:mb-[38px] gap-[6px] md:gap-[22px] xl:gap-[34px]' >
+            <button className={`w-[78px] md:w-[96px] xl:w-[144px] h-10 md:h-12 xl:h-[52px] text-white border-none rounded-[16px] cursor-pointer text-[15px] xl:text-[18px] leading-normal xl:leading-[18px]  uppercase hover:bg-primary bg-${activeCategory === 'productsAll' ? 'primary' : 'black'}`} 
+        
               onClick={() => handleCategoryChange('productsAll')}
             >
               Всі
-            </ButtonStyle>
-            <ButtonStyle
-              active={activeCategory === 'productsNew' ? 'true' : 'false'}
+            </button>
+            <button className={`w-[78px] md:w-[96px] xl:w-[144px] h-10 md:h-12 xl:h-[52px] text-white border-none rounded-[16px] cursor-pointer text-[15px] xl:text-[18px] leading-normal xl:leading-[18px]  uppercase hover:bg-primary bg-${activeCategory === 'productsNew' ? 'primary' : 'black'}`} 
+              
               onClick={() => handleCategoryChange('productsNew')}
             >
               New
-            </ButtonStyle>
-            <ButtonStyle
-              active={activeCategory === 'productsTop' ? 'true' : 'false'}
+            </button>
+            <button className={`w-[78px] md:w-[96px] xl:w-[144px] h-10 md:h-12 xl:h-[52px] text-white border-none rounded-[16px] cursor-pointer text-[15px] xl:text-[18px] leading-normal xl:leading-[18px]  uppercase hover:bg-primary bg-${activeCategory === 'productsTop' ? 'primary' : 'black'}`} 
+             
               onClick={() => handleCategoryChange('productsTop')}
             >
-              Top
-            </ButtonStyle>
-            <ButtonStyle
-              active={activeCategory === 'productsSale' ? 'true' : 'false'}
+              Tоп
+            </button>
+            <button className={`w-[78px] md:w-[96px] xl:w-[144px] h-10 md:h-12 xl:h-[52px] text-white border-none rounded-[16px] cursor-pointer text-[15px] xl:text-[18px] leading-normal xl:leading-[18px]  uppercase hover:bg-primary bg-${activeCategory === 'productsSale' ? 'primary' : 'black'}`} 
+             
               onClick={() => handleCategoryChange('productsSale')}
             >
-              Sale
-            </ButtonStyle>
-          </ButtonsWrapper>
+              Знижка
+            </button>
+          </div>
 
 
           {activeCategory === 'productsAll' && (
@@ -141,11 +94,12 @@ export default function Home({ productsNew, productsTop, productsSale, productsA
             <NewProducts products={productsSale} key={productsSale.slug} />
           )}
 
-          <ButtonCatalogStyle href={`/catalog/${activeCategory}`}>
+          <Link className='flex justify-center items-center w-[143px] md:w-[214px] xl:w-[206px] h-10 md:h-12 xl:h-[52px] bg-secondary text-black border-none rounded-[16px] cursor-pointer uppercase mx-auto mb-[25px] md:mb-5 xl:mb-[35px] gap-[5px] text-[15px] md:text-[18px] leading-normal md:leading-[1.8px] hover:bg-primary '
+           href={`/catalog/${activeCategory}`}>
             Всі товари <svg xmlns="http://www.w3.org/2000/svg" width="23" height="16" viewBox="0 0 23 16" fill="none">
               <path d="M1.93164 6.84119C1.37936 6.84119 0.931641 7.2889 0.931641 7.84119C0.931641 8.39347 1.37936 8.84119 1.93164 8.84119L1.93164 6.84119ZM22.6387 8.54829C23.0293 8.15777 23.0293 7.5246 22.6387 7.13408L16.2748 0.770119C15.8843 0.379594 15.2511 0.379594 14.8606 0.770119C14.47 1.16064 14.47 1.79381 14.8606 2.18433L20.5174 7.84119L14.8606 13.498C14.47 13.8886 14.47 14.5217 14.8606 14.9123C15.2511 15.3028 15.8843 15.3028 16.2748 14.9123L22.6387 8.54829ZM1.93164 8.84119L21.9316 8.84119V6.84119L1.93164 6.84119L1.93164 8.84119Z" fill="black" />
             </svg>
-          </ButtonCatalogStyle>
+          </Link>
         </div>
 
         <Sales />

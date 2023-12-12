@@ -3,7 +3,7 @@ import React from "react";
 
 export default function AboutUs() {
     return (
-        <div className="flex flex-row relative items-center justify-start m-auto" style={{ width: '1040px' }}>
+        <div className="flex flex-row relative items-center justify-start container" >
             <div className=" mt-28  mr-36 " style={{ width: "520px" }}>
                 <Image
                     className="m-auto "

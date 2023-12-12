@@ -19,6 +19,12 @@ a {
   box-sizing: border-box;
 }
 
+.container {
+  @apply px-[20px] mx-auto max-w-[480px]
+ md:px-10 md:min-w-[780px]
+ xl:px-[120px] xl:min-w-[1280px] xl:max-w-[2560px]
+}
+
 .card {
   @apply mb-5 block rounded-lg border border-gray-200 shadow-md;
 }
@@ -35,7 +41,7 @@ a {
 
 header {
   position: sticky;
-  top: 0;
+  top: -2px;
   background-color: rgba(249, 249, 249, 1);
   z-index: 50;
 }
@@ -85,17 +91,14 @@ nav {
 input,
 select,
 textarea {
-  @apply rounded border p-2 outline-none;
+  @apply rounded border-none p-2 outline-none hover:border-transparent active:border-transparent;
 }
 
 .dropdown-link {
-  @apply flex p-2 hover:bg-gray-200;
+  @apply flex p-2 hover:bg-none hover:border-none ;
 }
 
-/* img,
-video {
-  height: 100%;
-} */
+
 
 [class^="number-slide"],
 [class*=" number-slide"] {

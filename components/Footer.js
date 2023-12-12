@@ -21,7 +21,7 @@ export default function Footer() {
     }
 
     return (
-        <div className=" py-8 " style={{ width: "100%", }}
+        <div className=" py-8" 
 
         >
 
