@@ -20,22 +20,24 @@ export default function Layout({ title, children }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ToastContainer position="bottom-center" limit={1} />
-      {/* <div className=" container"> */}
-        <div className="flex min-h-screen flex-col ">
-          <Header setIsAuthModalOpen={setIsAuthModalOpen} />
 
-          <main className="  relative z-1">{children}</main>
+      <div className="flex min-h-screen flex-col ">
+        <Header setIsAuthModalOpen={setIsAuthModalOpen} />
 
-          <footer  className="w-full bg-primary "          
-          >
-            <div className="flex-col flex    justify-center items-center    relative z-0  " >
-              <Footer />
+        <main className="  relative z-1">{children}</main>
 
-              <p className="container bg-white py-[13px] md:py-[16px] xl:py-[25px] w-full ">Copyright © 2023</p>
+        <footer className="w-full bg-primary ">
+          <div className="flex-col flex    justify-center items-center    relative z-0  ">
+            <Footer />
+            <div className="bg-white w-full">
+              <p className="container  py-[13px] md:py-[16px] xl:py-[25px]  ">
+                Copyright © 2023
+              </p>
             </div>
-          </footer>
-        </div>
-      {/* </div> */}
+          </div>
+        </footer>
+      </div>
+
       {isAuthModalOpen && (
         <AuthModal
           onClose={() => setIsAuthModalOpen(false)}

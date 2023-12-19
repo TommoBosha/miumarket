@@ -69,8 +69,9 @@ export default function SocialMedia() {
   };
 
   return (
-    <div className="bg-yellow-400    relative container">
-      <h1 className="uppercase text-center text-[24px] md:text-[27px] xl:text-[30px] leading-normal font-bold py-[15px] md:pt-[43px] xl:pt-[41px] xl:pb-[38px]">
+    <div className="bg-yellow-400  w-full   relative ">
+        <div className="container">
+        <h1 className="uppercase text-center text-[24px] md:text-[27px] xl:text-[30px] leading-normal font-bold py-[15px] md:pt-[43px] xl:pt-[41px] xl:pb-[38px]">
         Відео огляд
       </h1>
       <div className="navigation-wrapper ">
@@ -129,6 +130,8 @@ export default function SocialMedia() {
           }}
         />
       </div>
+        </div>
+     
     </div>
   );
 }
