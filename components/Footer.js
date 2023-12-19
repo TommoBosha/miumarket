@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
+import { useMediaQuery } from "react-responsive";
 
 export default function Footer() {
     const [categories, setCategories] = useState([]);
+    const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+
+    const imageSrc = isMobile ? "/images/blue-mobile.svg" : "/images/blue.svg";
     useEffect(() => {
         fetchCategories()
     }, [])
@@ -203,7 +207,7 @@ export default function Footer() {
             <div className="footer-image-wrapper">
 
                 <Image
-                    src={'/images/blue.svg'}
+                    src={imageSrc}
                     alt="uzor"
                     width={1900}
                     height={253}
@@ -211,6 +215,7 @@ export default function Footer() {
                     style={{
                         zIndex: -1,
                     }}
+                    priority={true}
                 />
             </div>
 

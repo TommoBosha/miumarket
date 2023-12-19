@@ -2,8 +2,13 @@ import React from "react";
 import Layout from "../components/Layout";
 import Image from "next/image";
 import Link from "next/link";
+import { useMediaQuery } from "react-responsive";
 
 export default function Contacts() {
+
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+
+  const imageSrc = isMobile ? "/images/gray-mobile.svg" : "/images/gray.svg";
   return (
     <Layout>
       <div className=" bg-graybg w-full">
@@ -240,13 +245,16 @@ export default function Contacts() {
           </div>
         </div>
       </div>
+      <div className="footer-image-wrapper">
       <Image
-        src={"/images/gray.svg"}
+        src={imageSrc}
         alt="uzor"
         width={1900}
         height={253}
         className=" absolute left-0 bottom-0 z-10"
       />
+      </div>
+      
     </Layout>
   );
 }

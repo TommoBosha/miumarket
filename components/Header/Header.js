@@ -81,7 +81,7 @@ function Header({ setIsAuthModalOpen }) {
             alt="Логотип MIU Market"
             width={134}
             height={52}
-            className="hidden md:flex md:mr-5 xl:mr-[86px] xl:w-[180px] xl:h-[70px] "
+            className="hidden md:flex md:mr-5 xl:mr-[86px] md:w-[134px] md:h-[52px]  xl:w-[180px] xl:h-[70px] w-auto h-auto "
           />
         </Link>
 

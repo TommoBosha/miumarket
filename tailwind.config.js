@@ -8,7 +8,8 @@ module.exports = {
   theme: {
     extend: {
       textColor: {
-        primary: '#3ACCE9'
+        primary: '#3ACCE9',
+        secondary:'#999',
       },
       backgroundColor: {
         primary: '#3ACCE9',
@@ -23,6 +24,9 @@ module.exports = {
         footermobile: '148px minmax(0px, 1fr)',
         footer: '216px minmax(0px, 1fr)',
         footerxl: '382px minmax(0px, 1fr)',
+      },
+      borderColor:{
+        secondary:'#999',
       }
       
     },

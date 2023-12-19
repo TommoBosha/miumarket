@@ -12,10 +12,12 @@ export default function SocialMedia() {
   const [isClient, setIsClient] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const isTablet = useMediaQuery({ query: "(min-width: 768px)" });
   const isDesktop = useMediaQuery({ query: "(min-width: 1280px)" });
 
   const slidesPerView = isTablet ? 2 : 1;
+  const imageSrc = isMobile ? "/images/yellow-mobile.svg" : "/images/yellow.svg";
 
   useEffect(() => {
     setIsClient(true);
@@ -74,7 +76,7 @@ export default function SocialMedia() {
         <h1 className="uppercase text-center text-[24px] md:text-[27px] xl:text-[30px] leading-normal font-bold py-[15px] md:pt-[43px] xl:pt-[41px] xl:pb-[38px]">
         Відео огляд
       </h1>
-      <div className="navigation-wrapper ">
+      <div className="navigation-wrapper relative z-20">
         {isClient && (
           <div ref={sliderRef} className="keen-slider mx-auto">
             <div className="keen-slider__slide_youtybe keen-slider__slide ">
@@ -120,11 +122,11 @@ export default function SocialMedia() {
       </div>
       <div className="footer-image-wrapper">
         <Image
-          src={"/images/yellow.svg"}
+          src={imageSrc}
           alt="uzor"
           width={1900}
           height={253}
-          className=" absolute left-0 bottom-0 z-10 "
+          className=" absolute left-0 bottom-0 z-[2] "
           style={{
             zIndex: 1,
           }}

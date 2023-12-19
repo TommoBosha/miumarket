@@ -5,8 +5,12 @@ import styled from 'styled-components'
 import { sendPartnerForm } from '../lib/api'
 import Image from 'next/image'
 import { toast } from 'react-toastify'
+import { useMediaQuery } from 'react-responsive'
 
 export default function Partners() {
+    const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+
+    const imageSrc = isMobile ? "/images/gray-mobile.svg" : "/images/gray.svg";
     const { handleSubmit, control, formState: { errors }, reset } = useForm()
 
     const onSubmit = async (data) => {
@@ -35,15 +39,16 @@ export default function Partners() {
 
     return (
         <Layout>
-            <div className="m-auto" style={{ background: '#D7D7D7' }}>
+            <div className="bg-graybg" >
+                <div className='container'>
                 <h1
-                    className='uppercase text-g text-center pt-9 mb-12 font-bold'
-                    style={{ color: '#A0A0A0', fontSize: '28px' }}>
-                    форма для <br /> партнерства
+                    className='uppercase text-center pt-[15px] pb-[22px] font-bold text-secondary text-[24px] leading-[24.91px]'
+                    >
+                    форма для партнерства
                 </h1>
                 <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="w-full max-w-md mx-auto py-5 relative z-10">
+                    className="w-full max-w-md mx-auto pb-[23px] relative z-10">
 
                     <div className="mb-8 relative">
 
@@ -57,8 +62,8 @@ export default function Partners() {
                                 id="companyName"
                                 placeholder='Богдан Бондар'
                                 className={`appearance-none border-2 rounded-3xl 
-                                ${errors.companyName ? 'border-red-500' : 'border-gray-300'} 
-                                rounded w-full py-2 px-5 text-black text-sm leading-tight focus:outline-none focus:shadow-outline`} style={{ borderColor: '#A0A0A0', backgroundColor: '#D7D7D7' }} />}
+                                ${errors.companyName ? 'border-red-500' : 'border-secondary'} 
+                                rounded w-full py-2 px-5 border-secondary bg-graybg text-black text-sm leading-tight focus:outline-none focus:shadow-outline`}  />}
                         />
 
                         <label
@@ -206,9 +211,11 @@ export default function Partners() {
                         </ButtonStyles>
                     </div>
                 </form>
-                <div className='pt-4'>
+                </div>
+                
+                <div className='footer-image-wrapper'>
                     <Image
-                        src={'/images/gray.svg'}
+                        src={imageSrc}
                         alt="uzor"
                         width={1900}
                         height={253}

@@ -100,7 +100,7 @@ nav {
 input,
 select,
 textarea {
-  @apply rounded border-none p-2 outline-none hover:border-transparent active:border-transparent;
+  @apply rounded  p-2 outline-none hover:border-transparent  active:border-transparent;
 }
 
 .dropdown-link {
