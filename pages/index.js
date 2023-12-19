@@ -103,7 +103,7 @@ export default function Home({ productsNew, productsTop, productsSale, productsA
         </div>
 
         <Sales />
-        <section id="about">
+        <section id="about" className='container'>
           <AboutUs />
         </section>
 

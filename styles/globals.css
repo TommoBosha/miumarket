@@ -23,7 +23,12 @@ a {
   @apply px-[20px] mx-auto max-w-[480px]
  md:px-10 md:min-w-[780px]
  xl:px-[120px] xl:min-w-[1280px] xl:max-w-[2560px]
+
+ 
 }
+.container-header {
+  @apply max-w-[767px]
+ }
 
 .card {
   @apply mb-5 block rounded-lg border border-gray-200 shadow-md;
@@ -36,7 +41,7 @@ a {
   @apply rounded bg-gray-100 py-2 px-4 text-black shadow outline-none hover:bg-gray-200 active:bg-gray-300;
 }
 .primary-footer-text {
-  @apply text-white font-semibold text-xl uppercase;
+  @apply text-white font-bold text-[12px] md:text-[15px] xl:text-[18px] uppercase;
 }
 
 header {
@@ -165,10 +170,10 @@ textarea {
   height: 100%;
   object-fit: cover;
 }
-.swiper-pagination {
+/* .swiper-pagination {
   bottom: -10px !important;
   z-index: 15;
-}
+} */
 
 .modalBackdrop {
   position: fixed;
@@ -289,4 +294,24 @@ textarea {
 
 .keen-slider:not([data-keen-slider-disabled])[data-keen-slider-v] {
   flex-wrap: wrap;
+}
+
+
+.keen-slider__slide_youtybe {
+  min-height: 221px;
+  min-width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+
+  @media only screen and (max-width: 767px) {
+    min-height: 211px;
+    min-width: 316px;
+    max-width: 316px;
+  }
+
+  @media only screen and (min-width: 1280px) {
+    min-height: 336px;
+    min-width: 502px;
+    max-width: 502px;
+  }
 }

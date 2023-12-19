@@ -10,12 +10,12 @@ export default function ProductBox({
   const url = "/product/" + slug;
 
   return (
-    <div className="relative">
+    <div className="relative md:w-[213px] xl:min-w-[323px] md:h-[213px] xl:min-h-[323px]">
       <Link className="text-center flex items-center justify-center"
        href={url}>
-        <div className="absolute  top-0 left-0 right-0 bottom-0 md:left-[2px] md:right-[2px] xl:left-0 xl:right-0  xxl:right-[25px] xxl:left-[25px] z-10" style={{ background: 'linear-gradient(180deg, rgba(180, 180, 180, 0.00) 20.31%, #333 100%)'}}></div>
+        <div className="absolute  top-0 left-0 right-0 bottom-0 z-10" style={{ background: 'linear-gradient(180deg, rgba(180, 180, 180, 0.00) 20.31%, #333 100%)'}}></div>
         <Image 
-        className="relative z-0 w-full h-full md:w-[213px] xl:min-w-[323px] md:h-[213px] xl:min-h-[323px] "
+        className="relative z-0 w-full h-full  "
         src={images?.[0]} 
         alt={title}
         width={157}

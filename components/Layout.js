@@ -21,19 +21,17 @@ export default function Layout({ title, children }) {
       </Head>
       <ToastContainer position="bottom-center" limit={1} />
       {/* <div className=" container"> */}
-        <div className="flex min-h-screen flex-col justify-between">
+        <div className="flex min-h-screen flex-col ">
           <Header setIsAuthModalOpen={setIsAuthModalOpen} />
 
           <main className="  relative z-1">{children}</main>
 
-          <footer
-            className="container "
-            
+          <footer  className="w-full bg-primary "          
           >
-            <div className="flex-col flex   justify-center items-center  shadow-inner  relative z-0 bg-primary " >
+            <div className="flex-col flex    justify-center items-center    relative z-0  " >
               <Footer />
 
-              <p className="bg-white py-8 pl-56">Copyright © 2023</p>
+              <p className="container bg-white py-[13px] md:py-[16px] xl:py-[25px] w-full ">Copyright © 2023</p>
             </div>
           </footer>
         </div>

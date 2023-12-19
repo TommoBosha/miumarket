@@ -21,24 +21,26 @@ export default function Footer() {
     }
 
     return (
-        <div className=" py-8" 
+        <div className=" py-8 container" 
 
         >
 
             <div
-                className="flex justify-evenly space-x-14 mx-auto w-auto "
+                className="grid grid-cols-footermobile md:grid-cols-footer xl:grid-cols-footerxl  gap-5 md:gap-[73px] xl:gap-[138px]   "
 
             >
-
-                <ul>
+      
+                <div>
+                <ul className="mx-0 ">
                     <li>
-                        <Link href={"/"}>
+                        <Link href={"/"} >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                width="227"
-                                height="89"
+                                width="112"
+                                height="44"
                                 viewBox="0 0 227 89"
                                 fill="none"
+                                className="md:w-[163px] xl:w-[210px] md:h-[63px] xl:h-[82px]"
                             >
                                 <path
                                     d="M88.6046 68.4826L77.6568 56.749L88.1815 44.3912L77.6568 32.0335L88.6046 20.2999H76.8165V12.2164H80.7596V7.67721H76.2289V11.6277H68.2898V0L56.5957 10.9801L44.2964 0.423895L32.003 10.9801L20.3148 0V11.6277H12.3757V7.67721H7.84501V12.2164H11.7881V20.2999H0L10.9713 32.4633L0.611147 44.3853L11.0006 56.3427L0 68.4826H11.7881V76.5661H7.84501V80.9169H12.3757V77.1548H20.3148V88.7825L32.0147 77.8024L44.3023 88.3586L56.5957 77.8024L68.2957 88.7825V77.1548H76.2347V80.9169H80.7654V76.5661H76.8224V68.4826H88.6105H88.6046ZM77.4041 8.8547H79.5843V11.0389H77.4041V8.8547ZM11.2004 11.0389H9.0203V8.8547H11.2004V11.0389ZM11.2004 79.7394H9.0203V77.7435H11.2004V79.7394ZM77.4041 77.7435H79.5843V79.7394H77.4041V77.7435ZM78.6558 44.3971L73.414 50.6201H65.8335L60.4507 44.3971L65.8335 38.1682H73.414L78.6558 44.3971ZM58.4586 32.1925H61.385L51.8417 43.1254H47.5755L58.4586 32.1925ZM57.6535 29.1546V11.61L67.1145 2.72588V21.4832H85.8956L77.0398 30.9738L59.6339 31.015H57.6535V29.1546ZM56.4782 30.3379L45.7773 41.0884V36.8436L56.4782 27.4295V30.3379ZM38.2731 15.4251L44.3963 10.1735L50.5137 15.4251V23.0257L44.3963 28.401L38.2731 23.0257V15.4251ZM32.1264 27.4295L43.0682 37.0614V41.1119L32.1264 30.1672V27.4237V27.4295ZM41.2524 43.1313H36.9803L27.6662 32.1984H30.3223L41.2524 43.1313ZM2.70903 21.4774H21.4959V2.71999L30.957 11.6041V31.0091H30.2106L11.5648 30.9679L2.70903 21.4774ZM10.1486 44.297L15.5196 38.1623H23.1119L28.3478 44.297L23.1119 50.4317H15.5196L10.1486 44.297ZM30.9511 58.0442V77.1842L21.49 86.0625V67.3051H2.70903L11.5648 57.8087L30.6808 57.7675H30.957V58.0442H30.9511ZM30.3223 56.5959H27.6662L36.8334 45.8337H41.0526L30.3223 56.5959ZM32.1264 58.6329L43.0682 47.6352V51.727L32.1264 61.3588V58.627V58.6329ZM50.5137 73.381L44.3963 78.6267L38.2731 73.381V65.7803L44.3963 60.3933L50.5137 65.7803V73.381ZM56.4782 61.3706L45.7773 51.9566V47.6529L56.4782 58.3445V61.3706ZM47.7929 45.8337H51.9828L61.3792 56.6077H58.5702L47.7929 45.8337ZM67.1145 67.311V86.0684L57.6535 77.1901V57.7793H59.7514L77.0398 57.8205L85.8956 67.3169H67.1145V67.311Z"
@@ -52,25 +54,28 @@ export default function Footer() {
                         </Link>
                     </li>
                     <li>
-                        <p className="mt-5">
-                            Виготовлення сувенірів з відпрацьованих набоїв.
+                        <p className="mt-5 text-[12px] leading-[12.5px] ">
+                        Купуючи сувеніри з категорії Military, ви допомагаєте наблизити перемогу ЗСУ.
+                        <br/> <br/>
+                         10% з кожного сувеніру ми направляємо на вироблення зарядних станцій для Збройних Сил України.
                         </p>
-                        <p className="mt-3">Робимо зарядні станції для ЗСУ</p>
+                        
                     </li>
                 </ul>
+                </div>
 
 
-                <div className="flex justify-evenly space-x-12">
-                    <ul>
+                <div className="grid grid-cols-2 md:grid-cols-3  gap-x-[18px] gap-y-[12px] mt-[8px]">
+                    <ul className="">
 
-                        <h2 className="primary-footer-text mb-4">КАТАЛОГ</h2>
+                        <h2 className="primary-footer-text mb-1">КАТАЛОГ</h2>
 
 
                         {categories.map((cat) => (
 
                             <li key={cat._id}
 
-                                className='mb-2  '
+                                className='text-[12px] leading-[12px] mb-1  '
 
                             >
                                 <Link
@@ -83,28 +88,28 @@ export default function Footer() {
 
                     </ul>
 
-                    <ul>
-                        <h2 className="primary-footer-text mb-4">ІНФОРМАЦІЯ</h2>
-                        <li className="mb-2">
+                    <ul className="order-3 md:order-2">
+                        <h2 className="primary-footer-text mb-1">ІНФОРМАЦІЯ</h2>
+                        <li className="text-[12px] leading-[12px] mb-1">
                             <Link href={"/contacts"}>Контакти</Link>
                         </li>
-                        <li className="mb-2">
+                        <li className="text-[12px] leading-[12px] mb-1">
                             <Link href={"/delivery"}>Доставка та оплата</Link>
                         </li>
-                        <li className="mb-2">
+                        <li className="text-[12px] leading-[12px] mb-1">
                             <Link href={"/#about"}>Про нас</Link>
                         </li>
-                        <li>
+                        <li className="text-[12px] leading-[12px] mb-1">
                             <Link href={"/partners"}>Партнерам</Link>
                         </li>
                     </ul>
 
-                    <ul>
-                        <h2 className="primary-footer-text mb-4">СОЦМЕРЕЖІ</h2>
-                        <li className="flex items-center mb-2 ">
+                    <ul className="md:order-3 ">
+                        <h2 className="primary-footer-text mb-1">СОЦМЕРЕЖІ</h2>
+                        <li className="flex items-center text-[12px] leading-[12px] mb-1">
                             <Link
                                 href={"https://www.youtube.com/@Made.in.Ukraine2023"}
-                                className="flex items-center "
+                                className="flex items-center justify-center"
                                 target="_blank"
                             >
                                 {" "}
@@ -120,13 +125,13 @@ export default function Footer() {
                                         fill="white"
                                     />
                                 </svg>{" "}
-                                <p className="ml-2">Youtube</p>
+                                <p className="ml-1">Youtube</p>
                             </Link>
                         </li>
-                        <li className="flex items-center mb-2">
+                        <li className="flex items-center text-[12px] leading-[12px] mb-1">
                             <Link
-                                href={"/"}
-                                className="flex items-center"
+                                href={"https://www.facebook.com/profile.php?id=100094715630653"}
+                                className="flex items-center justify-center"
                                 target="_blank"
                             >
                                 {" "}
@@ -145,10 +150,10 @@ export default function Footer() {
                                 <p className="ml-2">Facebook</p>
                             </Link>
                         </li>
-                        <li className="flex items-center mb-2">
+                        <li className="flex items-center text-[12px] leading-[12px] mb-1">
                             <Link
-                                href={"/"}
-                                className="flex items-center"
+                                href={"https://www.instagram.com/made_in_ukraine_bs/"}
+                                className="flex items-center justify-center"
                                 target="_blank"
                             >
                                 <svg
@@ -167,10 +172,10 @@ export default function Footer() {
                             </Link>
                         </li>
 
-                        <li className="flex items-center">
+                        <li className="flex items-center text-[12px] leading-[12px] mb-1">
                             <Link
-                                href={"/"}
-                                className="flex items-center"
+                                href={"https://www.tiktok.com/@made.in.ukraine3"}
+                                className="flex items-center justify-center"
                                 target="_blank"
                             >
                                 <svg
