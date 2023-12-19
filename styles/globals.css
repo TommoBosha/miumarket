@@ -30,6 +30,10 @@ a {
   @apply max-w-[767px]
  }
 
+ .hidden-mobile {
+  display: none;
+}
+
 .card {
   @apply mb-5 block rounded-lg border border-gray-200 shadow-md;
 }

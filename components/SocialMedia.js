@@ -100,7 +100,7 @@ export default function SocialMedia() {
           </div>
         )}
         {loaded && instanceRef.current && (
-          <div className="dots pb-[56px] md:pb-[50px] xl:pb-[65px]">
+          <div className="dots pb-[56px] md:pb-[50px] xl:pb-[65px] relative z-50">
             {[
               ...Array(instanceRef.current.track.details.slides.length).keys(),
             ].map((idx) => {
@@ -123,7 +123,7 @@ export default function SocialMedia() {
           alt="uzor"
           width={1900}
           height={253}
-          className=" absolute left-0 bottom-0 "
+          className=" absolute left-0 bottom-0 z-10 "
           style={{
             zIndex: 1,
           }}
