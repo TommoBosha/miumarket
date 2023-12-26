@@ -100,11 +100,18 @@ nav {
 input,
 select,
 textarea {
-  @apply rounded  p-2 outline-none hover:border-transparent  active:border-transparent;
+  @apply rounded  p-2 outline-none  ;
 }
 
 .dropdown-link {
   @apply flex p-2 hover:bg-none hover:border-none ;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s; 
 }
 
 

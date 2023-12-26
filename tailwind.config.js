@@ -10,6 +10,7 @@ module.exports = {
       textColor: {
         primary: '#3ACCE9',
         secondary:'#999',
+        form: '#A0A0A0',
       },
       backgroundColor: {
         primary: '#3ACCE9',
