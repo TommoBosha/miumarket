@@ -168,8 +168,6 @@ input:-webkit-autofill:active {
   text-align: center;
   font-size: 18px;
   background: #fff;
-
-  /* Center slide text vertically */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -181,10 +179,7 @@ input:-webkit-autofill:active {
   height: 100%;
   object-fit: cover;
 }
-/* .swiper-pagination {
-  bottom: -10px !important;
-  z-index: 15;
-} */
+
 
 .modalBackdrop {
   position: fixed;
@@ -255,8 +250,8 @@ input:-webkit-autofill:active {
 .thumbnail .keen-slider__slide {
   font-size: 30px;
   margin-top: 30px;
-  width: 159px;
-  height: 159px ;
+  width: 78px;
+  height: 78px ;
   overflow: hidden;
   position: relative;
   
@@ -267,8 +262,8 @@ input:-webkit-autofill:active {
 }
 
 .thumbnail .keen-slider__slide img {
-  width: 159px;
-  height: 159px;
+  width: 78px;
+  height: 78px;
   object-fit: cover;
 }
 

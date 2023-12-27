@@ -39,6 +39,10 @@ function ThumbnailPlugin(mainRef) {
 export default function ProductSlider({ images }) {
   const [sliderRef, instanceRef] = useKeenSlider({
     initial: 0,
+    slides: {
+      perView: 1,
+      
+    },
   
   })
   const [thumbnailRef] = useKeenSlider(
@@ -53,11 +57,11 @@ export default function ProductSlider({ images }) {
   )
 
   return (
-    <>
+    <div className="container">
       <div ref={sliderRef} className="keen-slider">
       {images.map((image, index) => (
           <div key={index} className="keen-slider__slide">
-            <Image src={image} alt={`Slide ${index + 1}`}  width={520} height={398} objectFit="cover" />
+            <Image src={image} alt={`Slide ${index + 1}`}  width={333} height={319} objectFit="cover" />
           </div>
         ))}
       </div>
@@ -65,10 +69,10 @@ export default function ProductSlider({ images }) {
       <div ref={thumbnailRef} className="keen-slider thumbnail">
         {images.map((image, index) => (
           <div key={index} className="keen-slider__slide">
-            <Image src={image} alt={`Slide ${index + 1}`} width={159} height={159} />
+            <Image src={image} alt={`Slide ${index + 1}`} width={78} height={78} />
           </div>
         ))}
       </div>
-    </>
+    </div>
   )
 }

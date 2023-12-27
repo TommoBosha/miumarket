@@ -12,11 +12,13 @@ import { Currency } from "../../models/Currency";
 import { Category } from "../../models/Category";
 import ProductSlider from "../../components/ProductSlider";
 import { WishedProduct } from "../../models/WishedProduct";
+import {  useSession } from "next-auth/react";
 
 export default function ProductScreen(props) {
   const product = props.product[0];
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
+  const { data: session } = useSession();
 
   const priceInDollars = product.price;
   const exchangeRate = props.latestCurrency.currency;
@@ -53,6 +55,10 @@ export default function ProductScreen(props) {
 
   const toggleWishlist = async (productId) => {
     try {
+      if (!session) {
+        toast.error("Додавати в улюблене можуть тільки зареєстровані користувачі");
+        return; 
+    }
       const response = await axios.post("/api/wishlist", {
         product: productId,
       });
@@ -96,7 +102,7 @@ export default function ProductScreen(props) {
 
   return (
     <Layout title={product.title}>
-      <div className=" m-auto mt-5 mb-12 " style={{ width: "1040px" }}>
+      <div className=" container mt-5 mb-12 " >
         <div
           className="mb-3 flex items-center text-base "
           style={{ color: "#D7D7D7" }}
