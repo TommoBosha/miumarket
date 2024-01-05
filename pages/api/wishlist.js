@@ -6,7 +6,7 @@ import { WishedProduct } from "../../models/WishedProduct";
 export default async function handle(req, res) {
     await mongooseConnect();
     const session = await getServerSession(req, res);
-    const user = session?.user || null; // якщо user не існує, присвоїти null
+    const user = session?.user || null; 
 
     if (req.method === 'POST') {
         const { product } = req.body;
@@ -20,7 +20,6 @@ export default async function handle(req, res) {
                 res.json({ wishedDoc: newWishedDoc });
             }
         } else {
-            // Обробка випадку, коли користувач не авторизований
             res.status(401).json({ error: "Користувач не авторизований" });
         }
     }
@@ -31,7 +30,7 @@ export default async function handle(req, res) {
                 await WishedProduct.find({ userEmail: user.email }).populate('product')
             );
         } else {
-            // Обробка випадку, коли користувач не авторизований
+            
             res.status(401).json({ error: "Користувач не авторизований" });
         }
     }

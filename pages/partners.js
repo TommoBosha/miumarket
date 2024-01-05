@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Layout from "../components/Layout";
 import { sendPartnerForm } from "../lib/api";
@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useMediaQuery } from "react-responsive";
 
 export default function Partners() {
+  const [isClient, setIsClient] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   const imageSrc = isMobile ? "/images/gray-mobile.svg" : "/images/gray.svg";
@@ -26,6 +27,10 @@ export default function Partners() {
       console.error("Failed to submit form: ", error);
     }
   };
+  useEffect(() => {
+    setIsClient(true); 
+   
+}, [])
 
   return (
     <Layout>
@@ -252,6 +257,7 @@ export default function Partners() {
           </form>
         </div>
 
+        {isClient && (
         <div className="footer-image-wrapper">
           <Image
             src={imageSrc}
@@ -261,7 +267,7 @@ export default function Partners() {
             className=" absolute left-0 bottom-0 "
             priority={true}
           />
-        </div>
+        </div>)}
       </div>
     </Layout>
   );

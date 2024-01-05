@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../components/Layout'
 import Image from 'next/image'
 import { useMediaQuery } from 'react-responsive';
 
 export default function Delivery() {
+    const [isClient, setIsClient] = useState(false);
     const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
     const imageSrc = isMobile ? "/images/gray-mobile.svg" : "/images/gray.svg";
+
+    useEffect(() => {
+        setIsClient(true); 
+       
+    }, [])
 
     return (
         <Layout>
@@ -190,6 +196,8 @@ export default function Delivery() {
                     </div>
                 </div>
             </div>
+
+            {isClient && (
             <div className="footer-image-wrapper">
             <Image
                 src={imageSrc}
@@ -200,6 +208,7 @@ export default function Delivery() {
                 priority={true}
             />
             </div>
+            )}
         </Layout>
     )
 }

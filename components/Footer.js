@@ -6,11 +6,13 @@ import { useMediaQuery } from "react-responsive";
 
 export default function Footer() {
     const [categories, setCategories] = useState([]);
+    const [isClient, setIsClient] = useState(false);
     const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
     const imageSrc = isMobile ? "/images/blue-mobile.svg" : "/images/blue.svg";
     useEffect(() => {
-        fetchCategories()
+        setIsClient(true); 
+        fetchCategories();
     }, [])
 
     function fetchCategories() {
@@ -204,6 +206,7 @@ export default function Footer() {
                 </div>
             </div>
 
+            {isClient && (
             <div className="footer-image-wrapper">
 
                 <Image
@@ -218,7 +221,7 @@ export default function Footer() {
                     priority={true}
                 />
             </div>
-
+            )}
         </div>
 
     );

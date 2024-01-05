@@ -18,7 +18,7 @@ export default function ProductItem({ product, latestCurrency }) {
     const priceInHryvnia = priceInDollars * exchangeRate;
 
     const addToCartHandler = async (product) => {
-        const existItem = state.cart.cartItems.find((x) => x._id === product._id);
+        const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
         const quantity = existItem ? existItem.quantity + 1 : 1;
         const price = priceInHryvnia
         const { data } = await axios.get(`/api/products/${product._id}`);

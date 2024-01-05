@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,9 +6,16 @@ import { useMediaQuery } from "react-responsive";
 
 export default function Contacts() {
 
+  const [isClient, setIsClient] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   const imageSrc = isMobile ? "/images/gray-mobile.svg" : "/images/gray.svg";
+
+  useEffect(() => {
+    
+    setIsClient(true); 
+}, []);
+
   return (
     <Layout>
       <div className=" bg-graybg w-full">
@@ -245,6 +252,8 @@ export default function Contacts() {
           </div>
         </div>
       </div>
+
+      {isClient && (
       <div className="footer-image-wrapper">
       <Image
         src={imageSrc}
@@ -252,8 +261,10 @@ export default function Contacts() {
         width={1900}
         height={253}
         className=" absolute left-0 bottom-0 z-10"
+        priority={true}
       />
       </div>
+      )}
       
     </Layout>
   );

@@ -120,6 +120,8 @@ export default function SocialMedia() {
           </div>
         )}
       </div>
+
+      {isClient && (
       <div className="footer-image-wrapper">
         <Image
           src={imageSrc}
@@ -130,8 +132,10 @@ export default function SocialMedia() {
           style={{
             zIndex: 1,
           }}
+          priority={true}
         />
       </div>
+      )}
         </div>
      
     </div>

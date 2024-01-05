@@ -39,7 +39,7 @@ a {
 }
 
 .primary-button {
-  @apply rounded-2xl py-3 px-5  shadow outline-none 
+  @apply rounded-[10px] py-[9px] md:py-[13px]  px-[15px] md:px-[22px]  shadow outline-none 
 }
 .default-button {
   @apply rounded bg-gray-100 py-2 px-4 text-black shadow outline-none hover:bg-gray-200 active:bg-gray-300;
@@ -320,4 +320,8 @@ input:-webkit-autofill:active {
     min-width: 502px;
     max-width: 502px;
   }
+}
+
+.swiper-button-prev, .swiper-button-next {
+  display: none;
 }
