@@ -52,7 +52,7 @@ export default function Home({ productsNew, productsTop, productsSale, productsA
           direction={currentSlideDirection}
           slidesData={slidesData}
         />
-        <div className=' container' >
+        <div className=' container xl:max-w-[1282px]' >
           <div className='flex justify-center items-center mt-6 md:mt-5 xl:mt-10 mb-[22px] md:mb-5 xl:mb-[38px] gap-[6px] md:gap-[22px] xl:gap-[34px]' >
             <button className={`w-[78px] md:w-[96px] xl:w-[144px] h-10 md:h-12 xl:h-[52px] text-white border-none rounded-[16px] cursor-pointer text-[15px] xl:text-[18px] leading-normal xl:leading-[18px]  uppercase hover:bg-primary bg-${activeCategory === 'productsAll' ? 'primary' : 'black'}`} 
         
@@ -103,7 +103,7 @@ export default function Home({ productsNew, productsTop, productsSale, productsA
         </div>
 
         <Sales />
-        <section id="about" className='container'>
+        <section id="about" className='container xl:max-w-[1282px]'>
           <AboutUs />
         </section>
 
