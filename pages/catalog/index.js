@@ -9,10 +9,16 @@ import { WishedProduct } from '../../models/WishedProduct';
 import { useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { useRouter } from 'next/router';
+import Filter from '../../components/Filter';
+import { Category } from '../../models/Category';
 
-export default function CatalogPage({ products, latestCurrency, wished }) {
+export default function CatalogPage({ products, latestCurrency, wished, productCounts,parentCategories  }) {
     const { data: session } = useSession();
     const [isWished, setWished] = useState(wished);
+    const router = useRouter();
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [isFiltered, setIsFiltered] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -66,9 +72,22 @@ export default function CatalogPage({ products, latestCurrency, wished }) {
     return (
         <Layout>
             <div className="container">
-            <h1>Catalog</h1>
+            <div className="md:grid md:grid-cols-category md:gap-[20px]">
+               <div>
+               <Filter
+                router = {router} 
+                latestCurrency={latestCurrency} 
+                products={products}
+                productCounts={ productCounts}
+                parentCategories={parentCategories}
+                setFilteredProducts={setFilteredProducts}
+                setIsFiltered={setIsFiltered}
+                />
+
+               </div>
+               
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-6">
-                {products.map((product, index) => {
+                {(isFiltered ? filteredProducts : products).map((product, index) => {
                     const priceInDollars = product.price;
                     const exchangeRate = latestCurrency.currency;
 
@@ -106,6 +125,7 @@ export default function CatalogPage({ products, latestCurrency, wished }) {
                 })}
             </div>
             </div>
+            </div>
             
 
         </Layout >
@@ -118,6 +138,15 @@ export async function getServerSideProps() {
 
     const products = await Product.find({}, null, { sort: { '_id': -1 } });
     const wished = await WishedProduct.find({});
+    const productCounts = await getProductCountsByCategory();
+    const parentCategoriesData = await Category.find({ parent: { $exists: false } });
+    const parentCategories = await Promise.all(parentCategoriesData.map(async (category) => {
+        const children = await Category.find({ parent: category._id });
+        return {
+            ...category.toObject(), 
+            children: children.map(child => child.toObject()), 
+        };
+    }));
 
 
     return {
@@ -126,6 +155,30 @@ export async function getServerSideProps() {
             products: JSON.parse(JSON.stringify(products)),
             latestCurrency: JSON.parse(JSON.stringify(latestCurrency)),
             wished: JSON.parse(JSON.stringify(wished)),
+            productCounts: JSON.parse(JSON.stringify(productCounts)),
+            parentCategories: JSON.parse(JSON.stringify(parentCategories)),
         },
     };
 }
+
+const getProductCountsByCategory = async () => {
+    
+    const childCounts = await Product.aggregate([
+        { $group: { _id: "$category", count: { $sum: 1 } } }
+    ]);
+
+    const parentCounts = await Product.aggregate([
+        { $lookup: {
+            from: "categories",
+            localField: "category",
+            foreignField: "_id",
+            as: "categoryData"
+        }},
+        { $unwind: "$categoryData" },
+        { $group: { _id: "$categoryData.parent", count: { $sum: 1 } } }
+    ]);
+
+    const combinedCounts = [...childCounts, ...parentCounts];
+
+    return combinedCounts;
+};

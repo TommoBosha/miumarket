@@ -1,111 +1,97 @@
-// import React, { useEffect, useState } from 'react'
-// import { Category } from '../models/Category';
-// import Product from '../models/Product';
-// import axios from 'axios';
+import React, {  useState } from 'react'
 
-// export default function Filter({
-//     category, subCategories, products: originalProducts
-// }) {
 
-//     const defaultSorting = '_id-desc';
-//     const defaultFilterValues = category.properties
-//         .map(p => ({ name: p.name, value: 'all' }));
-//     const [products, setProducts] = useState(originalProducts);
-//     const [filtersValues, setFiltersValues] = useState(defaultFilterValues);
-//     const [sort, setSort] = useState(defaultSorting);
-//     const [loadingProducts, setLoadingProducts] = useState(false);
-//     const [filtersChanged, setFiltersChanged] = useState(false);
+export default function Filter({
+    setIsFiltered, setFilteredProducts,latestCurrency, productCounts, products, parentCategories, router}) {
+    
+        const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
+       
 
-//     function handleFilterChange(filterName, filterValue) {
-//         setFiltersValues(prev => {
-//             return prev.map(p => ({
-//                 name: p.name,
-//                 value: p.name === filterName ? filterValue : p.value,
-//             }));
-//         });
-//         setFiltersChanged(true);
-//     }
-//     // useEffect(() => {
-//     //     if (!filtersChanged) {
-//     //         return;
-//     //     }
-//     //     setLoadingProducts(true);
-//     //     const catIds = [category._id, ...(subCategories?.map(c => c._id) || [])];
-//     //     const params = new URLSearchParams;
-//     //     params.set('categories', catIds.join(','));
-//     //     params.set('sort', sort);
-//     //     filtersValues.forEach(f => {
-//     //         if (f.value !== 'all') {
-//     //             params.set(f.name, f.value);
-//     //         }
-//     //     });
-//     //     const url = `/api/products?` + params.toString();
-//     //     axios.get(url).then(res => {
-//     //         setProducts(res.data);
-//     //         setLoadingProducts(false);
-//     //     })
-//     // }, [filtersValues, sort, filtersChanged]);
-//     return (
-//         <div>
-//             <div>
-//                 <h1>{category.name}</h1>
-//                 <div>
-//                     {category.properties.map(prop => (
-//                         <div key={prop.name}>
-//                             <span>{prop.name}:</span>
-//                             <select
-//                                 onChange={ev => handleFilterChange(prop.name, ev.target.value)}
-//                                 value={filtersValues.find(f => f.name === prop.name).value}>
-//                                 <option value="all">All</option>
-//                                 {prop.values.map(val => (
-//                                     <option key={val} value={val}>{val}</option>
-//                                 ))}
-//                             </select>
-//                         </div>
-//                     ))}
-//                     <div>
-//                         <span>Sort:</span>
-//                         <select
-//                             value={sort}
-//                             onChange={ev => {
-//                                 setSort(ev.target.value);
-//                                 setFiltersChanged(true);
-//                             }}>
-//                             <option value="price-asc">price, lowest first</option>
-//                             <option value="price-desc">price, highest first</option>
-//                             <option value="_id-desc">newest first</option>
-//                             <option value="_id-asc">oldest first</option>
-//                         </select>
-//                     </div>
-//                 </div>
-//             </div>
-//             {/* {loadingProducts && (
-//                 <Spinner fullWidth />
-//             )}
-//             {!loadingProducts && (
-//                 <div>
-//                     {products.length > 0 && (
-//                         <ProductsGrid products={products} />
-//                     )}
-//                     {products.length === 0 && (
-//                         <div>Sorry, no products found</div>
-//                     )}
-//                 </div>
-//             )} */}
-//         </div>
-//     )
-// }
+        const handleCategoryClick = async (categoryId) => {
+                        try {
+                await router.push(`/catalog/${categoryId}`);
+                
+                setIsFiltered(false);
+                setFilteredProducts([]);
+            } catch (error) {
+                console.error('Помилка переходу до категорії:', error);
+            }
+        };
 
-// export async function getServerSideProps(context) {
-//     const category = await Category.findById(context.query.id);
-//     const subCategories = await Category.find({ parent: category._id });
-//     const catIds = [category._id, ...subCategories.map(c => c._id)];
-//     const products = await Product.find({ category: catIds });
-//     return {
-//         props: {
-//             category: JSON.parse(JSON.stringify(category)),
-//             subCategories: JSON.parse(JSON.stringify(subCategories)),
-//             products: JSON.parse(JSON.stringify(products)),
-//         }
-//     };
-// }
+    
+    const applyFilters = () => {
+        const exchangeRate = latestCurrency.currency;
+        const minPriceInDollars = parseInt(priceRange.min, 10) / exchangeRate;
+        const maxPriceInDollars = parseInt(priceRange.max, 10) / exchangeRate;
+    
+        const filtered = products.filter(product => {
+            const priceInDollars = product.price;
+            return priceInDollars >= minPriceInDollars && priceInDollars <= maxPriceInDollars;
+        });
+    
+        setIsFiltered(true);
+        setFilteredProducts(filtered);
+    };
+    
+    const handlePriceChange = (e) => {
+        setPriceRange({ ...priceRange, [e.target.name]: e.target.value });
+    };
+
+    if (!parentCategories) {
+        return <div>Loading...</div>; 
+    }
+    return (
+        <div>
+            <h2 className='text-[24px] md:text-[15px] xl:text-[21px] uppercase font-bold text-accent'>Каталог</h2>
+            <button 
+            className='pt-[14px] md:pt-[7px] xl:pt-[15px] text-[24px] md:text-[15px] xl:text-[18px] md:leading-[22px] uppercase font-semibold'
+            onClick={() => router.push(`/catalog/`)}>Всі товари</button>
+          {parentCategories.map(parentCategory => (
+    <div key={parentCategory._id}
+    className='pt-[10px] md:pt-[14px] xl:pt-[7px]'
+    >
+        <button 
+        onClick={() => handleCategoryClick(parentCategory._id)}
+        className='text-[19px] md:text-[15px] xl:text-[18px] leading-[22px] uppercase font-semibold'
+        >{parentCategory.name} ({productCounts.find(pc => pc._id.toString() === parentCategory._id.toString())?.count || 0})</button>
+        {parentCategory.children && parentCategory.children.length > 0 ? (
+            <ul>
+                {parentCategory.children.map(childCategory => (
+                    <li key={childCategory._id}>
+                        <button 
+                         className='text-[15px] md:text-[12px] xl:text-[16px]  leading-[6px] text-center'
+                        onClick={() => handleCategoryClick(childCategory._id)}>{childCategory.name} ({productCounts.find(pc => pc._id.toString() === childCategory._id.toString())?.count || 0})</button> 
+                    </li>
+                ))}
+            </ul>
+        ) : (
+            <p>Дочірні категорії відсутні</p>
+        )}
+    </div>
+))}
+
+
+<div className='pt-[8px] md:pt-[16px] xl:pt-[33px]'>
+    <h2 className='text-[24px] md:text-[15px] xl:text-[21px] uppercase font-bold text-accent'>Фільтр</h2>
+    <h3 className='text-[24px] md:text-[15px] xl:text-[18px] md:leading-[22px] uppercase font-semibold'>Ціна</h3>
+        <input
+        className='border-[2px] rounded-[10px] text-center w-[100px] md:w-[53px] xl:w-[60px] h-[30px] xl:h-[37px] '
+            name="min"
+            value={priceRange.min}
+            onChange={handlePriceChange}
+        />
+        -
+        <input
+                className='border-[2px] rounded-[10px] text-center w-[184px] md:w-[72px] xl:w-[81px] h-[30px] xl:h-[37px] '
+            name="max"
+            value={priceRange.max}
+            onChange={handlePriceChange}
+        />
+        <button onClick={applyFilters}>Застосувати фільтри</button>
+       
+    </div>
+
+        </div>
+    );
+}
+

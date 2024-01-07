@@ -13,16 +13,16 @@ import { WishedProduct } from "../../models/WishedProduct";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import { Store } from "../../utils/Store";
+import Filter from "../../components/Filter";
 
-export default function CategoryPage({ products, latestCurrency, wished}) {
+export default function CategoryPage({ products,parentCategories,  productCounts, latestCurrency, wished}) {
     const router = useRouter();
-    const { category } = router.query;
     const [isWished, setWished] = useState(wished);
     const { data: session } = useSession();
     const { state, dispatch } = useContext(Store);
-
-  
-
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [isFiltered, setIsFiltered] = useState(false);
+    
     useEffect(() => {
         const fetchData = async () => {
           try {
@@ -101,12 +101,29 @@ export default function CategoryPage({ products, latestCurrency, wished}) {
         toast.success(`Товар "${product.title}" додано до корзини!`);
     };
 
+    
+
     return (
         <Layout>
             <div className=" container" >
-                <h1>{category} Товари</h1>
+               
+                <div className="md:grid md:grid-cols-category xl:grid-cols-categoryxl md:gap-[20px] xl:gap-[50px]">
+               <div>
+               <Filter
+                router = {router} 
+                latestCurrency={latestCurrency} 
+                products={products}
+                productCounts={ productCounts}
+                parentCategories={parentCategories}
+                setFilteredProducts={setFilteredProducts}
+                setIsFiltered={setIsFiltered}
+                />
+
+               </div>
+               
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-6">
-                    {products.map((product) => {
+                    {(isFiltered ? filteredProducts : products).map((product) => {
                         const priceInDollars = product.price;
                         const exchangeRate = latestCurrency.currency;
 
@@ -181,6 +198,7 @@ export default function CategoryPage({ products, latestCurrency, wished}) {
                         );
                     })}
                 </div>
+                </div>
             </div>
         </Layout>
     );
@@ -192,6 +210,15 @@ export async function getServerSideProps(context) {
     const { category } = context.query;
     const latestCurrency = await Currency.findOne().sort({ currency: -1 });
     const wished = await WishedProduct.find({});
+    const productCounts = await getProductCountsByCategory();
+    const parentCategoriesData = await Category.find({ parent: { $exists: false } });
+    const parentCategories = await Promise.all(parentCategoriesData.map(async (category) => {
+        const children = await Category.find({ parent: category._id });
+        return {
+            ...category.toObject(), 
+            children: children.map(child => child.toObject()), 
+        };
+    }));
 
     let products;
     let childCategories;
@@ -225,10 +252,36 @@ export async function getServerSideProps(context) {
 
     return {
         props: {
+            productCounts: JSON.parse(JSON.stringify(productCounts)),
             category: category,
             products: JSON.parse(JSON.stringify(products)),
             latestCurrency: JSON.parse(JSON.stringify(latestCurrency)),
             wished: JSON.parse(JSON.stringify(wished)),
+            parentCategories: JSON.parse(JSON.stringify(parentCategories)),
         },
     };
 }
+
+
+
+const getProductCountsByCategory = async () => {
+    
+    const childCounts = await Product.aggregate([
+        { $group: { _id: "$category", count: { $sum: 1 } } }
+    ]);
+
+    const parentCounts = await Product.aggregate([
+        { $lookup: {
+            from: "categories",
+            localField: "category",
+            foreignField: "_id",
+            as: "categoryData"
+        }},
+        { $unwind: "$categoryData" },
+        { $group: { _id: "$categoryData.parent", count: { $sum: 1 } } }
+    ]);
+
+    const combinedCounts = [...childCounts, ...parentCounts];
+
+    return combinedCounts;
+};

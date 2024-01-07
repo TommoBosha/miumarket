@@ -26,6 +26,8 @@ module.exports = {
         footermobile: '148px minmax(0px, 1fr)',
         footer: '216px minmax(0px, 1fr)',
         footerxl: '382px minmax(0px, 1fr)',
+        category: '132px minmax(0px, 1fr)',
+        categoryxl: '150px minmax(0px, 1fr)',
       },
       borderColor:{
         secondary:'#999',
