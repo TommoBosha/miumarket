@@ -137,13 +137,12 @@ export default function CatalogPage({
           </div>
 
           <div className="relative z-20">
-            
-              {currentItems.length === 0 ? (
-                <div className="text-center p-5">
-                  Товари за обраними критеріями не знайдено
-                </div>
-              ) : (
-                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 md:auto-rows-catalog xl:auto-rows-catalogxl xxl:auto-rows-catalogxxl gap-3 md:gap-[10px] xl:gap-[16px] pt-[18px] md:pt-[20px] xl:pt-[30px]">
+            {currentItems.length === 0 ? (
+              <div className="text-center p-5">
+                Товари за обраними критеріями не знайдено
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 md:auto-rows-catalog xl:auto-rows-catalogxl xxl:auto-rows-catalogxxl gap-3 md:gap-[10px] xl:gap-[16px] pt-[18px] md:pt-[20px] xl:pt-[30px]">
                 {currentItems.map((product, index) => {
                   const priceInDollars = product.price;
                   const exchangeRate = latestCurrency.currency;
@@ -196,9 +195,9 @@ export default function CatalogPage({
                     </div>
                   );
                 })}
-                </div>
-              )}
-            
+              </div>
+            )}
+
             <div className="pt-[18px] md:pt-[12px] xl:pt-[40px] mx-auto  ">
               <Pagination
                 itemsPerPage={itemsPerPage}
