@@ -2,7 +2,7 @@ import React, {  useState } from 'react'
 
 
 export default function Filter({
-    setIsFiltered, setFilteredProducts,latestCurrency, productCounts, products, parentCategories, router}) {
+    setIsFiltered, setFilteredProducts, setCurrentPage, latestCurrency, productCounts, products, parentCategories, router}) {
     
         const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
        
@@ -31,6 +31,7 @@ export default function Filter({
     
         setIsFiltered(true);
         setFilteredProducts(filtered);
+        setCurrentPage(1);
     };
     
     const handlePriceChange = (e) => {
@@ -41,7 +42,7 @@ export default function Filter({
         return <div>Loading...</div>; 
     }
     return (
-        <div>
+        <div className='pt-[18px] md:pt-[20px] xl:pt-[30px]'>
             <h2 className='text-[24px] md:text-[15px] xl:text-[21px] uppercase font-bold text-accent'>Каталог</h2>
             <button 
             className='pt-[14px] md:pt-[7px] xl:pt-[15px] text-[24px] md:text-[15px] xl:text-[18px] md:leading-[22px] uppercase font-semibold'
@@ -73,21 +74,30 @@ export default function Filter({
 
 <div className='pt-[8px] md:pt-[16px] xl:pt-[33px]'>
     <h2 className='text-[24px] md:text-[15px] xl:text-[21px] uppercase font-bold text-accent'>Фільтр</h2>
-    <h3 className='text-[24px] md:text-[15px] xl:text-[18px] md:leading-[22px] uppercase font-semibold'>Ціна</h3>
-        <input
-        className='border-[2px] rounded-[10px] text-center w-[100px] md:w-[53px] xl:w-[60px] h-[30px] xl:h-[37px] '
+    <div className='border-t-[2px] border-primary'></div>
+    <h3 className='pt-[16px] md:pt-[23px] xl:pt-[13px] text-[24px] md:text-[15px] xl:text-[18px] md:leading-[22px] uppercase font-semibold'>Ціна</h3>
+       <div className='pt-[6px] xl:pt-[12px]'>
+       <input
+        className='border-[2px] rounded-[10px] text-center w-[100px] md:w-[54px] xl:w-[60px] h-[30px] xl:h-[37px] '
             name="min"
             value={priceRange.min}
             onChange={handlePriceChange}
         />
-        -
+       <span> {' '}-{' '}</span>
         <input
-                className='border-[2px] rounded-[10px] text-center w-[184px] md:w-[72px] xl:w-[81px] h-[30px] xl:h-[37px] '
+                className='border-[2px] rounded-[10px] text-center w-[184px] md:w-[62px] xl:w-[70px] h-[30px] xl:h-[37px] '
             name="max"
             value={priceRange.max}
             onChange={handlePriceChange}
         />
-        <button onClick={applyFilters}>Застосувати фільтри</button>
+        </div>
+        <div className='pt-[8px] md:pt-[12px] xl:pt-[14px]'>
+        <button onClick={applyFilters}
+        className='bg-primary px-[12px]  py-[8px] rounded-[10px] xl:text-[16px] xl:font-semibold leading-[16.67px]'
+        >
+            Застосувати фільтри
+            </button>
+            </div>
        
     </div>
 

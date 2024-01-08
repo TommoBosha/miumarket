@@ -14,274 +14,306 @@ import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import { Store } from "../../utils/Store";
 import Filter from "../../components/Filter";
+import Image from "next/image";
+import { useMediaQuery } from "react-responsive";
+import HeartIcon from "../../components/HeartIcon";
+import CartIcon from "../../components/CartIcon";
+import Pagination from "../../components/Pagination";
 
-export default function CategoryPage({ products,parentCategories,  productCounts, latestCurrency, wished}) {
-    const router = useRouter();
-    const [isWished, setWished] = useState(wished);
-    const { data: session } = useSession();
-    const { state, dispatch } = useContext(Store);
-    const [filteredProducts, setFilteredProducts] = useState([]);
-    const [isFiltered, setIsFiltered] = useState(false);
-    
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            if (!session) {
-              
-              return;
-            }
-            const response = await axios.get("/api/wishlist");
-            const wishedData = response.data.reduce((acc, item) => {
-              acc[item.product._id] = true;
-              return acc;
-            }, {});
-      
-            setWished(wishedData);
-          } catch (error) {
-            console.error(error);
-          }
-        };
-      
-        fetchData();
-      }, [session]);
+export default function CategoryPage({
+  products,
+  parentCategories,
+  productCounts,
+  latestCurrency,
+  wished,
+}) {
+  const router = useRouter();
+  const { category } = router.query;
+  const [isClient, setIsClient] = useState(false);
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const [isWished, setWished] = useState(wished);
+  const { data: session } = useSession();
+  const { state, dispatch } = useContext(Store);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [isFiltered, setIsFiltered] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
 
-    const toggleWishlist = async (productId) => {
-        try {
-            if (!session) {
-                toast.error("Додавати в улюблене можуть тільки зареєстровані користувачі");
-                return; 
-            }
+  const imageSrc = isMobile ? "/images/gray-mobile.svg" : "/images/gray.svg";
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const productsToDisplay = isFiltered ? filteredProducts : products;
+  const currentItems = productsToDisplay.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
-            const response = await axios.post('/api/wishlist', {
-                product: productId,
-            });
-
-            if (response.data.wishedDoc && response.data.wishedDoc._id) {
-                setWished((prevWished) => {
-                    const updatedWished = { ...prevWished };
-                    updatedWished[productId] = !updatedWished[productId];
-                    
-                    return updatedWished;
-                });
-            } else {
-                console.error;
-            }
-        } catch (error) {
-            console.error;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!session) {
+          return;
         }
+        const response = await axios.get("/api/wishlist");
+        const wishedData = response.data.reduce((acc, item) => {
+          acc[item.product._id] = true;
+          return acc;
+        }, {});
+
+        setWished(wishedData);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
-    if (!products) {
-        return <Layout title="404">Продукти не знайдено</Layout>;
+    fetchData();
+    setIsClient(true);
+    setCurrentPage(1);
+  }, [session, category]);
+
+  const toggleWishlist = async (productId) => {
+    try {
+      if (!session) {
+        toast.error(
+          "Додавати в улюблене можуть тільки зареєстровані користувачі"
+        );
+        return;
+      }
+
+      const response = await axios.post("/api/wishlist", {
+        product: productId,
+      });
+
+      if (response.data.wishedDoc && response.data.wishedDoc._id) {
+        setWished((prevWished) => {
+          const updatedWished = { ...prevWished };
+          updatedWished[productId] = !updatedWished[productId];
+
+          return updatedWished;
+        });
+      } else {
+        console.error;
+      }
+    } catch (error) {
+      console.error;
+    }
+  };
+
+  if (!products) {
+    return <Layout title="404">Продукти не знайдено</Layout>;
+  }
+
+  const addToCardHandler = (productId) => {
+    const product = products.find((p) => p._id === productId);
+
+    if (!product) {
+      return toast.error("Товар не знайдено");
     }
 
+    const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+    const priceInDollars = product.price;
+    const exchangeRate = latestCurrency.currency;
+    const priceInHryvnia = priceInDollars * exchangeRate;
 
-    const addToCardHandler = (productId) => {
-        
-        const product = products.find((p) => p._id === productId);
+    if (product.countInStock < quantity) {
+      return toast.error("Пробачте, товар закінчився");
+    }
+
+    dispatch({
+      type: "CART_ADD_ITEM",
+      payload: { ...product, quantity, price: priceInHryvnia },
+    });
+    toast.success(`Товар "${product.title}" додано до корзини!`);
+  };
+
+  return (
+    <Layout>
+      <div className=" container xxl:max-w-[1440px] pb-[20px] md:pb-[57px] xl:pb-[42px] ">
+        <div className="md:grid md:grid-cols-category xl:grid-cols-categoryxl md:gap-[20px] xl:gap-[50px]">
+          <div className="relative z-20">
+            <Filter
+              router={router}
+              latestCurrency={latestCurrency}
+              products={products}
+              productCounts={productCounts}
+              parentCategories={parentCategories}
+              setFilteredProducts={setFilteredProducts}
+              setIsFiltered={setIsFiltered}
+              setCurrentPage={setCurrentPage}
+            />
+          </div>
+          <div className="relative z-20">
             
-        if (!product) {
-            return toast.error("Товар не знайдено");
-        }
-    
-        const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
-        const quantity = existItem ? existItem.quantity + 1 : 1;
-        const priceInDollars = product.price;
-        const exchangeRate = latestCurrency.currency;
-        const priceInHryvnia = priceInDollars * exchangeRate;
-    
-        if (product.countInStock < quantity) {
-            return toast.error("Пробачте, товар закінчився");
-        }
-    
-        dispatch({
-            type: "CART_ADD_ITEM",
-            payload: { ...product, quantity, price: priceInHryvnia },
-        });
-        toast.success(`Товар "${product.title}" додано до корзини!`);
-    };
-
-    
-
-    return (
-        <Layout>
-            <div className=" container" >
-               
-                <div className="md:grid md:grid-cols-category xl:grid-cols-categoryxl md:gap-[20px] xl:gap-[50px]">
-               <div>
-               <Filter
-                router = {router} 
-                latestCurrency={latestCurrency} 
-                products={products}
-                productCounts={ productCounts}
-                parentCategories={parentCategories}
-                setFilteredProducts={setFilteredProducts}
-                setIsFiltered={setIsFiltered}
-                />
-
-               </div>
-               
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-6">
-                    {(isFiltered ? filteredProducts : products).map((product) => {
-                        const priceInDollars = product.price;
-                        const exchangeRate = latestCurrency.currency;
-
-                        const priceInHryvnia = priceInDollars * exchangeRate;
-                      
-                        return (
-                            <div
-                            key={product._id}
-                                className="bg-white shadow-md rounded-lg overflow-hidden"
-                            >
-                                <Link href={"/product/" + product.slug}>
-                                    <img
-                                        src={product.images[0]}
-                                        alt={product.title}
-                                        className="w-full h-56 object-fill"
-                                    />
-                                    <div className="p-4">
-                                        <h2 className="text-lg font-semibold">{product.title}</h2>
-                                        <p className="text-gray-600">{priceInHryvnia} грн</p>
-
-
-
-                                    </div>
-                                </Link>
-
-
-                                <button onClick={() => toggleWishlist(product._id)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill={isWished[product._id] ? "#3ACCE9" : "none"} viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                                    </svg>
-                                </button>
-
-                                <button
-                className="stroke-black "
+              {currentItems.length === 0 ? (
+                <div className="text-center p-5">
+                  Товари за обраними критеріями не знайдено
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 md:auto-rows-catalog xl:auto-rows-catalogxl xxl:auto-rows-catalogxxl gap-3 md:gap-[10px] xl:gap-[16px] pt-[18px] md:pt-[20px] xl:pt-[30px]">
                 
-                onClick={() => addToCardHandler(product._id)}
-              >
-               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-  <g filter="url(#filter0_d_1230_17808)">
-    <g filter="url(#filter1_d_1230_17808)">
-      <path fillRule="evenodd" clipRule="evenodd" d="M13.7336 4.9865C13.9134 4.61949 14.3626 4.46973 14.7371 4.65698C15.1041 4.83674 15.2539 5.28603 15.0667 5.66053L14.3401 7.11354L13.1941 10.3268C12.9769 10.9185 12.4153 11.3155 11.7786 11.3155H7.05238C6.37079 11.3155 5.77163 10.8511 5.59936 10.192L5.02262 7.94501C4.78294 6.99378 5.49444 6.07251 6.47564 6.07251H13.1867L13.7336 4.9865ZM11.7786 9.81752L12.5876 7.57051H6.47564L7.05238 9.81752H11.7786Z" fill="white"/>
-    </g>
-    <path d="M10.6544 13.1884C10.6544 13.8101 11.1562 14.3119 11.7779 14.3119C12.3995 14.3119 12.9014 13.8101 12.9014 13.1884C12.9014 12.5668 12.3995 12.0649 11.7779 12.0649C11.1562 12.0649 10.6544 12.5668 10.6544 13.1884Z" fill="white"/>
-    <path d="M6.1612 13.1884C6.1612 13.8101 6.66303 14.3119 7.2847 14.3119C7.90637 14.3119 8.4082 13.8101 8.4082 13.1884C8.4082 12.5668 7.90637 12.0649 7.2847 12.0649C6.66303 12.0649 6.1612 12.5668 6.1612 13.1884Z" fill="white"/>
-  </g>
-  <defs>
-    <filter id="filter0_d_1230_17808" x="2.27607" y="0.876172" width="15.5714" height="15.1358" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-      <feFlood floodOpacity="0" result="BackgroundImageFix"/>
-      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-      <feOffset dy="-1"/>
-      <feGaussianBlur stdDeviation="1.35"/>
-      <feComposite in2="hardAlpha" operator="out"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.26 0"/>
-      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1230_17808"/>
-      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1230_17808" result="shape"/>
-    </filter>
-    <filter id="filter1_d_1230_17808" x="0.976074" y="4.57617" width="18.1714" height="14.7393" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-      <feFlood floodOpacity="0" result="BackgroundImageFix"/>
-      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-      <feOffset dy="4"/>
-      <feGaussianBlur stdDeviation="2"/>
-      <feComposite in2="hardAlpha" operator="out"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1230_17808"/>
-      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1230_17808" result="shape"/>
-    </filter>
-  </defs>
-</svg>
-              </button>
+                {currentItems.map((product) => {
+                  const priceInDollars = product.price;
+                  const exchangeRate = latestCurrency.currency;
 
-                            </div>
-                        );
-                    })}
+                  const priceInHryvnia = priceInDollars * exchangeRate;
+
+                  return (
+                    <div
+                      key={product._id}
+                      className=" relative z-20 xxl:w-[238px] xxl:h-[238px] "
+                    >
+                      <Link href={"/product/" + product.slug}>
+                        <div
+                          className="absolute  top-0 left-0 right-0 bottom-0 z-10 xxl:w-[238px] xxl:h-[238px]"
+                          style={{
+                            background:
+                              "linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.40) 20%), linear-gradient(180deg, rgba(180, 180, 180, 0.00) 20.31%, rgba(51, 51, 51, 0.80) 100%)",
+                          }}
+                        ></div>
+                        <img
+                          src={product.images[0]}
+                          alt={product.title}
+                          className=" object-fill"
+                        />
+                        <div className="">
+                          <h2 className="absolute z-20 bottom-[21px] md:bottom-[16px] xl:bottom-[4px]  left-[4px] xl:left-[7px] w-[128px]  xl:w-[146px]  text-[12px]  xl:text-[13px]  uppercase text-white">
+                            {product.title}
+                          </h2>
+                          <p className="absolute z-20 bottom-[6px] xl:bottom-[10px]  left-[4px] xl:left-[132px] xxl:left-[170px]  text-[12px] xl:text-[13px] leading-[6px] font-bold uppercase text-primary">
+                            {priceInHryvnia} грн
+                          </p>
+                        </div>
+                      </Link>
+                      <div className=" ">
+                        <button
+                          onClick={() => toggleWishlist(product._id)}
+                          className="absolute z-20 bottom-[0px] xl:bottom-[100px]  right-[22px] xl:right-0 xl:left-[4px] xl:top-[-75px] xxl:top-[-100px] "
+                        >
+                          <HeartIcon isWished={isWished} product={product} />
+                        </button>
+
+                        <button
+                          className=" absolute z-20 bottom-[1px] xl:bottom-[100px]  right-1 xl:top-[-75px] xxl:top-[-100px]"
+                          onClick={() => addToCardHandler(product._id)}
+                        >
+                          <CartIcon />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
                 </div>
-                </div>
+              )}
+            
+            <div className="pt-[18px] md:pt-[12px] xl:pt-[40px] mx-auto  ">
+              <Pagination
+                itemsPerPage={itemsPerPage}
+                totalItems={
+                  isFiltered ? filteredProducts.length : products.length
+                }
+                paginate={setCurrentPage}
+                currentPage={currentPage}
+              />
             </div>
-        </Layout>
-    );
+          </div>
+        </div>
+      </div>
+      {isClient && (
+        <div className="footer-image-wrapper">
+          <Image
+            src={imageSrc}
+            alt="uzor"
+            width={1900}
+            height={253}
+            className=" absolute left-0 bottom-0 z-0 "
+            priority={true}
+          />
+        </div>
+      )}
+    </Layout>
+  );
 }
 
 export async function getServerSideProps(context) {
-    await mongooseConnect();
+  await mongooseConnect();
 
-    const { category } = context.query;
-    const latestCurrency = await Currency.findOne().sort({ currency: -1 });
-    const wished = await WishedProduct.find({});
-    const productCounts = await getProductCountsByCategory();
-    const parentCategoriesData = await Category.find({ parent: { $exists: false } });
-    const parentCategories = await Promise.all(parentCategoriesData.map(async (category) => {
-        const children = await Category.find({ parent: category._id });
-        return {
-            ...category.toObject(), 
-            children: children.map(child => child.toObject()), 
-        };
-    }));
+  const { category } = context.query;
+  const latestCurrency = await Currency.findOne().sort({ currency: -1 });
+  const wished = await WishedProduct.find({});
+  const productCounts = await getProductCountsByCategory();
+  const parentCategoriesData = await Category.find({
+    parent: { $exists: false },
+  });
+  const parentCategories = await Promise.all(
+    parentCategoriesData.map(async (category) => {
+      const children = await Category.find({ parent: category._id });
+      return {
+        ...category.toObject(),
+        children: children.map((child) => child.toObject()),
+      };
+    })
+  );
 
-    let products;
-    let childCategories;
+  let products;
+  let childCategories;
 
-    if (category === "productsAll") {
-        products = await Product.find({});
-    } else if (category === "productsNew") {
-        products = await Product.find({ tag: "New" }, null, {
-            sort: { tag: -1 },
+  if (category === "productsAll") {
+    products = await Product.find({});
+  } else if (category === "productsNew") {
+    products = await Product.find({ tag: "New" }, null, {
+      sort: { tag: -1 },
+    });
+  } else if (category === "productsTop") {
+    products = await Product.find({ tag: "Top" }, null, {
+      sort: { tag: -1 },
+    });
+  } else if (category === "productsSale") {
+    products = await Product.find({ tag: "Sale" }, null, {
+      sort: { tag: -1 },
+    });
+  } else {
+    childCategories = await Category.find({ parent: category });
 
-        });
-    } else if (category === "productsTop") {
-        products = await Product.find({ tag: "Top" }, null, {
-            sort: { tag: -1 },
+    const categoryIds = [
+      ...childCategories.map((childCategory) => childCategory._id),
+      category,
+    ];
 
-        });
-    } else if (category === "productsSale") {
-        products = await Product.find({ tag: "Sale" }, null, {
-            sort: { tag: -1 },
+    products = await Product.find({ category: { $in: categoryIds } });
+  }
 
-        });
-    } else {
-        childCategories = await Category.find({ parent: category });
-
-
-        const categoryIds = [...childCategories.map((childCategory) => childCategory._id), category];
-
-        products = await Product.find({ category: { $in: categoryIds } });
-
-    }
-
-    return {
-        props: {
-            productCounts: JSON.parse(JSON.stringify(productCounts)),
-            category: category,
-            products: JSON.parse(JSON.stringify(products)),
-            latestCurrency: JSON.parse(JSON.stringify(latestCurrency)),
-            wished: JSON.parse(JSON.stringify(wished)),
-            parentCategories: JSON.parse(JSON.stringify(parentCategories)),
-        },
-    };
+  return {
+    props: {
+      productCounts: JSON.parse(JSON.stringify(productCounts)),
+      category: category,
+      products: JSON.parse(JSON.stringify(products)),
+      latestCurrency: JSON.parse(JSON.stringify(latestCurrency)),
+      wished: JSON.parse(JSON.stringify(wished)),
+      parentCategories: JSON.parse(JSON.stringify(parentCategories)),
+    },
+  };
 }
 
-
-
 const getProductCountsByCategory = async () => {
-    
-    const childCounts = await Product.aggregate([
-        { $group: { _id: "$category", count: { $sum: 1 } } }
-    ]);
+  const childCounts = await Product.aggregate([
+    { $group: { _id: "$category", count: { $sum: 1 } } },
+  ]);
 
-    const parentCounts = await Product.aggregate([
-        { $lookup: {
-            from: "categories",
-            localField: "category",
-            foreignField: "_id",
-            as: "categoryData"
-        }},
-        { $unwind: "$categoryData" },
-        { $group: { _id: "$categoryData.parent", count: { $sum: 1 } } }
-    ]);
+  const parentCounts = await Product.aggregate([
+    {
+      $lookup: {
+        from: "categories",
+        localField: "category",
+        foreignField: "_id",
+        as: "categoryData",
+      },
+    },
+    { $unwind: "$categoryData" },
+    { $group: { _id: "$categoryData.parent", count: { $sum: 1 } } },
+  ]);
 
-    const combinedCounts = [...childCounts, ...parentCounts];
+  const combinedCounts = [...childCounts, ...parentCounts];
 
-    return combinedCounts;
+  return combinedCounts;
 };

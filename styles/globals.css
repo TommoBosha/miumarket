@@ -48,6 +48,10 @@ a {
   @apply text-white font-bold text-[12px] md:text-[15px] xl:text-[18px] uppercase;
 }
 
+.active {
+  @apply bg-primary text-black
+}
+
 header {
   position: sticky;
   top: -2px;

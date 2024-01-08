@@ -29,8 +29,14 @@ module.exports = {
         category: '132px minmax(0px, 1fr)',
         categoryxl: '150px minmax(0px, 1fr)',
       },
+      gridAutoRows:{
+catalog:'176px',
+catalogxl:'198px',
+catalogxxl:'238px',
+      },
       borderColor:{
         secondary:'#999',
+        primary: '#D7D7D7',
       }
       
     },
