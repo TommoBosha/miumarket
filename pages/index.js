@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import Layout from '../components/Layout'
 import Product from '../models/Product'
-import PageSlide from '../components/PageSlide';
-import slidesData from '../utils/slideData';
+// import PageSlide from '../components/PageSlide';
+// import slidesData from '../utils/slideData';
 import SocialMedia from '../components/SocialMedia';
 import { mongooseConnect } from '../lib/mongoose';
 import NewProducts from '../components/NewProducts';
 import Link from 'next/link';
 import AboutUs from '../components/AboutUs';
 import Sales from '../components/Sales';
+import HeroSlider from '../components/HeroSlider';
 
 const slides = [
   '1',
@@ -46,13 +47,18 @@ export default function Home({ productsNew, productsTop, productsSale, productsA
   return (
     <div >
       <Layout title="HomePage">
-        <PageSlide
+        {/* <PageSlide
 
           name={slides[currentSlideIndex]}
           direction={currentSlideDirection}
           slidesData={slidesData}
-        />
+        /> */}
+        <div className='xl:max-w-[1440px]'>
+        <HeroSlider/>
+        </div>
+        
         <div className=' container xl:max-w-[1282px]' >
+       
           <div className='flex justify-center items-center mt-6 md:mt-5 xl:mt-10 mb-[22px] md:mb-5 xl:mb-[38px] gap-[6px] md:gap-[22px] xl:gap-[34px]' >
             <button className={`w-[78px] md:w-[96px] xl:w-[144px] h-10 md:h-12 xl:h-[52px] text-white border-none rounded-[16px] cursor-pointer text-[15px] xl:text-[18px] leading-normal xl:leading-[18px]  uppercase hover:bg-primary bg-${activeCategory === 'productsAll' ? 'primary' : 'black'}`} 
         
