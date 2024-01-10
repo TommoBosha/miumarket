@@ -66,7 +66,7 @@ export default function Filter({
         >
           <button
             onClick={() => handleCategoryClick(parentCategory._id)}
-            className="text-[19px] md:text-[15px] xl:text-[18px] leading-[22px] uppercase font-semibold"
+            className="text-[19px] md:text-[15px] xl:text-[18px] leading-[22px] text-primary uppercase font-semibold"
           >
             {parentCategory.name}{" "}
             <span className="text-accent">

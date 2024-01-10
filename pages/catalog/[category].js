@@ -129,7 +129,7 @@ export default function CategoryPage({
 
   return (
     <Layout>
-      <div className=" container xxl:max-w-[1440px] pb-[20px] md:pb-[57px] xl:pb-[42px] ">
+      <div className=" container xl:max-w-[1280px] xxl:max-w-[1440px] pb-[20px] md:pb-[57px] xl:pb-[42px] ">
         <div className="md:grid md:grid-cols-category xl:grid-cols-categoryxl md:gap-[20px] xl:gap-[50px]">
           <div className="relative z-20">
             <Filter
@@ -149,7 +149,7 @@ export default function CategoryPage({
                 Товари за обраними критеріями не знайдено
               </div>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 md:auto-rows-catalog xl:auto-rows-catalogxl xxl:auto-rows-catalogxxl gap-3 md:gap-[10px] xl:gap-[16px] pt-[18px] md:pt-[20px] xl:pt-[30px]">
+              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 xxl:grid-cols-4 md:auto-rows-catalog xl:auto-rows-catalogxl xxl:auto-rows-catalogxxl gap-3 md:gap-[10px] xl:gap-[16px] pt-[18px] md:pt-[20px] xl:pt-[30px]">
                 {currentItems.map((product) => {
                   const priceInDollars = product.price;
                   const exchangeRate = latestCurrency.currency;
@@ -159,11 +159,11 @@ export default function CategoryPage({
                   return (
                     <div
                       key={product._id}
-                      className=" relative z-20 xxl:w-[238px] xxl:h-[238px] "
+                      className=" relative z-20 "
                     >
                       <Link href={"/product/" + product.slug}>
                         <div
-                          className="absolute  top-0 left-0 right-0 bottom-0 z-10 xxl:w-[238px] xxl:h-[238px]"
+                          className="absolute  top-0 left-0 right-0 bottom-0 z-10 "
                           style={{
                             background:
                               "linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.40) 20%), linear-gradient(180deg, rgba(180, 180, 180, 0.00) 20.31%, rgba(51, 51, 51, 0.80) 100%)",
@@ -172,31 +172,36 @@ export default function CategoryPage({
                         <img
                           src={product.images[0]}
                           alt={product.title}
-                          className=" object-fill"
+                          className=" object-fill "
                         />
-                        <div className="">
-                          <h2 className="absolute z-20 bottom-[21px] md:bottom-[16px] xl:bottom-[4px]  left-[4px] xl:left-[7px] w-[128px]  xl:w-[146px]  text-[12px]  xl:text-[13px]  uppercase text-white">
+                        </Link>
+                        <div>
+                        <Link href={"/product/" + product.slug}>
+                          <h2 className="absolute xl:pt-[130px]  z-20 bottom-[21px] md:bottom-[16px] xl:bottom-[4px]  left-[4px] xl:left-[7px] w-[128px]  xl:w-[134px]  text-[12px]  xl:text-[13px]  uppercase text-white">
                             {product.title}
                           </h2>
-                          <p className="absolute z-20 bottom-[6px] xl:bottom-[10px]  left-[4px] xl:left-[132px] xxl:left-[170px]  text-[12px] xl:text-[13px] leading-[6px] font-bold uppercase text-primary">
+                          <p className="absolute xl:pt-[130px]  z-20 bottom-[6px] xl:bottom-[10px]  left-[4px] xl:left-[132px] xxl:left-[170px]  text-[12px] xl:text-[13px] leading-[6px] font-bold uppercase text-primary">
                             {priceInHryvnia} грн
                           </p>
-                        </div>
-                      </Link>
-                      <div className=" ">
+                        </Link>
+                      
+                      <div className="absolute z-10 bottom-[-7px] m-0 right-1 xl:top-0 xl:gap-[45px]  ">
                         <button
                           onClick={() => toggleWishlist(product._id)}
-                          className="absolute z-20 bottom-[0px] xl:bottom-[100px]  right-[22px] xl:right-0 xl:left-[4px] xl:top-[-75px] xxl:top-[-100px] "
+                          className="xl:pr-[153px] xxl:pr-[194px]"
                         >
-                          <HeartIcon isWished={isWished} product={product} />
+                          <HeartIcon 
+                         
+                          isWished={isWished} product={product} />
                         </button>
 
                         <button
-                          className=" absolute z-20 bottom-[1px] xl:bottom-[100px]  right-1 xl:top-[-75px] xxl:top-[-100px]"
+                         
                           onClick={() => addToCardHandler(product._id)}
                         >
                           <CartIcon />
                         </button>
+                      </div>
                       </div>
                     </div>
                   );

@@ -53,7 +53,7 @@ export default function Home({ productsNew, productsTop, productsSale, productsA
           direction={currentSlideDirection}
           slidesData={slidesData}
         /> */}
-        <div className='xl:max-w-[1440px]'>
+        <div className='  xl:max-w-[1440px] xxl:max-w-[2560px]'>
         <HeroSlider/>
         </div>
         
