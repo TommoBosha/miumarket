@@ -48,18 +48,19 @@ function reducer(state, action) {
             Cookies.set("cart", JSON.stringify({ ...state.cart, cartItems }));
             return { ...state, cart: { ...state.cart, cartItems } };
         }
-        case "SAVE_SHIPPING_ADDRESS":
-            return {
-                ...state,
-                cart: {
-                    ...state.cart,
-                    shippingAddress: {
-                        ...state.cart.shippingAddress,
-                        ...action.payload,
-                    }
-
+        case "SAVE_SHIPPING_ADDRESS":{
+            const updatedCart = {
+                ...state.cart,
+                shippingAddress: {
+                    ...state.cart.shippingAddress,
+                    ...action.payload,
                 }
             };
+            Cookies.set('cart', JSON.stringify(updatedCart));
+           
+            return { ...state, cart: updatedCart };
+        }
+           
         case 'CART_CLEAR_ITEMS':
             return {
                 ...state, cart: { ...state.cart, cartItems: [] }

@@ -31,7 +31,7 @@ export default function HeroSlider() {
           slot="container-start"
           className="parallax-bg "
           style={{
-            "background-image":
+            "backgroundImage":
               "url(https://res.cloudinary.com/dfshhapcu/image/upload/v1704792514/9_1_ycvsae.png)",
           }}
           data-swiper-parallax="-23%"

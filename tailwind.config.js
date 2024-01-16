@@ -19,6 +19,7 @@ module.exports = {
         secondary: "#FFCD05",
         graybg: "#D7D7D7",
         counter: '#ECECEC',
+        buttonSecondary: '#999',
         gradient:
           "linear-gradient(180deg, rgba(180, 180, 180, 0.00) 20.31%, #333 100%)",
       },
@@ -44,9 +45,13 @@ module.exports = {
       borderColor: {
         secondary: "#999",
         primary: "#D7D7D7",
+        accent: "#3ACCE9",
       },
       stroke: {
         primary: "#3ACCE9",
+      },
+      maxWidth: {
+        xxl: '836px'
       }
     },
   },
