@@ -74,7 +74,7 @@ export default function OrderScreen() {
     shippingAddress,
     paymentMethod,
     orderItems,
-    itemsPrice,
+   
 
     totalPrice,
     isPaid,
@@ -102,18 +102,18 @@ console.log(orderItems)
   return (
     <Layout title={`Замовлення ${orderId}`}>
         <div className="bg-graybg">
-            <div className="container relative z-10">
-      <h1 className="mb-4 text-xl">{`Замовлення ${orderId}`}</h1>
+            <div className="container relative z-10 pb-[25px] md:pb-[42px] xl:pb-[124px]">
+      <h1 className="xl:pl-[182px] pt-[12px]  text-[20px] md:text-[27px] xl:text-[3]px font-bold uppercase">{`Замовлення ${orderId} `}</h1>
       {loading ? (
         <div>Loading...</div>
       ) : error ? (
         <div className="alert-error">{error}</div>
       ) : (
-        <div className="grid md:grid-cols-4 md:gap-5">
-          <div className="overflow-x-auto md:col-span-3">
-            <div className="card  p-5">
-              <h2 className="mb-2 text-lg">Адреса доставки</h2>
-              <div>{displayShippingDetails()}</div>
+        <div className="max-w-xxl mx-auto grid md:grid-cols-cartContainer xl:grid-cols-placeorderContainerXl  md:gap-[24px] pt-[9px] md:pt-[18px] gap-3.5  ">
+          <div className="grid grid-cols-1 gap-[14px] ">
+            <div className="border-[2px] py-[10px] px-[12px]  border-secondary  xl:gap-[28px] relative">
+              <h2 className="mb-2 text-[15px] font-bold uppercase leading-[22.5px] text-white">Адреса</h2>
+              <div className="text-[12px] md:text-[15px] leading-[18px] md:leading-[22.5px]">{displayShippingDetails()}</div>
               {isDelivered ? (
                 <div className="alert-success">Delivered at {deliveredAt}</div>
               ) : (
@@ -121,9 +121,9 @@ console.log(orderItems)
               )}
             </div>
 
-            <div className="card p-5">
-              <h2 className="mb-2 text-lg">Спосіб оплати</h2>
-              <div>{paymentMethod}</div>
+            <div className="border-[2px] py-[10px] px-[12px]  border-secondary  xl:gap-[28px] relative">
+              <h2 className="mmb-2 text-[15px] font-bold uppercase leading-[22.5px] text-white">Спосіб оплати</h2>
+              <div className="text-[12px] md:text-[15px] leading-[18px] md:leading-[22.5px]">{paymentMethod}</div>
               {isPaid ? (
                 <div className="alert-success">Paid at {paidAt}</div>
               ) : (
@@ -131,68 +131,83 @@ console.log(orderItems)
               )}
             </div>
 
-            <div className="card overflow-x-auto p-5">
-              <h2 className="mb-2 text-lg">Товари замовлення</h2>
-              <table className="min-w-full">
-                <thead className="border-b">
-                  <tr>
-                    <th className="px-5 text-left">Товар</th>
-                    <th className="    p-5 text-right">Кількість</th>
-                    <th className="  p-5 text-right">Ціна</th>
-                    <th className="p-5 text-right">Проміжний підсумок</th>
-                  </tr>
-                </thead>
-                <tbody>
+            <div className="grid md:grid-cols-productContainer xl:grid-cols-productContainerXl md:gap-[18px] xl:gap-[48px]  gap-3.5">
+              
+              <div className="grid grid-cols-1 gap-[14px] border-secondary border-[2px]">
+                
+                
                   {orderItems.map((item) => (
-                    <tr key={item._id} className="border-b">
-                      <td>
+                    <div key={item._id} className="py-[10px] px-[12px] xl:px-[24px] xl:py-[18px]   xl:gap-[28px] relative">
+                      <div className="flex items-center gap-[12px] md:gap-[17px] md:items-start">
+                        
                         <Link
                           href={`/product/${item.slug}`}
-                          className="flex items-center"
+                         
                         >
-                          <Image
-                            src={item.images[0]}
-                            alt={item.title}
-                            width={50}
-                            height={50}
-                          ></Image>
-                          &nbsp;
-                          {item.title}
-                        </Link>
-                      </td>
-                      <td className=" p-5 text-right">{item.quantity}</td>
-                      <td className="p-5 text-right">{item.price} грн.</td>
-                      <td className="p-5 text-right">
-                        {item.quantity * item.price} грн.
-                      </td>
-                    </tr>
+                           <Image
+                              src={item.images[0]}
+                              alt={item.title}
+                              width={102}
+                              height={102}
+                              className="w-[102px] h-[102px] md:w-[76px] md:h-[76px] border-[1px] border-white"
+                            />
+                          </Link>
+                          <div className="flex flex-col md:flex-row md:gap-[43px] xl:gap-[150px] md:justify-between md:items-start">
+                            <div className="flex flex-col">
+                              <p className="text-[15px] underline md:pb-[10px] md:w-[284px] xl:w-[313px]">
+                                {item.title}
+                              </p>
+                              <p className="text-[12px] md:text-[11px] md:pb-[8px] ">
+                                {item.productIndex}
+                              </p>
+                              
+                            </div>
+                            <div className="flex flex-row gap-[11px] md:gap-[37px] xl:gap-[61px] items-center md:items-end">
+                              <div className="flex flex-col">
+                                <p className=" text-[11px]  underline">
+                                  ціна за одиницю
+                                </p>
+                                <p className="text-[15px] md:text-[20px] xl:text-[15px] font-bold ">
+                                  {item.price} грн
+                                </p>
+                              </div>
+                              <div className="flex flex-col">
+                                <p className=" text-[11px]  underline">
+                                  загальна вартість
+                                </p>
+                                <p className=" text-[15px] md:text-[20px] xl:text-[15px] font-bold text-primary">
+                                  {item.quantity * item.price} грн
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                      </div>
                   ))}
-                </tbody>
-              </table>
+               
+              </div>
             </div>
           </div>
           <div>
-            <div className="card  p-5">
-              <h2 className="mb-2 text-lg">Сума замовлення</h2>
-              <ul>
-                <li>
-                  <div className="mb-2 flex justify-between">
-                    <div>Товари</div>
-                    <div>{itemsPrice} грн.</div>
+            <div className="md:min-h-[168px] px-[20px] md:py-[8px] pt-[15px] pb-[12px] xl:pt-[20px] xl:pb-[17px] bg-counter ">
+              <h2 className="text-[15px] xl:text-[24px] xl:text-center font-bold uppercase">Сума замовлення</h2>
+              
+              <div className=" flex justify-between">
+                    <p className="text-[15px]">Товари</p>
+                    <div className="text-[15px] font-bold text-primary">
+                      {totalPrice} грн
+                    </div>
                   </div>
-                </li>{" "}
-                <li>
-                  <div className="mb-2 flex justify-between">
-                    <div>Доставка згідно тарифу перевізника</div>
-                  </div>
-                </li>
-                <li>
-                  <div className="mb-2 flex justify-between">
-                    <div>Загальна сума</div>
-                    <div>{totalPrice} грн.</div>
-                  </div>
-                </li>
-              </ul>
+                  <div>
+                    <div className="pt-[5px] md:pt-[16px] xl:pt-[71px] text-[15px] md:text-[11px] font-bold uppercase text-center text-cart md:text-black xl:text-cart">
+                      {" "}
+                      Доставка згідно тарифу перевізника
+                    </div>
+                    </div>
+              
+              
+              
             </div>
           </div>
         </div>

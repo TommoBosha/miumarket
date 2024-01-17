@@ -36,6 +36,10 @@ module.exports = {
         cartXl: '119px minmax(0px, 1fr)',
         cartContainer: '389px minmax(0px, 1fr)',
         cartContainerXl: '637px minmax(0px, 1fr)',
+        placeorderContainerXl: '518px minmax(0px, 1fr)',
+        productContainerXl: '840px minmax(0px, 1fr)',
+        productContainer: '698px minmax(0px, 1fr)'
+        
       },
       gridAutoRows: {
         catalog: "176px",

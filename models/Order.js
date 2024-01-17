@@ -10,6 +10,7 @@ const orderSchema = new mongoose.Schema(
         images: { type: Array, required: true },
         price: { type: Number, required: true },
         slug: { type: String, required: true },
+        productIndex: { type: String, required: true },
       },
     ],
     shippingAddress: {
