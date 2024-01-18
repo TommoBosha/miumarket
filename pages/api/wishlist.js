@@ -34,4 +34,14 @@ export default async function handle(req, res) {
             res.status(401).json({ error: "Користувач не авторизований" });
         }
     }
+
+    if (req.method === 'DELETE') {
+        if (user) {
+            const { productId } = req.body;
+            await WishedProduct.deleteOne({ userEmail: user.email, product: productId });
+            res.status(200).json({ message: "Продукт видалено зі списку бажань" });
+        } else {
+            res.status(401).json({ error: "Користувач не авторизований" });
+        }
+    }
 }
