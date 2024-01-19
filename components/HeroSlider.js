@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import { Parallax, Pagination, Navigation } from "swiper/modules";
+import { Parallax, Pagination} from "swiper/modules";
 import Image from "next/image";
 import ArrowIcon from "./ArrowIcon";
 import Link from "next/link";
@@ -23,8 +23,8 @@ export default function HeroSlider() {
         pagination={{
           clickable: true,
         }}
-        navigation={true}
-        modules={[Parallax, Pagination, Navigation]}
+      
+        modules={[Parallax, Pagination]}
         className="mySwiper "
       >
         <div
@@ -89,7 +89,7 @@ export default function HeroSlider() {
         </SwiperSlide>
 
 
-        <SwiperSlide className="">
+        {/* <SwiperSlide className="">
           <div className="flex flex-row relative max-w-[425px] md:max-w-[780px] mx-auto xl:max-w-[1440px] xl:mx-auto">
             <div className="absolute top-[415px] right-[78px] md:right-0 md:left-[65px] md:top-[72px] xl:top-0  md:block  xl:ml-[65px] xl:mt-[112px] ">
               <h2
@@ -244,7 +244,7 @@ export default function HeroSlider() {
               </p>
             </div>
           </div>
-        </SwiperSlide>
+        </SwiperSlide> */}
       </Swiper>
     </>
   );
