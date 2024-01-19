@@ -18,7 +18,7 @@ export default function Delivery() {
         <Layout>
             <div className='bg-graybg'>
                 <div
-                    className='container relative z-10  justify-center pt-[14px] md:pt-[20px] xl:pt-[28px] pb-2 '
+                    className='container xxl:max-w-[1440px] relative z-10  justify-center pt-[14px] md:pt-[20px] xl:pt-[28px] pb-2 '
                    >
                     <h1 className='text-primary  text-center uppercase  mb-[12px] md:mb-[15px] xl:mb-[30px] font-bold text-[24px] leading-normal'>доставка</h1>
 

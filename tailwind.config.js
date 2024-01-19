@@ -26,6 +26,7 @@ module.exports = {
       screens: {
         sm: "425px",
         xxl: "1440px",
+        xxxl:'2560px',
       },
       gridTemplateColumns: {
         footermobile: "148px minmax(0px, 1fr)",

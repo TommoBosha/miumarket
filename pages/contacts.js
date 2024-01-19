@@ -19,7 +19,7 @@ export default function Contacts() {
   return (
     <Layout>
       <div className=" bg-graybg w-full">
-        <div className="container flex flex-col md:grid md:grid-cols-2 md:gap-[40px] xl:gap-[108px] justify-center pt-[14px] md:pt-[32px] xl:pt-[38px] pb-[28px] md:pb-[32px] xl:pb-[40px] z-30 relative">
+        <div className="container xxl:max-w-[1440px] flex flex-col md:grid md:grid-cols-2 md:gap-[40px] xl:gap-[108px] justify-center pt-[14px] md:pt-[32px] xl:pt-[38px] pb-[28px] md:pb-[32px] xl:pb-[40px] z-30 relative">
           <div className=" mb-2 ">
             <h1 className=" uppercase mb-[13px] md:mb-[24px] font-bold text-[24px] md:text-[27px] xl:text-[30px] leading-normal">
               Контакти
