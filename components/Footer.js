@@ -27,7 +27,7 @@ export default function Footer() {
     }
 
     return (
-        <div className=" py-8 container" 
+        <div className=" py-8 container xl:max-w-[1440px]" 
 
         >
 

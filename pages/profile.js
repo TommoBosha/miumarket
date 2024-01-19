@@ -4,7 +4,6 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import Tabs from "../components/Tabs";
 import SingleOrder from "../components/SingleOrder";
-import ProductBox from "../components/ProductBox";
 import Spinner from "../components/Spinner";
 import Link from "next/link";
 import Input from "../components/Input";
@@ -13,9 +12,9 @@ import { useMediaQuery } from "react-responsive";
 import Image from "next/image";
 import { mongooseConnect } from "../lib/mongoose";
 import { Currency } from "../models/Currency";
+import FavoriteItem from "../components/FavoriteItem";
 
-
-export default function ProfileScreen({ latestCurrency}) {
+export default function ProfileScreen({ latestCurrency }) {
   const { data: session } = useSession();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -57,7 +56,6 @@ export default function ProfileScreen({ latestCurrency}) {
     setWishlistLoaded(false);
     setOrderLoaded(false);
     axios.get("/api/address").then((response) => {
-      console.log(response.data);
       if (response.data?.name) {
         setName(response.data.name);
         setEmail(response.data.email);
@@ -97,7 +95,7 @@ export default function ProfileScreen({ latestCurrency}) {
   return (
     <Layout>
       <div className="bg-graybg  ">
-        <div className="container relative z-10 pb-[22px] md:pb-[25px] xl:pb-[32px]">
+        <div className="container xxl:max-w-[1440px] relative z-10 pb-[22px] md:pb-[25px] xl:pb-[32px]">
           <Tabs
             tabs={["Профіль", "Замовлення", "Улюблені"]}
             active={activeTab}
@@ -192,7 +190,7 @@ export default function ProfileScreen({ latestCurrency}) {
           )}
 
           {activeTab === "Замовлення" && (
-            < >
+            <>
               {!orderLoaded && <Spinner fullWidth={true} />}
               {orderLoaded && (
                 <div>
@@ -218,7 +216,7 @@ export default function ProfileScreen({ latestCurrency}) {
               {!wishlistLoaded && <Spinner fullWidth={true} />}
               {wishlistLoaded && (
                 <>
-                  <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 xxl:grid-cols-4 md:auto-rows-catalog xl:auto-rows-catalogxl xxl:auto-rows-catalogxxl gap-3 md:gap-[10px] xl:gap-[16px] pt-[18px] md:pt-[20px] xl:pt-[30px]">
+                  <div className="grid grid-cols-2  md:grid-cols-3 xl:grid-cols-4 xxl:grid-cols-4 md:auto-rows-catalog xl:auto-rows-catalogxl xxl:auto-rows-catalogxxl gap-3 md:gap-[10px] xl:gap-[16px] pt-[18px] md:pt-[20px] xl:pt-[30px]">
                     {wishedProducts.length > 0 &&
                       wishedProducts.map((wp) => {
                         const priceInDollars = wp.price;
@@ -226,7 +224,7 @@ export default function ProfileScreen({ latestCurrency}) {
 
                         const priceInHryvnia = priceInDollars * exchangeRate;
                         return (
-                          <ProductBox
+                          <FavoriteItem
                             key={wp._id}
                             {...wp}
                             wished={true}
@@ -234,6 +232,7 @@ export default function ProfileScreen({ latestCurrency}) {
                             productRemovedFromWishlist={() =>
                               productRemovedFromWishlist(wp._id)
                             }
+                            className=''
                           />
                         );
                       })}
@@ -271,12 +270,10 @@ export default function ProfileScreen({ latestCurrency}) {
 export async function getServerSideProps() {
   await mongooseConnect();
   const latestCurrency = await Currency.findOne().sort({ currency: -1 });
-  
 
   return {
     props: {
       latestCurrency: JSON.parse(JSON.stringify(latestCurrency)),
-     
     },
   };
 }

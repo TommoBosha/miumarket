@@ -30,7 +30,7 @@ export default function Layout({ title, children }) {
           <div className="flex-col flex    justify-center items-center    relative z-0  ">
             <Footer />
             <div className="bg-white w-full">
-              <p className="container  py-[13px] md:py-[16px] xl:py-[25px]  ">
+              <p className="container xl:max-w-[1440px] py-[13px] md:py-[16px] xl:py-[25px]  ">
                 Copyright © 2023
               </p>
             </div>

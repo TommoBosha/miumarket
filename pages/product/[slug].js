@@ -109,7 +109,7 @@ export default function ProductScreen(props) {
 
   return (
     <Layout title={product.title}>
-      <div className=" container pb-[30px] md:pb-[61px] xl:pb-[46px] relative z-10  ">
+      <div className=" container max-w-[425px] md:max-w-[1024px] xl:max-w-[1280px] xxl:max-w-[1440px] pb-[30px] md:pb-[61px] xl:pb-[46px] relative z-10  ">
         <div
           className="pt-[14px] flex items-center text-base "
           style={{ color: "#D7D7D7" }}
@@ -144,8 +144,8 @@ export default function ProductScreen(props) {
           ))}
         </div>
 
-        <div className="pt-[5px] flex flex-col md:grid md:grid-cols-2 md:gap-[55px] xl:gap-10">
-          <div>
+        <div className="pt-[5px] flex flex-col md:grid md:grid-cols-2 md:gap-[40px] xl:gap-10">
+          <div className="max-w-[340px] xl:max-w-[520px]">
             <ProductSlider images={product.images} />
           </div>
           <div className="flex flex-col items-center md:items-start">

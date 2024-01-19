@@ -157,10 +157,7 @@ export default function CategoryPage({
                   const priceInHryvnia = priceInDollars * exchangeRate;
 
                   return (
-                    <div
-                      key={product._id}
-                      className=" relative z-20 "
-                    >
+                    <div key={product._id} className=" relative z-20 ">
                       <Link href={"/product/" + product.slug}>
                         <div
                           className="absolute  top-0 left-0 right-0 bottom-0 z-10 "
@@ -174,8 +171,8 @@ export default function CategoryPage({
                           alt={product.title}
                           className=" object-fill "
                         />
-                        </Link>
-                        <div>
+                      </Link>
+                      <div>
                         <Link href={"/product/" + product.slug}>
                           <h2 className="absolute xl:pt-[130px]  z-20 bottom-[21px] md:bottom-[16px] xl:bottom-[4px]  left-[4px] xl:left-[7px] w-[128px]  xl:w-[134px]  text-[12px]  xl:text-[13px]  uppercase text-white">
                             {product.title}
@@ -184,24 +181,19 @@ export default function CategoryPage({
                             {priceInHryvnia} грн
                           </p>
                         </Link>
-                      
-                      <div className="absolute z-10 bottom-[-7px] m-0 right-1 xl:top-0 xl:gap-[45px]  ">
-                        <button
-                          onClick={() => toggleWishlist(product._id)}
-                          className="xl:pr-[153px] xxl:pr-[194px]"
-                        >
-                          <HeartIcon 
-                         
-                          isWished={isWished} product={product} />
-                        </button>
 
-                        <button
-                         
-                          onClick={() => addToCardHandler(product._id)}
-                        >
-                          <CartIcon />
-                        </button>
-                      </div>
+                        <div className="absolute z-10 bottom-[-7px] m-0 right-1 xl:top-0 xl:gap-[45px]  ">
+                          <button
+                            onClick={() => toggleWishlist(product._id)}
+                            className="xl:pr-[153px] xxl:pr-[194px]"
+                          >
+                            <HeartIcon isWished={isWished} product={product} />
+                          </button>
+
+                          <button onClick={() => addToCardHandler(product._id)}>
+                            <CartIcon />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   );

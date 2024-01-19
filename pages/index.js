@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Layout from '../components/Layout'
 import Product from '../models/Product'
-// import PageSlide from '../components/PageSlide';
-// import slidesData from '../utils/slideData';
 import SocialMedia from '../components/SocialMedia';
 import { mongooseConnect } from '../lib/mongoose';
 import NewProducts from '../components/NewProducts';
@@ -11,34 +9,11 @@ import AboutUs from '../components/AboutUs';
 import Sales from '../components/Sales';
 import HeroSlider from '../components/HeroSlider';
 
-const slides = [
-  '1',
-  '2-2',
-  '3'
-];
 
 export default function Home({ productsNew, productsTop, productsSale, productsAll }) {
-
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [currentSlideDirection, setCurrentSlideDirection] = useState('left');
+ 
   const [activeCategory, setActiveCategory] = useState('productsAll');
   
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const nextIndex =
-        currentSlideIndex === slides.length - 1 ? 0 : currentSlideIndex + 1;
-      const direction = currentSlideDirection === 'left' ? 'right' : 'left';
-
-      setCurrentSlideIndex(nextIndex);
-      setCurrentSlideDirection(direction);
-    }, 8000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [currentSlideIndex, currentSlideDirection]);
-
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
   };
@@ -47,12 +22,7 @@ export default function Home({ productsNew, productsTop, productsSale, productsA
   return (
     <div >
       <Layout title="HomePage">
-        {/* <PageSlide
-
-          name={slides[currentSlideIndex]}
-          direction={currentSlideDirection}
-          slidesData={slidesData}
-        /> */}
+     
         <div className='  xl:max-w-[1440px] xxl:max-w-[2560px]'>
         <HeroSlider/>
         </div>

@@ -121,7 +121,7 @@ export default function CatalogPage({
 
   return (
     <Layout>
-      <div className="container xxl:max-w-[1440px] pb-[20px] md:pb-[57px] xl:pb-[42px]">
+      <div className="container relative z-20 xxl:max-w-[1440px] pb-[20px] md:pb-[57px] xl:pb-[42px]">
         <div className="md:grid md:grid-cols-category xl:grid-cols-categoryxl md:gap-[20px] xl:gap-[50px]">
           <div className="relative z-20">
             <Filter
@@ -152,11 +152,11 @@ export default function CatalogPage({
                   return (
                     <div
                       key={index}
-                      className=" relative z-20 xxl:w-[238px] xxl:h-[238px] "
+                      className=" relative z-20 "
                     >
                       <Link href={"/product/" + product.slug}>
                         <div
-                          className="absolute  top-0 left-0 right-0 bottom-0 z-10 xxl:w-[238px] xxl:h-[238px]"
+                          className="absolute  top-0 left-0 right-0 bottom-0 z-10 "
                           style={{
                             background:
                               "linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.40) 20%), linear-gradient(180deg, rgba(180, 180, 180, 0.00) 20.31%, rgba(51, 51, 51, 0.80) 100%)",
@@ -167,63 +167,69 @@ export default function CatalogPage({
                           alt={product.title}
                           className="object-fill"
                         />
+                        </Link>
                         <div className="">
-                          <h2 className="absolute z-20 bottom-[21px] md:bottom-[16px] xl:bottom-[4px]  left-[4px] xl:left-[7px] w-[128px]  xl:w-[146px]  text-[12px]  xl:text-[13px]  uppercase text-white">
+                        <Link href={"/product/" + product.slug}>
+                          <h2 className="absolute xl:pt-[130px]  z-20 bottom-[21px] md:bottom-[16px] xl:bottom-[4px]  left-[4px] xl:left-[7px] w-[128px]  xl:w-[134px]  text-[12px]  xl:text-[13px]  uppercase text-white">
                             {product.title}
                           </h2>
-                          <p className="absolute z-20 bottom-[6px] xl:bottom-[10px]  left-[4px] xl:left-[132px] xxl:left-[170px]  text-[12px] xl:text-[13px] leading-[6px] font-bold uppercase text-primary">
+                          <p className="absolute xl:pt-[130px]  z-20 bottom-[6px] xl:bottom-[10px]  left-[4px] xl:left-[132px] xxl:left-[170px]  text-[12px] xl:text-[13px] leading-[6px] font-bold uppercase text-primary">
                             {priceInHryvnia} грн
                           </p>
-                        </div>
+                        
                       </Link>
 
-                      <div>
+                      <div className="absolute z-10 bottom-[-7px] m-0 right-1 xl:top-0 xl:gap-[45px]  ">
                         <button
                           onClick={() => toggleWishlist(product._id)}
-                          className="absolute z-20 bottom-[0px] xl:bottom-[100px]  right-[22px] xl:right-0 xl:left-[4px] xl:top-[-75px] xxl:top-[-100px] "
+                          className="xl:pr-[153px] xxl:pr-[194px] "
                         >
                           <HeartIcon isWished={isWished} product={product} />
                         </button>
 
                         <button
-                          className=" absolute z-20 bottom-[1px] xl:bottom-[100px]  right-1 xl:top-[-75px] xxl:top-[-100px]"
+                          
                           onClick={() => addToCardHandler(product._id)}
                         >
                           <CartIcon />
                         </button>
                       </div>
+                      </div>
                     </div>
                   );
                 })}
+
+                
+
+               
               </div>
             )}
-
-            <div className="pt-[18px] md:pt-[12px] xl:pt-[40px] mx-auto  ">
-              <Pagination
-                itemsPerPage={itemsPerPage}
-                totalItems={
-                  isFiltered ? filteredProducts.length : products.length
-                }
-                paginate={setCurrentPage}
-                currentPage={currentPage}
-              />
-            </div>
+           <div className="pt-[18px] md:pt-[12px] xl:pt-[40px] mx-auto ">
+                  <Pagination
+                    itemsPerPage={itemsPerPage}
+                    totalItems={
+                      isFiltered ? filteredProducts.length : products.length
+                    }
+                    paginate={setCurrentPage}
+                    currentPage={currentPage}
+                  />
+                </div>
           </div>
         </div>
+       
       </div>
-
       {isClient && (
-        <div className="footer-image-wrapper">
-          <Image
-            src={imageSrc}
-            alt="uzor"
-            width={1900}
-            height={253}
-            className=" absolute left-0 bottom-0 z-0 "
-            priority={true}
-          />
-        </div>
-      )}
+            <div className="footer-image-wrapper">
+            <Image
+              src={imageSrc}
+              alt="uzor"
+              width={1900}
+              height={253}
+              className=" absolute left-0 bottom-0 -z-10 "
+              priority={true}
+            />
+          </div>
+        )}
     </Layout>
   );
 }

@@ -24,6 +24,7 @@ module.exports = {
           "linear-gradient(180deg, rgba(180, 180, 180, 0.00) 20.31%, #333 100%)",
       },
       screens: {
+        sm: "425px",
         xxl: "1440px",
       },
       gridTemplateColumns: {

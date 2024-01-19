@@ -1,51 +1,29 @@
 import Link from "next/link";
 import Image from "next/image";
-import XMarkIcon from "@heroicons/react/24/outline/XMarkIcon";
+
 
 export default function ProductBox({
   title,
   slug,
   images,
-  priceInHryvnia,
-  productRemovedFromWishlist,
 }) {
   const url = "/product/" + slug;
 
   return (
-    <div className="relative z-20">
-      <Link href={url}>
-        <div
-          className="absolute  top-0 left-0 right-0 bottom-0 z-10 "
-          style={{
-            background:
-              "linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.40) 20%), linear-gradient(180deg, rgba(180, 180, 180, 0.00) 20.31%, rgba(51, 51, 51, 0.80) 100%)",
-          }}
-        ></div>
-        <Image
-          className="relative z-0 w-full h-full  "
-          src={images?.[0]}
-          alt={title}
-          width={157}
-          height={157}
-        />
+    <div className="relative md:w-[213px] xl:min-w-[323px] md:h-[213px] xl:min-h-[323px]">
+      <Link className="text-center flex items-center justify-center"
+       href={url}>
+        <div className="absolute  top-0 left-0 right-0 bottom-0 z-10" style={{ background: 'linear-gradient(180deg, rgba(180, 180, 180, 0.00) 20.31%, #333 100%)'}}></div>
+        <Image 
+        className="relative z-0 w-full h-full  "
+        src={images?.[0]} 
+        alt={title}
+        width={157}
+        height={157} />
       </Link>
-      <div className="relative z-20">
-        <Link href={url}>
-          <h2 className="absolute xl:pt-[130px]  z-20 bottom-[21px] md:bottom-[16px] xl:bottom-[4px]  left-[4px] xl:left-[7px] w-[128px]  xl:w-[134px]  text-[12px]  xl:text-[13px]  uppercase text-white">
-            {title}
-          </h2>
-        </Link>
-        <p className="absolute xl:pt-[130px]  z-20 bottom-[6px] xl:bottom-[10px]  left-[4px] xl:left-[132px] xxl:left-[170px]  text-[12px] xl:text-[13px] leading-[6px] font-bold uppercase text-primary">
-          {priceInHryvnia} грн
-        </p>
-       
-          <button onClick={productRemovedFromWishlist}
-          className="absolute z-30 bottom-[140px] md:bottom-[155px] xl:bottom-[215px] right-[8px] text-white md:text-white"
-          >
-
-            <XMarkIcon className="h-[14px] w-[14px] md:h-[17px] md:w-[17px]" />
-          </button>
-        
+      <div  className="relative z-20">
+        <Link className="absolute bottom-[20px] px-[2px] left-0 right-0 text-center text-white text-[12px] md:text-[15px] leading-normal  uppercase"
+        href={url}>{title}</Link>
       </div>
     </div>
   );
