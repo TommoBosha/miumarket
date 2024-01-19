@@ -200,9 +200,24 @@ input:-webkit-autofill:active {
   padding: 18px;
   height: 100%;
   width: 451px;
-  border-radius: 20px;
+  
   position: relative;
   z-index: 100;
+}
+
+@media (min-width: 768px)  { 
+  .modalContent {
+    
+    border-radius: 20px;
+    width: 410px;
+  }
+}
+
+@media (min-width: 1280px)  { 
+  .modalContent {
+    border-radius: 20px;
+    width: 451px;
+  }
 }
 
 .scrollableContent {

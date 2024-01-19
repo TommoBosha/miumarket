@@ -36,7 +36,7 @@ function Header({ setIsAuthModalOpen }) {
 
   return (
     <header className=" container container-header   md:max-w-[1279px] xl:max-w-[2560px]">
-      <nav className="flex xl:max-w-[1440px] mx-auto items-center justify-between shadow-[bottom] py-[16px] md:py-[22px]">
+      <nav className="flex md:max-w-[780px] xl:max-w-[1440px] mx-auto items-center justify-between shadow-[bottom] py-[16px] md:py-[22px]">
         <div className="relative  mr-4 md:mr-2 xl:mr-[66px]">
           <button
             className="  text-gray-700 rounded-md outline-none cursor-pointer"

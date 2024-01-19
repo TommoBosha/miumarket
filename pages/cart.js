@@ -12,12 +12,15 @@ import { toast } from "react-toastify";
 import CartArrowIcon from "../components/CartArrowIcon";
 import QuantityCounter from "../components/QuantityCounter";
 import { useMediaQuery } from "react-responsive";
+import AuthModal from "../components/AuthModal";
 
 function CartScreen() {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
   const { data: session } = useSession();
   const [isClient, setIsClient] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isLoginModal, setIsLoginModal] = useState(true);
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   const imageSrc = isMobile ? "/images/gray-mobile.svg" : "/images/gray.svg";
@@ -78,7 +81,7 @@ function CartScreen() {
           </div>
 
           {cartItems.length === 0 ? (
-            <div>
+            <div className=" h-[30vh]">
               Кошик пустий.{" "}
               <Link
                 href="/catalog"
@@ -151,12 +154,21 @@ function CartScreen() {
                     грн
                   </div>
                   <div className="flex flex-col justify-center">
-                    <button
-                      onClick={handleButtonClick}
-                      className="primary-button w-full"
-                    >
-                      Оформити замовлення
-                    </button>
+                    {session?.user ? (
+                      <button
+                        onClick={handleButtonClick}
+                        className="primary-button w-full"
+                      >
+                        Оформити замовлення
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => setIsAuthModalOpen(true)}
+                        className="primary-button w-full"
+                      >
+                        Оформити замовлення
+                      </button>
+                    )}
 
                     <button
                       onClick={clearCartHandler}
@@ -183,6 +195,14 @@ function CartScreen() {
           </div>
         )}
       </div>
+
+      {isAuthModalOpen && (
+        <AuthModal
+          onClose={() => setIsAuthModalOpen(false)}
+          isLogin={isLoginModal}
+          setIsLogin={setIsLoginModal}
+        />
+      )}
     </Layout>
   );
 }
