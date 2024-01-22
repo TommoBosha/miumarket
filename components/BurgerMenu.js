@@ -69,6 +69,7 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
             window.removeEventListener("keydown", handleKeyPress);
             window.removeEventListener("click", handleBurgerMenuClick);
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isEscKeyPressed]);
 
 

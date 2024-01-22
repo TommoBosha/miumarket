@@ -20,6 +20,7 @@ export default function NovaPoshta({ errors, register, cityName, setCityName, wa
       }
     }
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cityName]);
 
   async function searchCityHandler() {
