@@ -48,13 +48,15 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
     };
 
 
-    const handleBurgerMenuClick = (e) => {
-        if (burgerMenuRef.current && !burgerMenuRef.current.contains(e.target)) {
-            setNavbar(false);
-        }
-    };
+   
 
     useEffect(() => {
+
+        const handleBurgerMenuClick = (e) => {
+            if (burgerMenuRef.current && !burgerMenuRef.current.contains(e.target)) {
+                setNavbar(false);
+            }
+        };
 
         window.addEventListener("keydown", handleKeyPress);
 
@@ -69,8 +71,8 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
             window.removeEventListener("keydown", handleKeyPress);
             window.removeEventListener("click", handleBurgerMenuClick);
         };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isEscKeyPressed]);
+ 
+    }, [isEscKeyPressed, setNavbar]);
 
 
     return (

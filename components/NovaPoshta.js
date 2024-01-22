@@ -11,6 +11,44 @@ export default function NovaPoshta({ errors, register, cityName, setCityName, wa
  
 
   useEffect(() => {
+    async function searchCityHandler() {
+      try {
+        const response = await axios.post(`${baseURL}common/city/find`, {
+          apiKey: apiKey,
+          modelName: "Address",
+          calledMethod: "searchSettlements",
+          methodProperties: {
+            CityName: cityName,
+            Limit: 20,
+          },
+        });
+        setCities(response.data.data[0].Addresses);
+        return response.data.data[0].Addresses[0].MainDescription;
+      } catch (error) {
+        console.error;
+        return null;
+      }
+    }
+  
+    async function getBranchesHandler(deliveryCity) {
+      try {
+        const response = await axios.post(
+          `${baseURL}counterparty/getWarehouses`,
+          {
+            apiKey: apiKey,
+            modelName: "Address",
+            calledMethod: "getWarehouses",
+            methodProperties: {
+              CityName: deliveryCity,
+            },
+          }
+        );
+        setBranches(response.data.data);
+      } catch (error) {
+        console.error("Помилка під час отримання відділень Нової Пошти:", error);
+      }
+    }
+    
     async function fetchData() {
       if (cityName) {
         const response = await searchCityHandler();
@@ -20,46 +58,10 @@ export default function NovaPoshta({ errors, register, cityName, setCityName, wa
       }
     }
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cityName]);
+  
+  }, [apiKey, cityName]);
 
-  async function searchCityHandler() {
-    try {
-      const response = await axios.post(`${baseURL}common/city/find`, {
-        apiKey: apiKey,
-        modelName: "Address",
-        calledMethod: "searchSettlements",
-        methodProperties: {
-          CityName: cityName,
-          Limit: 20,
-        },
-      });
-      setCities(response.data.data[0].Addresses);
-      return response.data.data[0].Addresses[0].MainDescription;
-    } catch (error) {
-      console.error;
-      return null;
-    }
-  }
-
-  async function getBranchesHandler(deliveryCity) {
-    try {
-      const response = await axios.post(
-        `${baseURL}counterparty/getWarehouses`,
-        {
-          apiKey: apiKey,
-          modelName: "Address",
-          calledMethod: "getWarehouses",
-          methodProperties: {
-            CityName: deliveryCity,
-          },
-        }
-      );
-      setBranches(response.data.data);
-    } catch (error) {
-      console.error("Помилка під час отримання відділень Нової Пошти:", error);
-    }
-  }
+ 
 
   function clearBranches() {
     setBranches([]);
