@@ -27,7 +27,7 @@ export default function ProfileScreen({ latestCurrency }) {
   const [wishlistLoaded, setWishlistLoaded] = useState(true);
   const [orderLoaded, setOrderLoaded] = useState(true);
   const [wishedProducts, setWishedProducts] = useState([]);
-  const [activeTab, setActiveTab] = useState("Профіль користувача");
+  const [activeTab, setActiveTab] = useState("Профіль");
   const [orders, setOrders] = useState([]);
   const [isClient, setIsClient] = useState(false);
   const [phoneError] = useState("");
@@ -95,7 +95,7 @@ export default function ProfileScreen({ latestCurrency }) {
   return (
     <Layout>
       <div className="bg-graybg  ">
-        <div className="container xxl:max-w-[1440px] relative z-10 pb-[22px] md:pb-[25px] xl:pb-[32px]">
+        <div className="container md:max-w-[780px] xl:max-w-[1280px] xxl:max-w-[1440px] relative z-10 pb-[22px] md:pb-[25px] xl:pb-[32px]">
           <Tabs
             tabs={["Профіль", "Замовлення", "Улюблені"]}
             active={activeTab}
@@ -103,7 +103,7 @@ export default function ProfileScreen({ latestCurrency }) {
             className=" "
           />
 
-          {activeTab === "Профіль користувача" && (
+          {activeTab === "Профіль" && (
             <>
               <div className="w-full max-w-xxl mx-auto  relative z-10">
                 {!addressLoaded && <Spinner fullWidth={true} />}
@@ -193,8 +193,8 @@ export default function ProfileScreen({ latestCurrency }) {
             <>
               {!orderLoaded && <Spinner fullWidth={true} />}
               {orderLoaded && (
-                <div>
-                  {orders.length === 0 && <p>Login to see your orders</p>}
+                <div className="max-w-xxl mx-auto ">
+                  {orders.length === 0 && <p>У вас поки немає замовлень</p>}
                   {orders.length > 0 &&
                     orders.map((o, index) => (
                       <Link key={index} href={`/order/${o._id}`}>
@@ -216,7 +216,7 @@ export default function ProfileScreen({ latestCurrency }) {
               {!wishlistLoaded && <Spinner fullWidth={true} />}
               {wishlistLoaded && (
                 <>
-                  <div className="grid grid-cols-2  md:grid-cols-3 xl:grid-cols-4 xxl:grid-cols-4 md:auto-rows-catalog xl:auto-rows-catalogxl xxl:auto-rows-catalogxxl gap-3 md:gap-[10px] xl:gap-[16px] pt-[18px] md:pt-[20px] xl:pt-[30px]">
+                  <div className="max-w-xxl mx-auto grid grid-cols-2  md:grid-cols-4 xl:grid-cols-4 xxl:grid-cols-4   gap-3 md:gap-[10px] xl:gap-[16px] pt-[18px] md:pt-[20px] xl:pt-[30px]">
                     {wishedProducts.length > 0 &&
                       wishedProducts.map((wp) => {
                         const priceInDollars = wp.price;

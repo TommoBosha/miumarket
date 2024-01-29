@@ -46,7 +46,7 @@ export default function AuthModal({ onClose }) {
         <>
             {isVisible && (
                 <div className='modalBackdrop' onClick={handleClickOutside}>
-                    <div className='modalContent'>
+                    <div className='modalContent relative z-20' >
                         <button className='closeButton ' onClick={onClose}>
                             <Image
                                 src="/images/close.svg"
@@ -100,7 +100,7 @@ export default function AuthModal({ onClose }) {
                             alt="uzor"
                             width={451}
                             height={108}
-                            className=" absolute rounded-2xl left-0 -bottom-16 z-10   "
+                            className=" absolute rounded-2xl left-0 -bottom-16 -z-10   "
                         />
                     </div>
 

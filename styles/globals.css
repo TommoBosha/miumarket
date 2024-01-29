@@ -30,6 +30,11 @@ a {
   @apply max-w-[767px] bg-white
  }
 
+ .inner-header-container {
+  @apply mx-auto max-w-[425px] md:max-w-[780px] xl:max-w-[1280px]
+
+}
+
  .hidden-mobile {
   display: none;
 }
@@ -38,6 +43,9 @@ a {
   @apply pl-0;
 }
 
+.expanded-header {
+  height: 100px; 
+}
 
 .primary-button {
   @apply rounded-[10px] py-[15px] bg-counter uppercase text-[15px] xl:text-[18px]  px-[15px] md:px-[22px] outline-none 

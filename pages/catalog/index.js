@@ -121,7 +121,7 @@ export default function CatalogPage({
 
   return (
     <Layout>
-      <div className="container relative z-20 xxl:max-w-[1440px] pb-[20px] md:pb-[57px] xl:pb-[42px]">
+      <div className="container relative z-20 xl:max-w-[1280px] xxl:max-w-[1440px] pb-[20px] md:pb-[57px] xl:pb-[42px]">
         <div className="md:grid md:grid-cols-category xl:grid-cols-categoryxl md:gap-[20px] xl:gap-[50px]">
           <div className="relative z-20">
             <Filter

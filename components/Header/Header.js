@@ -7,6 +7,7 @@ import { signOut, useSession } from "next-auth/react";
 import { Store } from "../../utils/Store";
 import Cookies from "js-cookie";
 
+
 function Header({ setIsAuthModalOpen }) {
   const { status, data: session } = useSession();
   const { state, dispatch } = useContext(Store);
@@ -14,8 +15,27 @@ function Header({ setIsAuthModalOpen }) {
   const [cartItemsCount, setcartItemsCoun] = useState(0);
   const [navbar, setNavbar] = useState(false);
   const [query, setQuery] = useState("");
+  const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
+
+  const handleSearchIconClick = () => {
+    setIsSearchInputVisible(!isSearchInputVisible);
+  };
 
   const router = useRouter();
+  const [isTablet, setIsTablet] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const match = window.matchMedia("(min-width: 768px)").matches;
+      setIsTablet(match);
+    };
+  
+    window.addEventListener("resize", handleResize);
+  
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const submitHandler = (e) => {
     e.preventDefault();
     router.push({
@@ -35,9 +55,10 @@ function Header({ setIsAuthModalOpen }) {
   };
 
   return (
-    <header className=" container container-header   md:max-w-[1279px] xl:max-w-[2560px]">
+    <header className={`container container-header md:max-w-[1279px] xl:max-w-[2560px] ${isSearchInputVisible ? 'expanded-header' : ''}`}>
+        <div className="inner-header-container">
       <nav className="flex md:max-w-[780px] xl:max-w-[1440px] mx-auto items-center justify-between shadow-[bottom] py-[16px] md:py-[22px]">
-        <div className="relative  mr-4 md:mr-2 xl:mr-[66px]">
+        <div className="flex flex-row justify-between items-center gap-[6px] relative  mr-4 md:mr-2 xl:mr-[66px]">
           <button
             className="  text-gray-700 rounded-md outline-none cursor-pointer"
             onClick={() => setNavbar(!navbar)}
@@ -50,10 +71,26 @@ function Header({ setIsAuthModalOpen }) {
           {/* Burger menu */}
 
           <BurgerMenu setNavbar={setNavbar} navbar={navbar} />
+          
+          <button 
+          className="md:hidden" 
+          onClick={handleSearchIconClick}
+        >
+          <Image
+            src="/images/search-mobile.svg"
+            alt="Лупа"
+            width={15}
+            height={15}
+          />
+        </button>
+     
         </div>
 
         {/* Пошук */}
-        <div className="relative mr-4 xl:mr-[66px]">
+        <div className={`absolute bottom-2 md:bottom-0 left-5 md:left-0 mt-2 md:relative md:mr-4 xl:mr-[66px] ${isTablet === false ? 'left-1/2 transform -translate-x-1/2' : ''}`}>
+       
+
+        {isTablet !== undefined && (isSearchInputVisible || isTablet)  && (
           <form onSubmit={submitHandler}>
             <input
               onChange={(e) => setQuery(e.target.value)}
@@ -73,6 +110,7 @@ function Header({ setIsAuthModalOpen }) {
               />
             </button>
           </form>
+        )}
         </div>
 
         <Link href="/">
@@ -81,14 +119,14 @@ function Header({ setIsAuthModalOpen }) {
             alt="Логотип MIU Market"
             width={134}
             height={52}
-            className="hidden md:flex md:mr-5 xl:mr-[86px] md:w-[134px] md:h-[52px]  xl:w-[180px] xl:h-[70px] w-auto h-auto "
+            className=" md:mr-5 xl:mr-[86px] w-[98px] h-[38px] md:w-[134px] md:h-[52px]  xl:w-[180px] xl:h-[70px]  "
           />
         </Link>
 
         {/* Номер телефону */}
         <p
           className="hidden md:flex md:text-[20px] md:leading-[16.78px] md:font-bold md:text-primary md:mr-6
-        xl:text-[22px] xl:leading-[18.45px] xl:mr-[82px] }"
+        xl:text-[22px] xl:leading-[18.45px] xl:mr-[78px] }"
         >
           +380 66 523 23 07
         </p>
@@ -110,7 +148,7 @@ function Header({ setIsAuthModalOpen }) {
           ) : (
             <button
               className=" text-gray-700 rounded-md outline-none cursor-pointer"
-              onClick={() => setIsAuthModalOpen(true)} // Відкриття модального вікна
+              onClick={() => setIsAuthModalOpen(true)} 
             >
               <svg className="w-4 h-4">
                 <use xlinkHref="/images/icons.svg#icon-user" />
@@ -148,6 +186,7 @@ function Header({ setIsAuthModalOpen }) {
           </Link>
         </div>
       </nav>
+      </div>
     </header>
   );
 }

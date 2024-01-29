@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import '../styles/globals.css'
 import { StoreProvider } from '../utils/Store'
 import { SessionProvider, useSession } from 'next-auth/react'
+import Spinner from '../components/Spinner'
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
@@ -27,7 +28,7 @@ function Auth({ children }) {
     },
   });
   if (status === 'loading') {
-    return <>Loading...</>;
+    return <Spinner/>;
   }
   return children;
 }
