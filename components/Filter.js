@@ -1,3 +1,5 @@
+import axios from "axios";
+import Image from "next/image";
 import React, { useState } from "react";
 
 export default function Filter({
@@ -9,6 +11,11 @@ export default function Filter({
   products,
   parentCategories,
   router,
+  setSearchResults,
+  query,
+  setQuery,
+  setIsLoading
+
 }) {
   const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
 
@@ -44,17 +51,67 @@ export default function Filter({
   const handlePriceChange = (e) => {
     setPriceRange({ ...priceRange, [e.target.name]: e.target.value });
   };
+  
+  
+  const submitHandler =  async (e) => {
+    e.preventDefault();
+    setIsLoading(true)
+
+    try {
+      const response = await axios.get(`/api/products?phrase=${(query)}`);
+      setSearchResults(response.data); 
+      setIsFiltered(true);
+      setCurrentPage(1);
+      setIsLoading(false)
+    } catch (error) {
+      console.error("Помилка пошуку продуктів:", error);
+    } finally {
+      setIsLoading(false); // Переконайтеся, що завжди вимикаєте завантаження
+    }
+  };
+
 
   if (!parentCategories) {
     return <div>Loading...</div>;
   }
   return (
     <div className="pt-[18px] md:pt-[20px] xl:pt-[30px]">
+      
+      
+
       <h2 className="text-[24px] md:text-[15px] xl:text-[21px] uppercase font-bold text-accent">
         Каталог
       </h2>
+
+      <div className="relative bottom-2 md:bottom-0 left-0  mt-5 mb-2 md:hidden ">
+       
+
+      
+       <form onSubmit={submitHandler}>
+         <input
+           onChange={(e) => setQuery(e.target.value)}
+           type="text"
+           value={query}
+           className=" pl-[26px]  w-full  border-none bg-primary rounded-full text-white placeholder-white focus:outline-none   "
+           placeholder="Пошук"
+         />
+         <button
+           type="submit"
+           className="absolute inset-y-0 left-2 md:left-[10px] xl:left-3 flex items-center"
+         >
+           <Image
+             src="/images/search.svg"
+             alt="Лупа"
+             width={11}
+             height={11}
+           />
+         </button>
+       </form>
+   
+     </div>
+
       <button
-        className="pt-[14px] md:pt-[7px] xl:pt-[15px] text-[24px] md:text-[15px] xl:text-[18px] md:leading-[22px] uppercase font-semibold"
+        className=" md:pt-[7px] xl:pt-[15px] text-[24px] md:text-[15px] xl:text-[18px] md:leading-[22px] uppercase font-semibold"
         onClick={() => router.push(`/catalog/`)}
       >
         Всі товари
@@ -69,7 +126,7 @@ export default function Filter({
             className="text-[19px] md:text-[15px] xl:text-[18px] leading-[22px] text-primary uppercase font-semibold"
           >
             {parentCategory.name}{" "}
-            <span className="text-accent">
+            <span className="text-accent ">
               (
               {productCounts.find(
                 (pc) => pc._id.toString() === parentCategory._id.toString()
@@ -82,7 +139,7 @@ export default function Filter({
               {parentCategory.children.map((childCategory) => (
                 <li key={childCategory._id}>
                   <button
-                    className="text-[15px] md:text-[12px] xl:text-[16px]  leading-[6px] text-center"
+                    className="pl-[12px] text-[15px] md:text-[12px] xl:text-[16px]  leading-[6px] text-center"
                     onClick={() => handleCategoryClick(childCategory._id)}
                   >
                     {childCategory.name}{" "}

@@ -32,6 +32,7 @@ const SearchPage = ({
   const { data: session } = useSession();
   const { state, dispatch } = useContext(Store);
   const [searchResults, setSearchResults] = useState([]);
+  const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
@@ -48,6 +49,9 @@ const SearchPage = ({
     indexOfFirstItem,
     indexOfLastItem
   );
+
+
+
 
   useEffect(() => {
     if (phrase) {
@@ -77,10 +81,18 @@ const SearchPage = ({
       }
     };
 
+    
+
+
     fetchData();
     setIsClient(true);
     setCurrentPage(1);
   }, [phrase]);
+
+ 
+ 
+  
+  console.log(currentItems)
 
   const toggleWishlist = async (productId) => {
     try {
@@ -148,17 +160,22 @@ const SearchPage = ({
               setFilteredProducts={setFilteredProducts}
               setIsFiltered={setIsFiltered}
               setCurrentPage={setCurrentPage}
+              setQuery={setQuery}
+              query={query}
+              setSearchResults={setSearchResults}
+              setIsLoading={ setIsLoading}
+              
             />
           </div>
           <div>
-            <h1>Результати пошуку для: &quot;{phrase}&quot;</h1>
+            <h1>Результати пошуку для: &quot;{phrase}  {query}&quot;</h1>
             {!isLoading && searchResults.length === 0 && (
               <p>Нічого не знайдено.</p>
             )}
             {!isLoading && searchResults.length > 0 && (
               <div className="relative z-20 ">
                 <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 md:auto-rows-catalog xl:auto-rows-catalogxl xxl:auto-rows-catalogxxl gap-3 md:gap-[10px] xl:gap-[16px] pt-[18px] md:pt-[20px] xl:pt-[30px]">
-                  {currentItems.map((product) => {
+                  {(currentItems.length > 0 ? currentItems : searchResults).map((product) => {
                     const priceInDollars = product.price;
                     const exchangeRate = latestCurrency.currency;
 

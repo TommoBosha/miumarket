@@ -15,14 +15,15 @@ function Header({ setIsAuthModalOpen }) {
   const [cartItemsCount, setcartItemsCoun] = useState(0);
   const [navbar, setNavbar] = useState(false);
   const [query, setQuery] = useState("");
-  const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
+ 
 
-  const handleSearchIconClick = () => {
-    setIsSearchInputVisible(!isSearchInputVisible);
-  };
+  
 
   const router = useRouter();
   const [isTablet, setIsTablet] = useState(false);
+  const handleSearchIconClick = () => {
+    router.push('/search')
+   };
 
   useEffect(() => {
     const handleResize = () => {
@@ -55,7 +56,7 @@ function Header({ setIsAuthModalOpen }) {
   };
 
   return (
-    <header className={`container container-header md:max-w-[1279px] xl:max-w-[2560px] ${isSearchInputVisible ? 'expanded-header' : ''}`}>
+    <header className="container container-header md:max-w-[1279px] xl:max-w-[2560px] ">
         <div className="inner-header-container">
       <nav className="flex md:max-w-[780px] xl:max-w-[1440px] mx-auto items-center justify-between shadow-[bottom] py-[16px] md:py-[22px]">
         <div className="flex flex-row justify-between items-center gap-[6px] relative  mr-4 md:mr-2 xl:mr-[66px]">
@@ -90,7 +91,7 @@ function Header({ setIsAuthModalOpen }) {
         <div className={`absolute bottom-2 md:bottom-0 left-5 md:left-0 mt-2 md:relative md:mr-4 xl:mr-[66px] ${isTablet === false ? 'left-1/2 transform -translate-x-1/2' : ''}`}>
        
 
-        {isTablet !== undefined && (isSearchInputVisible || isTablet)  && (
+        {isTablet !== undefined &&  isTablet  && (
           <form onSubmit={submitHandler}>
             <input
               onChange={(e) => setQuery(e.target.value)}

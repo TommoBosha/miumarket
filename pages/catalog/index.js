@@ -84,7 +84,7 @@ export default function CatalogPage({
         setWished((prevWished) => {
           const updatedWished = { ...prevWished };
           updatedWished[productId] = !updatedWished[productId];
-          console.log("Wished after toggle:", updatedWished);
+         
           return updatedWished;
         });
       } else {

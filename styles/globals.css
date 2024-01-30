@@ -27,7 +27,7 @@ a {
  
 }
 .container-header {
-  @apply max-w-[767px] bg-white
+  @apply max-w-[767px] bg-counter
  }
 
  .inner-header-container {

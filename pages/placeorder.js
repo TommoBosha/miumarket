@@ -70,7 +70,7 @@ export default function PlaceOrderScreen() {
       toast.error(getError(err));
     }
   };
-  console.log(cartItems);
+ 
   const placeOrderHandler = async () => {
     try {
       setLoading(true);

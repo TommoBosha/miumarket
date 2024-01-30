@@ -24,7 +24,7 @@ export default async function handle(req, res) {
             productsQuery['properties.' + filterName] = filters[filterName];
         });
     }
-    console.log(productsQuery);
+    
 
     return res.json(await Product.find(
         productsQuery,

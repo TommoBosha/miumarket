@@ -92,14 +92,14 @@ export default function ShippingScreen() {
       };
       setUkrPoshtaShippingAddress(updatedShippingAddress);
     }
-    console.log("FormData:", data);
+    
 
     dispatch({
       type: "SAVE_SHIPPING_ADDRESS",
       payload: updatedShippingAddress,
     });
 
-    console.log("Shipping Address for Dispatch:", updatedShippingAddress);
+   
     Cookies.set(
       "cart",
       JSON.stringify({

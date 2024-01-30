@@ -82,7 +82,7 @@ export default function OrderScreen() {
     isDelivered,
     deliveredAt,
   } = order;
-console.log(orderItems)
+
   const displayShippingDetails = () => {
     if (!shippingAddress || !shippingAddress.deliveryMethod) {
       return "Метод доставки не визначено";

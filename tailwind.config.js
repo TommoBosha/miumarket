@@ -20,6 +20,7 @@ module.exports = {
         graybg: "#D7D7D7",
         counter: '#ECECEC',
         buttonSecondary: '#999',
+        menu: '#F4F4F4',
         gradient:
           "linear-gradient(180deg, rgba(180, 180, 180, 0.00) 20.31%, #333 100%)",
       },
@@ -58,7 +59,13 @@ module.exports = {
       },
       maxWidth: {
         xxl: '836px'
-      }
+      },
+      width: {
+        menu: "calc(100% - 40px)",
+      },
+      height: {
+        menu: "calc(100vh - 60px)",
+      },
     },
   },
   plugins: [],
