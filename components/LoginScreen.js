@@ -41,15 +41,15 @@ export default function LoginScreen({ setIsVisible }) {
     }
 
     return (
-
+<div className='mx-2'>
         <form
-            className='mx-auto '
+            className='mx-auto'
             onSubmit={handleSubmit(submitHandler)} >
-            <h1 className='mb-7 mt-14 text-center text-4xl font-bold'>Увійти</h1>
-            <div className='mb-4 '>
+            <h1 className='mb-10 md:mb-5 mt-[34px] md:mt-[38px] xl:mt-[68px] text-center text-[24px] md:text-[27px]  uppercase  font-bold'>Увійти</h1>
+            <div className='relative mb-8 '>
                 <label
-                    className='pl-16 text-white'
-                    htmlFor='email'>Email or Username</label>
+                    className='block   text-[15px]  pl-4 md:pl-8  absolute top-[-10px] left-5 transform -translate-y-2/4 bg-transparent text-form'
+                    htmlFor='email'>Email</label>
                 <input type='email'
                     {...register('email', {
                         required: 'Додайте вашу пошту',
@@ -58,32 +58,32 @@ export default function LoginScreen({ setIsVisible }) {
                             message: 'Невірна пошта',
                         }
                     })}
-                    className=' m-auto grid pl-6 rounded-3xl bg-white placeholder-slate-300'
-                    style={{ width: '335px' }}
+                    className='  mx-auto grid pl-6 h-[32px] md:h-[38px] rounded-3xl bg-white placeholder-slate-300 w-[276px] md:w-[335px]'
+                    
                     placeholder=' madeinua@gmail.com'
                     id='email'
                     autoFocus />
                 {errors.email && (<div className='text-red-500'>{errors.email.message}</div>)}
             </div>
 
-            <div className='mb-10'>
+            <div className='relative mb-5'>
                 <label
-                    className='pl-16 text-white'
+                    className='block   text-[15px]  pl-4 md:pl-8  absolute top-[-10px] left-5 transform -translate-y-2/4 bg-transparent text-form'
                     htmlFor='password'>Пароль</label>
                 <input type='password'
                     {...register('password', {
                         required: 'Додайте ваш пароль',
                         minLength: { value: 6, message: 'Пароль повинен бути більше за 5 символів' },
                     })}
-                    className='  m-auto grid pl-6 rounded-3xl bg-white placeholder-slate-300 '
-                    style={{ width: '335px' }}
+                    className='   mx-auto grid pl-6 h-[32px] md:h-[38px] rounded-3xl bg-white placeholder-slate-300 w-[276px] md:w-[335px] '
+                    
                     placeholder='sfrhfdgt32'
                     id='password'
                     autoFocus />
                 {errors.password && (<div className='text-red-500'>{errors.password.message}</div>)}
             </div>
 
-            <div className='mb-6 flex justify-center'>
+            <div className='mb-5 flex justify-center'>
                 <button
                     style={{ width: '230px', backgroundColor: '#3ACCE9' }}
                     className='  rounded-3xl py-2 text-lg font-semibold uppercase text-white'
@@ -92,6 +92,7 @@ export default function LoginScreen({ setIsVisible }) {
 
 
         </form>
+        </div>
 
     )
 }

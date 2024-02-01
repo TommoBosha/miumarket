@@ -75,13 +75,13 @@ const BurgerMenu = ({ navbar, setNavbar }) => {
 
   const modalStyle = {
     transform: navbar ? "translateX(0)" : "translateX(-150%)",
-    transition: "transform 0.7s ease-in-out",
+    transition: "transform 0.6s ease-in-out",
   };
 
   const backdropStyle = {
     visibility: navbar ? "visible" : "hidden",
     opacity: navbar ? "1" : "0",
-    transition: "visibility 0s, opacity 0.3s linear",
+    transition: "visibility 0s, opacity 0.2s linear",
   };
 
   return (

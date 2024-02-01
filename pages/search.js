@@ -92,7 +92,7 @@ const SearchPage = ({
  
  
   
-  console.log(currentItems)
+
 
   const toggleWishlist = async (productId) => {
     try {

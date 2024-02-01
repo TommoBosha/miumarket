@@ -50,11 +50,11 @@ export default function RegisterScreen({ setIsVisible }) {
     return (
 
         <form className='mx-auto ' onSubmit={handleSubmit(submitHandler)} >
-            <h1 className='mb-7 mt-14 text-center text-4xl font-bold'>Реєстрація</h1>
+            <h1 className='mb-7 md:mb-5 mt-[34px] md:mt-[28px] xl:mt-10 text-center text-[24px] md:text-[27px]  uppercase  font-bold'>Реєстрація</h1>
 
-            <div className='mb-4'>
+            <div className='relative mb-8'>
                 <label
-                    className='pl-16 text-white'
+                    className='block   text-[15px]  pl-4 md:pl-8  absolute top-[-10px] left-5 transform -translate-y-2/4 bg-transparent text-form'
                     htmlFor='name'>Ім&#39;я</label>
                 <input
                     type='text'
@@ -62,17 +62,17 @@ export default function RegisterScreen({ setIsVisible }) {
                         required: 'Додайте ваше ім&#39;я',
 
                     })}
-                    className='  m-auto grid pl-6 rounded-3xl bg-white placeholder-slate-300 '
-                    style={{ width: '335px' }}
+                    className='  mx-auto grid pl-6 h-[32px] md:h-[38px] rounded-3xl bg-white placeholder-slate-300 w-[276px] md:w-[335px] '
+                    
                     placeholder='Made Ua'
                     id='name'
                     autoFocus />
                 {errors.name && (<div className='text-red-500'>{errors.name.message}</div>)}
             </div>
 
-            <div className='mb-4'>
+            <div className='relative mb-8'>
                 <label
-                    className='pl-16 text-white'
+                    className='block   text-[14px]  pl-4 md:pl-8 absolute top-[-10px] left-5 transform -translate-y-2/4 bg-transparent text-form'
                     htmlFor='email'>Email</label>
                 <input
                     type='email'
@@ -83,17 +83,17 @@ export default function RegisterScreen({ setIsVisible }) {
                             message: 'Невірна пошта',
                         }
                     })}
-                    className='  m-auto grid pl-6 rounded-3xl bg-white placeholder-slate-300 '
-                    style={{ width: '335px' }}
+                    className='  m-auto grid pl-6 h-[32px] md:h-[38px] rounded-3xl bg-white placeholder-slate-300 w-[276px] md:w-[335px] '
+                  
                     placeholder='madeinua@gmail.com'
                     id='email'
                 />
                 {errors.email && (<div className='text-red-500'>{errors.email.message}</div>)}
             </div>
 
-            <div className='mb-4'>
+            <div className='relative mb-8'>
                 <label
-                    className='pl-16 text-white'
+                    className='block   text-[14px]  pl-4 md:pl-8 absolute top-[-10px] left-5 transform -translate-y-2/4 bg-transparent text-form'
                     htmlFor='password'>Пароль</label>
                 <input
                     type='password'
@@ -101,16 +101,16 @@ export default function RegisterScreen({ setIsVisible }) {
                         required: 'Додайте ваш пароль',
                         minLength: { value: 6, message: 'Пароль повинен бути більше за 5 символів' },
                     })}
-                    className='m-auto grid pl-6 rounded-3xl bg-white placeholder-slate-300'
-                    style={{ width: '335px' }}
+                    className='m-auto grid pl-6 h-[32px] md:h-[38px] rounded-3xl bg-white placeholder-slate-300 w-[276px] md:w-[335px]'
+                    
                     placeholder='sfrhfdgt32'
                     id='password' />
                 {errors.password && (<div className='text-red-500'>{errors.password.message}</div>)}
             </div>
 
-            <div className='mb-8'>
+            <div className='relative mb-[18px]'>
                 <label
-                    className='pl-16 text-white'
+                    className='block   text-[14px]  pl-4 md:pl-8 absolute top-[-10px] left-5 transform -translate-y-2/4 bg-transparent text-form'
                     htmlFor='confirmPassword'>Підтвердження пароля</label>
                 <input
                     type='password'
@@ -122,8 +122,8 @@ export default function RegisterScreen({ setIsVisible }) {
                             message: 'Пароль повинен бути більше за 5 символів'
                         },
                     })}
-                    className='m-auto grid pl-6 rounded-3xl bg-white placeholder-slate-300'
-                    style={{ width: '335px' }}
+                    className='m-auto grid pl-6 h-[32px] md:h-[38px] rounded-3xl bg-white placeholder-slate-300 w-[276px] md:w-[335px]'
+                    
                     placeholder='sfrhfdgt32'
                     id='confirmPassword' />
                 {errors.confirmPassword && (<div className='text-red-500'>{errors.confirmPassword.message}</div>)}
@@ -132,10 +132,10 @@ export default function RegisterScreen({ setIsVisible }) {
                         <div className='text - red - 500'>Паролі не співпадають</div>)}
             </div>
 
-            <div className='mb-7 flex justify-center'>
+            <div className='mb-[18px] md:mb-[15px] flex justify-center'>
                 <button
                     style={{ width: '230px', backgroundColor: '#3ACCE9' }}
-                    className=' mx-8 rounded-3xl py-2 text-lg font-semibold uppercase text-white'
+                    className=' mx-8 rounded-3xl py-2 text-[15px] md:text-[18px] font-semibold uppercase text-white'
                 >Зареєструватись</button>
             </div>
 

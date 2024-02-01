@@ -8,7 +8,7 @@ import { Store } from "../../utils/Store";
 import Cookies from "js-cookie";
 
 
-function Header({ setIsAuthModalOpen }) {
+function Header({ setIsAuthModalOpen}) {
   const { status, data: session } = useSession();
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
@@ -150,6 +150,7 @@ function Header({ setIsAuthModalOpen }) {
             <button
               className=" text-gray-700 rounded-md outline-none cursor-pointer"
               onClick={() => setIsAuthModalOpen(true)} 
+              
             >
               <svg className="w-4 h-4">
                 <use xlinkHref="/images/icons.svg#icon-user" />
