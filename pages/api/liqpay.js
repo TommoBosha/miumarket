@@ -1,32 +1,44 @@
-import LiqPay from "liqpay-sdk-nodejs";
 
-const liqpay = new LiqPay({
-    publicKey: 'sandbox_i67991022050',
-    privateKey: 'sandbox_sPmUKVMZYWvsfay1Wgtp6w8MEacJCsoqb9Gklbqx',
-});
+import crypto from "crypto";
+import Order from "../../models/Order";
+import db from "../../utils/db";
 
-export default async function handler(req, res) {
-    if (req.method === 'POST') {
-        try {
-            const html = liqpay.cnb_form({
-                action: 'pay',
-                amount: 100,
-                currency: 'UAH',
-                description: 'Оплата заказа',
-                sandbox: 0,
-                server_url: 'https://test.com/billing/pay-callback/',
-                order_id: '5324',
-                version: '3',
-            });
+const handler = async (req, res) => {
+  if (req.method === "POST") {
+    const { data, signature } = req.body;
+    console.log("Отримано запит від LiqPay:", req.body);
+    const privateKey = process.env.PRIVATE_LIQPAY_KEY;
 
-            console.log(html)
+    // Перевіряємо підпис
+    const expectedSignature = crypto.createHash('sha1')
+      .update(privateKey + data + privateKey)
+      .digest('base64');
 
-            res.status(200).send(html);
-        } catch (error) {
-            console.error(error);
-            res.status(500).send('Помилка при створенні платежу');
-        }
-    } else {
-        res.status(405).end();
+    if (signature !== expectedSignature) {
+      return res.status(403).send("Невірний підпис");
     }
-}
+
+    const decodedData = JSON.parse(Buffer.from(data, 'base64').toString('utf-8'));
+
+    await db.connect();
+    const order = await Order.findOne({ _id: decodedData.order_id });
+
+    if (!order) {
+      return res.status(404).send("Замовлення не знайдено");
+    }
+
+    // Оновлюємо статус замовлення на основі відповіді LiqPay
+    if (decodedData.status === "success") {
+      order.isPaid = true;
+      order.paidAt = Date.now();
+    }
+    // Тут можна додати обробку інших статусів
+
+    await order.save();
+    res.status(200).send("Статус оплати оновлено");
+  } else {
+    res.status(405).send("Method Not Allowed");
+  }
+};
+
+export default handler;

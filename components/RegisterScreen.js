@@ -62,7 +62,7 @@ export default function RegisterScreen({ setIsVisible }) {
                         required: 'Додайте ваше ім&#39;я',
 
                     })}
-                    className='  mx-auto grid pl-6 h-[32px] md:h-[38px] rounded-3xl bg-white placeholder-slate-300 w-[276px] md:w-[335px] '
+                    className='  mx-auto grid pl-3 md:pl-4 h-[32px] md:h-[38px] rounded-3xl bg-white placeholder-slate-300 w-[276px] md:w-[335px] '
                     
                     placeholder='Made Ua'
                     id='name'
@@ -83,7 +83,7 @@ export default function RegisterScreen({ setIsVisible }) {
                             message: 'Невірна пошта',
                         }
                     })}
-                    className='  m-auto grid pl-6 h-[32px] md:h-[38px] rounded-3xl bg-white placeholder-slate-300 w-[276px] md:w-[335px] '
+                    className='  m-auto grid pl-3 md:pl-4 h-[32px] md:h-[38px] rounded-3xl bg-white placeholder-slate-300 w-[276px] md:w-[335px] '
                   
                     placeholder='madeinua@gmail.com'
                     id='email'
@@ -101,7 +101,7 @@ export default function RegisterScreen({ setIsVisible }) {
                         required: 'Додайте ваш пароль',
                         minLength: { value: 6, message: 'Пароль повинен бути більше за 5 символів' },
                     })}
-                    className='m-auto grid pl-6 h-[32px] md:h-[38px] rounded-3xl bg-white placeholder-slate-300 w-[276px] md:w-[335px]'
+                    className='m-auto grid pl-3 md:pl-4 h-[32px] md:h-[38px] rounded-3xl bg-white placeholder-slate-300 w-[276px] md:w-[335px]'
                     
                     placeholder='sfrhfdgt32'
                     id='password' />
@@ -122,7 +122,7 @@ export default function RegisterScreen({ setIsVisible }) {
                             message: 'Пароль повинен бути більше за 5 символів'
                         },
                     })}
-                    className='m-auto grid pl-6 h-[32px] md:h-[38px] rounded-3xl bg-white placeholder-slate-300 w-[276px] md:w-[335px]'
+                    className='m-auto grid pl-3 md:pl-4 h-[32px] md:h-[38px] rounded-3xl bg-white placeholder-slate-300 w-[276px] md:w-[335px]'
                     
                     placeholder='sfrhfdgt32'
                     id='confirmPassword' />

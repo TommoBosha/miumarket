@@ -1,109 +1,105 @@
-import React, { useState, useEffect } from 'react';
-import LiqPay from 'liqpay-sdk-nodejs';
+// import liqpay from 'liqpay-sdk-nodejs';
 
-
-const publicKey = 'sandbox_i67991022050';
-const privateKey = 'sandbox_sPmUKVMZYWvsfay1Wgtp6w8MEacJCsoqb9Gklbqx';
-const liqPay = new LiqPay(publicKey, privateKey);
-
-export default function LiqpayComponent() {
-    const [liqpayForm, setLiqpayForm] = useState('');
-
-
-    useEffect(() => {
-        const fetchForm = async () => {
-            const params = {
-                version: 3,
-                action: 'pay',
-                amount: 1,
-                currency: 'USD',
-                description: 'Test payment',
-                order_id: 'order12345',
-            };
-
-            try {
-                const html = await liqPay.cnb_form(params);
-                console.log(html); // <-- this is the HTML string I need to render in my component
-                setLiqpayForm(html);
-
-
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchForm();
-    }, []);
+// import { useEffect, useRef, useState } from 'react';
+import LiqPayPay from '../components/LiqPay/LiqPay';
 
 
 
+
+const PaymentComponent = ({ publicKey, privateKey }) => {
+
+    const payInfo = {
+        amount: 2,
+        currency: 'UAH',
+        title: 'PAY'
+      }
+    
+
+      const ButtonComponent = () => (
+        <button style={{
+          backgroundColor: '#337ab7',
+          color: '#fff',
+          borderColor: '#2e6da4',
+          border: '1px solid transparent',
+          borderRadius: '4px',
+          padding: '6px 12px',
+          cursor: 'pointer'
+        }}
+        >{`${payInfo.title} ${payInfo.amount} ${payInfo.currency}`}
+        </button>
+      )
+
+    // const publicKey = process.env.PUBLIC_LIQPAY_KEY;
+    // const privateKey = process.env.PRIVATE_LIQPAY_KEY;
+    
+    // const liqPayInstance = new liqpay(publicKey, privateKey);
+    // const [paymentStatus] = useState(null);
+    
+    // const formRef = useRef(null);
+
+    // const params = {
+    //   action: 'pay',
+    //   amount: '1',
+    //   currency: 'UAH',
+    //   description: 'Оплата заказа',
+    //   order_id: 'order01241',
+    //   version: '3',
+    //   language: 'uk', 
+    //   result_url: 'https://miumarket.com/profile',
+    // };
+
+    // useEffect(() => {
+    //     if (formRef.current) {
+    //       formRef.current.innerHTML = liqPayInstance.cnb_form(params);
+    //     }
+    //   }, [params]);
+    
+    // console.log(liqPayInstance.cnb_form(params))
     return (
-        <div>
-            <div>
-                <h2>LiqPay Payment</h2>
-                <iframe
-                    srcDoc={`<!DOCTYPE html><html><body>${liqpayForm}</body></html>`}
-                    width="100%"
-                    height="780px"
-                    title="LiqPay Payment"
-                // sandbox="allow-popups"
-                />
-            </div>
-        </div>
+      <div>
+        {/* <div>
+          {!paymentStatus ? (
+            <>
+              {/* <div className='w-20' dangerouslySetInnerHTML={{ __html: liqPayInstance.cnb_form(params) }}></div> */}
+              {/* <div ref={formRef}></div>
+            </> */}
+          {/* ) : paymentStatus === 'success' ? (
+            <p>Платеж успешно проведен.</p>
+          ) : (
+            <p>Ошибка при проведении платежа. Попробуйте еще раз.</p>
+          )}
+        // </div> */} 
 
+        <LiqPayPay
+        publicKey={publicKey}
+        privateKey={privateKey}
+        amount='3'
+        description='Payment for product'
+        currency='UAH'
+        orderId={Math.floor(1 + Math.random() * 900000000)}
+        result_url='http://domain.com/user/account'
+        server_url='http://server.domain.com/liqpay'
+        product_description='Online courses'
+        style={{ margin: '8px' }}
+        // disabled={true}
+        extra={[<ButtonComponent key='2' />]}
+      />
+      </div>
     );
-}
-
-// import React, { useState, useEffect } from 'react';
-// import LiqPay from 'liqpay-sdk-nodejs';
-// import HTMLtoReact from 'html-to-react';
-
-// const publicKey = 'sandbox_i67991022050';
-// const privateKey = 'sandbox_sPmUKVMZYWvsfay1Wgtp6w8MEacJCsoqb9Gklbqx';
-// const liqPay = new LiqPay(publicKey, privateKey);
-
-// export default function LiqpayComponent() {
-//     const [liqpayForm, setLiqpayForm] = useState(null);
-
-//     useEffect(() => {
-//         const fetchForm = async () => {
-//             const params = {
-//                 version: 3,
-//                 action: 'pay',
-//                 amount: 100.5,
-//                 currency: 'USD',
-//                 description: 'Test payment',
-//                 order_id: 'order12345',
-//             };
-
-//             try {
-//                 const html = await liqPay.cnb_form(params);
-//                 setLiqpayForm(html);
+  };
 
 
-//                 const htmlToReactParser = new HTMLtoReact.Parser();
-//                 const reactElement = htmlToReactParser.parse(html);
-
-//                 // Встановіть React компонент у стані
-//                 setLiqpayForm(reactElement);
-
-//                 if (typeof SDK_Button === "undefined") {
-//                     const script = document.createElement("script");
-//                     script.src = "https://static.liqpay.ua/libjs/sdk_button.js";
-//                     script.async = true;
-//                     document.head.appendChild(script);
-//                 }
-//             } catch (error) {
-//                 console.error(error);
-//             }
-//         };
-
-//         fetchForm();
-//     }, []);
-
-//     return (
-//         <div>
-//             {liqpayForm}
-//         </div>
-//     );
-// }
+  export async function getServerSideProps() {
+   
+    const publicKey = process.env.PUBLIC_LIQPAY_KEY;
+    const privateKey = process.env.PRIVATE_LIQPAY_KEY;
+  
+    
+    return {
+      props: {
+        publicKey,
+        privateKey,
+      },
+    };
+  }
+  export default PaymentComponent;

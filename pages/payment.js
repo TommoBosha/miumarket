@@ -39,6 +39,10 @@ export default function PaymentScreen() {
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+
+
+  
   return (
     <Layout title="Метод оплати">
       <div className="bg-graybg">
@@ -51,13 +55,13 @@ export default function PaymentScreen() {
               Метод оплати
             </h1>
 
-            <div className="flex flex-row justify-center gap-[25px] md:gap-[64px] xl:gap-[50px]">
-              {["Відділення Нової Пошти", "Накладенний платіж"].map(
+            <div className="flex flex-col md:flex-row justify-center gap-[2px] md:gap-[25px] md:gap-[64px] xl:gap-[50px]">
+              {["Відділення Нової Пошти", "Накладенний платіж", "Онлайн оплата"].map(
                 (payment) => {
                   return (
                     <div
                       key={payment}
-                      className="mb-4 flex  gap-[2px] md:gap-[10px] items-center "
+                      className="mb-0 md:mb-4 xl:mb-[32px] flex  gap-[2px] md:gap-[10px] items-center "
                     >
                       <input
                         name="paymentMethod"
@@ -79,7 +83,7 @@ export default function PaymentScreen() {
               )}
             </div>
 
-            <div className=" flex justify-center gap-5 md:gap-[80px] pb-[22px] md:pb-[26px] xl:pb-[56px]">
+            <div className=" flex justify-center gap-5 mt-4 md:mt-0 md:gap-[80px] pb-[22px] md:pb-[26px] xl:pb-[56px]">
               <button
                 onClick={() => router.push("/shipping")}
                 type="button"

@@ -38,3 +38,24 @@ const handler = async (req, res) => {
 };
 
 export default handler;
+
+export const paymentWebhookHandler = async (req, res) => {
+  if (req.method === "POST") {
+    await db.connect();
+    const { data } = req.body;
+    // Розшифровка даних від LiqPay, перевірка підпису тощо. (залежить від платіжної системи)
+    // Перевірка статусу оплати
+    if (data.status === "success") {
+      // Оновлення статусу замовлення на "успішно"
+      const order = await Order.findByIdAndUpdate(data.order_id, { status: "успішно" }, { new: true });
+      res.status(200).json(order);
+    } else {
+      // Обробка неуспішної оплати
+      res.status(400).json({ message: "Оплата не пройшла" });
+    }
+  } else {
+    res.status(405).send("Method Not Allowed");
+  }
+};
+
+
