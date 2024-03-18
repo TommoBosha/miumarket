@@ -360,7 +360,7 @@ export default function PlaceOrderScreen({ publicKey, privateKey }) {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const { cartItems, shippingAddress, paymentMethod } = cart;
-
+console.log(paymentMethod)
   const router = useRouter();
   // eslint-disable-next-line no-unused-vars
   const [session, setSession] = useState(null);
@@ -390,7 +390,8 @@ export default function PlaceOrderScreen({ publicKey, privateKey }) {
     setIsClient(true);
   }, [paymentMethod, router]);
 
-  const [ setLoading] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [loading, setLoading] = useState(false);
 
   const updateProductQuantity = async () => {
     try {
@@ -603,6 +604,15 @@ export default function PlaceOrderScreen({ publicKey, privateKey }) {
                     </div>
 
                     <div className="pt-[10px] md:pt-[5px] ">
+                    {paymentMethod !== "Онлайн оплата" && (
+                        <button
+                          disabled={loading}
+                          onClick={placeOrderHandler}
+                          className="primary-button placeorder w-full"
+                        >
+                          {loading ? "Loading..." : "Зробити замовлення"}
+                        </button>
+                    )}
                       {paymentMethod === "Онлайн оплата" && (
                         <LiqPayPay
                          
